@@ -1,1 +1,10 @@
 /node_modules
+/php
+/www/vendor
+/www/storage
+/.git
+.git*
+/.git-original
+
+
+

@@ -4,10 +4,16 @@
   "description": "Making laravel desktop application using electron js",
   "main": "main.js",
   "engines": {
-    "node": ">=8.0"
+    "node": ">=12.1.0"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager . LaravelElectron --out=dist",
+    "windows-from-ubuntu": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='ElectronApp'",
+    "windows-from-docker": "electron-packager . --overwrite --platform win32 --arch x64 --out=dist",
+    "first": "sudo docker pull hackash/electron-windows-build",
+    "second": "sudo docker run -it --rm -v ${PWD}:/project hackash/electron-windows-build",
+    "third": "npm run windows-from-docker"
   },
   "repository": "",
   "keywords": [
@@ -19,8 +25,8 @@
   "author": "laravelarticle",
   "license": "cc-by-4.0",
   "devDependencies": {
-    "electron": "^8.2.3",
-    "electron-packager": "^11.0.1"
+    "electron": "^8.5.5",
+    "electron-packager": "^12.1.0"
   },
   "dependencies": {
     "node-php-server": "^0.1.2"
