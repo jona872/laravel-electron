@@ -5,5 +5,9 @@ sudo docker run -it --rm -v ${PWD}:/project hackash/electron-windows-build
 npm run windows-from-docker --> en este caso (windows-from-docker)
 
 
-Post-Build... 
-777 dist, y despues borrar www/boostrap/cache/config.php
+================= Post-Build =================
+(con el server corriendo hice el build y funciono ok)
+sudo chmod -R 777 dist/
+cp -R dist/ /media/sf_Facu2/ACA/
+si tengo problema de session borrar www/boostrap/cache/config.php
+==============================================
