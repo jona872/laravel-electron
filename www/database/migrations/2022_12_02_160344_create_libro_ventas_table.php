@@ -15,10 +15,6 @@ class CreateLibroVentasTable extends Migration
     {
         Schema::create('libro_ventas', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            $table->bigInteger('factura_id')->unsigned()->index()->nullable();
-            $table->foreign('factura_id')->references('id')->on('facturas');
-            
             $table->timestamps();
         });
     }

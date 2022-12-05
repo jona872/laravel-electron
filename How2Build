@@ -3,3 +3,7 @@ https://strong-pointer.medium.com/use-docker-container-to-build-windows-installe
 sudo docker pull hackash/electron-windows-build (solo para bajarlo la primera vez)
 sudo docker run -it --rm -v ${PWD}:/project hackash/electron-windows-build
 npm run windows-from-docker --> en este caso (windows-from-docker)
+
+
+Post-Build... 
+777 dist, y despues borrar www/boostrap/cache/config.php

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,17 +12,10 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(['password.request' => false, 'password.reset' => false]);
-
-Route::group(['middleware' => 'auth'], function () {
-    //
-});
-
-
+Auth::routes();
 
 Route::get('/', 'FacturaController@index');
 Route::get('/home', 'FacturaController@index');
 Route::resource('factura', 'FacturaController');
 Route::resource('compras', 'LibroCompraController');
 Route::resource('ventas', 'LibroVentaController');
-
