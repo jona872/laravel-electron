@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\LibroCompra;
 use Illuminate\Http\Request;
 
-class LibroCompraController extends Controller
+class ResumenesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class LibroCompraController extends Controller
      */
     public function index()
     {
-        return view('compras.index');
+        return view('resumenes.index');
     }
 
     /**
@@ -24,7 +23,7 @@ class LibroCompraController extends Controller
      */
     public function create()
     {
-        return view('compras.create');
+        //
     }
 
     /**
@@ -41,10 +40,10 @@ class LibroCompraController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\LibroCompra  $libroCompra
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(LibroCompra $libroCompra)
+    public function show($id)
     {
         //
     }
@@ -52,10 +51,10 @@ class LibroCompraController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\LibroCompra  $libroCompra
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(LibroCompra $libroCompra)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +63,10 @@ class LibroCompraController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\LibroCompra  $libroCompra
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LibroCompra $libroCompra)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +74,10 @@ class LibroCompraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\LibroCompra  $libroCompra
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LibroCompra $libroCompra)
+    public function destroy($id)
     {
         //
     }

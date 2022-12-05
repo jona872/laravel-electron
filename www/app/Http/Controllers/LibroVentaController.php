@@ -14,7 +14,7 @@ class LibroVentaController extends Controller
      */
     public function index()
     {
-        return view('Venta.index');
+        return view('ventas.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class LibroVentaController extends Controller
      */
     public function create()
     {
-        //
+        return view('ventas.create');
     }
 
     /**

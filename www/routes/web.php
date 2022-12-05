@@ -16,6 +16,10 @@ Auth::routes();
 
 Route::get('/', 'FacturaController@index');
 Route::get('/home', 'FacturaController@index');
+
+//========= RESOURCES =========
 Route::resource('factura', 'FacturaController');
 Route::resource('compras', 'LibroCompraController');
 Route::resource('ventas', 'LibroVentaController');
+Route::resource('resumenes', 'ResumenesController');
+Route::resource('clientes', 'UserController');

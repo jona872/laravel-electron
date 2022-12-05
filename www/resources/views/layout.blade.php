@@ -13,7 +13,6 @@
    <link rel="stylesheet" href="{{ asset('css/layout.css')}}">
    @stack('styles')
 
-
 </head>
 
 <body>
@@ -27,7 +26,6 @@
 
 
    @yield('scripts')
-
    <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
 </body>
 
