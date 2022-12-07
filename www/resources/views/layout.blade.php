@@ -11,6 +11,7 @@
 
    <!-- IMPORTANTE -->
    <link rel="stylesheet" href="{{ asset('css/layout.css')}}">
+   <link rel="stylesheet" href="{{ asset('css/bootstrap-icons/font/bootstrap-icons.css')}}">
    @stack('styles')
 
 </head>

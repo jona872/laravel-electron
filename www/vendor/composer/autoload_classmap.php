@@ -18,6 +18,7 @@ return array(
     'App\\Http\\Controllers\\Auth\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ResetPasswordController.php',
     'App\\Http\\Controllers\\Auth\\VerificationController' => $baseDir . '/app/Http/Controllers/Auth/VerificationController.php',
     'App\\Http\\Controllers\\ClienteController' => $baseDir . '/app/Http/Controllers/ClienteController.php',
+    'App\\Http\\Controllers\\ClienteUsuarioController' => $baseDir . '/app/Http/Controllers/ClienteUsuarioController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\FacturaController' => $baseDir . '/app/Http/Controllers/FacturaController.php',
     'App\\Http\\Controllers\\LibroCompraController' => $baseDir . '/app/Http/Controllers/LibroCompraController.php',

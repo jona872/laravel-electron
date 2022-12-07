@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-Resumenes
+<h1>Resumenes</h1>
 <a href="/" role="button" class="btn">
     Volver
 </a>

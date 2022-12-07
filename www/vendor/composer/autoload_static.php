@@ -426,6 +426,7 @@ class ComposerStaticInitdd6a6606f76b33321b31e98197788f7e
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\ClienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteController.php',
+        'App\\Http\\Controllers\\ClienteUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteUsuarioController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\FacturaController' => __DIR__ . '/../..' . '/app/Http/Controllers/FacturaController.php',
         'App\\Http\\Controllers\\LibroCompraController' => __DIR__ . '/../..' . '/app/Http/Controllers/LibroCompraController.php',

@@ -19,11 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/listado-facturas', 'FacturaController@getFacturas');
-// //UPDATE->PUT-> Form/url encoded postman
-Route::put('/factura-editar/{id}', 'FacturaController@update');
+
+// //UPDATE->PUT-> Form/url encoded postman (si uso api/v1/... no es necesario modificar estos metodos)
+//Route::put('/factura-editar/{id}', 'FacturaController@update');
+//Route::put('/cliente-editar/{id}', 'ClienteController@update');
 
 
 // //RESOURCES API  
 Route::apiResources([
-    'facturas' => 'FacturaController',
+    '/v1/facturas' => 'FacturaController',
+    '/v1/clientes' => 'ClienteController',
 ]);

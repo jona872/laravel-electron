@@ -20,6 +20,7 @@ class CreateFacturasTable extends Migration
             
             $table->bigInteger('sender_id')->unsigned()->index()->nullable();
             $table->foreign('sender_id')->references('id')->on('users');
+            
             $table->bigInteger('receiver_id')->unsigned()->index()->nullable();
             $table->foreign('receiver_id')->references('id')->on('users');
             

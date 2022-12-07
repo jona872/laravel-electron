@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Auth;
 */
 Auth::routes();
 
-Route::get('/', 'FacturaController@index');
-Route::get('/home', 'FacturaController@index');
+Route::get('/', 'Auth\LoginController@showLoginForm');
+Route::get('/home', 'ClienteController@index');
+
+
+Route::get('clientes/{id}/romper', 'ClienteController@romper');
+
 
 //========= RESOURCES =========
-Route::resource('facturas', 'FacturaController');
+// Route::resource('facturas', 'FacturaController');
 Route::resource('compras', 'LibroCompraController');
 Route::resource('ventas', 'LibroVentaController');
 Route::resource('resumenes', 'ResumenesController');
-Route::resource('clientes', 'UserController');
+Route::resource('clientes', 'ClienteController');

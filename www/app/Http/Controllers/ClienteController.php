@@ -13,37 +13,61 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        if ( Auth::user() ) {
-            $clientes = Cliente::all()->except(Auth::id());
-            
+        // if ( Auth::user() ) {
+        //     $clientes = Cliente::all()->except(Auth::id());
+
+        //     return view('clientes.index', compact('clientes'));
+        // }
+        // else {
+        //     return redirect()->route('login')->withErrors('Solo docentes pueden acceder al panel!');
+        // }
+        try {
+            $clientes = DB::table('clientes')->get();
+
+            $clientes = DB::table('clientes')
+                ->select('clientes.*')
+                ->join('cliente_usuario', 'clientes.id', '=', 'cliente_usuario.cliente_id')
+                ->where('cliente_usuario.user_id', Auth::user()->id)
+                ->get();
+
             return view('clientes.index', compact('clientes'));
-        }
-        else {
-            return redirect()->route('login')->withErrors('Solo docentes pueden acceder al panel!');
+            // return response()->json([
+            //     'value'  => $clientes,
+            //     'status' => 'success',
+            //     'message' => 'Clientes Listed Successfully !!'
+            // ]);
+
+        } catch (Exception $e) {
+            return [
+                'value'  => [],
+                'status' => 'error',
+                'message'   => $e->getMessage()
+            ];
         }
     }
 
     public function create()
     {
-        //
+        return view('clientes.create');
     }
 
     public function store(Request $request)
     {
+        //dd($request->all());
         try {
             $cliente = Cliente::create($request->all());
 
             $cu = new Cliente_Usuario();
             $cu->cliente_id = $cliente->id;
-            $cu->user_id = Auth::user()->id;
+            $cu->user_id = 1;
             $cu->save();
 
-            return response()->json([
-                'value'  => [$cliente,$cu],
-                'status' => 'success',
-                'message' => 'Cliente created Successfully !!'
-            ]);
-            //return redirect()->route('home')->with('success', 'Cliente agregados correctamente');
+            // return response()->json([
+            //     'value'  => [$cliente, $cu],
+            //     'status' => 'success',
+            //     'message' => 'Cliente created Successfully !!'
+            // ]);
+            return redirect()->route('clientes.index')->with('success', 'Cliente agregados correctamente!');
         } catch (Exception $e) {
             return [
                 'value'  => [],
@@ -64,13 +88,75 @@ class ClienteController extends Controller
         //
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Cliente $cliente)
     {
-        //
+        try {
+            $cliente = Cliente::find($request->id);
+            if ($cliente) {
+                $cliente->update($request->all());
+            }
+            // return redirect()->route('facturas.index')->with('success', 'Cliente editada correctamente!');
+            return response()->json([
+                'value'  => $cliente,
+                'status' => 'success',
+                'message' => 'Cliente Updated Successfully !!'
+            ]);
+        } catch (Exception $e) {
+            return [
+                'value'  => [],
+                'status' => 'error',
+                'message'   => $e->getMessage()
+
+            ];
+        }
     }
 
     public function destroy($id)
     {
-        //
+        try {
+            $cliente = Cliente::find($id);
+            //cascade
+            $cu = Cliente_Usuario::where('cliente_id', '=', $cliente->id)->firstOrFail();
+            
+            $cu->delete();
+
+            if ($cliente) {
+                $cliente->delete();
+            }
+            return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
+            // return response()->json([
+            //     'value'  => [$cliente, $cu],
+            //     'status' => 'success',
+            //     'message' => 'Cliente Completely Deleted Successfully !!'
+            // ]);
+        } catch (Exception $e) {
+            return [
+                'value'  => [],
+                'status' => 'error',
+                'message'   => $e->getMessage()
+
+            ];
+        }
+    }
+
+    public function romper($id)
+    {
+        try {
+            $cliente = Cliente::find($id);
+            $cu = Cliente_Usuario::where('cliente_id', '=', $cliente->id)->firstOrFail();
+            $cu->delete();
+
+            if ($cliente) {
+                $cliente->delete();
+            }
+            return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
+        } catch (Exception $e) {
+            return [
+                'value'  => [],
+                'status' => 'error',
+                'message'   => $e->getMessage()
+
+            ];
+        }
     }
 }

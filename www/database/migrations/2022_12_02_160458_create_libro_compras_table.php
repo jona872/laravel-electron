@@ -15,6 +15,18 @@ class CreateLibroComprasTable extends Migration
     {
         Schema::create('libro_compras', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code')->nullable();
+            $table->string('type')->nullable();
+
+            $table->bigInteger('receiver_id')->unsigned()->index()->nullable();
+            $table->foreign('receiver_id')->references('id')->on('users');
+
+            $table->bigInteger('sender_id')->unsigned()->index()->nullable();
+            $table->foreign('sender_id')->references('id')->on('clientes');
+
+            $table->float('iva')->nullable();
+            $table->float('subtotal')->nullable();
+            $table->float('total')->nullable();
             $table->timestamps();
         });
     }
