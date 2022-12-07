@@ -7,6 +7,7 @@ Resumenes
 </a>
 
 <div>
+{{Auth::user()->name}}
     <ul>
         @if (count($clientes ?? '') > 0)
         @foreach ($clientes ?? '' as $u)

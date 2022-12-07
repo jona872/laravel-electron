@@ -6,7 +6,7 @@
 <a href="/" role="button" class="btn">
   <- Volver </a>
     <br>
-
+    
     <div>
       <div>
         <ul>
@@ -28,4 +28,6 @@
         </ul>
       </div>
     </div>
+
+
 @endsection
