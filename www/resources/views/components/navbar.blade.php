@@ -4,7 +4,7 @@
     <div class="dropdown">
         <button class="nav--btn">Clientes</button>
         <div class="dropdown-content">
-            <a href="#">Agregar Cliente</a>
+            <a href="/clientes/create">Agregar Cliente</a>
             <a href="/clientes">Listado de Clientes</a>
         </div>
     </div>
@@ -12,7 +12,7 @@
     <div class="dropdown">
         <button class="nav--btn">Compras</button>
         <div class="dropdown-content">
-            <a href="/compras">Agregar Compras</a>
+            <a href="/compras/create">Agregar Compras</a>
             <a href="/compras">Listado de Compras</a>
         </div>
     </div>

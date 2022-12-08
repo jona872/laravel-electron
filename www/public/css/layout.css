@@ -9,7 +9,31 @@
     --nav-btn: #a6e1fa;
     --nav-btn-hover: #1DABD2;
     --nav-a-hover: #f1f1f1;
-    
+
+    --icon: #000;
+    --icon-blue: blue;
+
+    --bg: #fff;
+    --hover: #777;
+
+
+
+    /* ### Primary  */
+    /* - Soft blue: hsl(215, 51%, 70%)  */
+    --sBlue: hsl(215, 51%, 70%);
+    /* Cyan: hsl(178, 100%, 50%)  */
+    --cyan: hsl(178, 100%, 50%);
+
+    /* ### Neutral */
+    /* - Very dark blue (main BG): hsl(217, 54%, 11%) */
+    --vdBlue-main: hsl(217, 54%, 11%);
+    /* Very dark blue (card BG): hsl(216, 50%, 16%) */
+    --vdBlue-card: hsl(216, 50%, 16%);
+    /* - Very dark blue (line): hsl(215, 32%, 27%) */
+    --vdBlue-line: hsl(215, 32%, 27%);
+    /* Pure White: hsl(0, 0%, 100%) */
+    --pWhite: hsl(0, 0%, 100%);
+
 }
 
 body {
@@ -66,4 +90,58 @@ nav {
 
 .dropdown:hover .nav--btn {
     background-color: var(--nav-btn-hover);
+}
+
+.main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg);
+    padding: 1rem;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.card {
+    padding: 1rem 0;
+    width: 80%;
+    background: aliceblue;
+    box-shadow: 0px 2px 11px 3px rgba(112,100,100,0.76);
+    -webkit-box-shadow: 0px 2px 11px 3px rgba(112,100,100,0.76);
+    -moz-box-shadow: 0px 2px 11px 3px rgba(112,100,100,0.76);
+}
+
+.card--row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.card--row--item {
+    width: 50%;
+}
+
+.card-label {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card-input {
+    display: flex;
+    justify-content: flex-start;    
+}
+
+.card--btn {
+    display: flex;
+    justify-content: center;    
 }

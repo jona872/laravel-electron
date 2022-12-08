@@ -69,12 +69,13 @@ class ClienteController extends Controller
             // ]);
             return redirect()->route('clientes.index')->with('success', 'Cliente agregados correctamente!');
         } catch (Exception $e) {
-            return [
-                'value'  => [],
-                'status' => 'error',
-                'message'   => $e->getMessage()
+            // return [
+            //     'value'  => [],
+            //     'status' => 'error',
+            //     'message'   => $e->getMessage()
 
-            ];
+            // ];
+            return redirect()->back()->withErrors($e->getMessage());
         }
     }
 
@@ -85,7 +86,26 @@ class ClienteController extends Controller
 
     public function edit($id)
     {
-        //
+        try {
+            $cliente = Cliente::find($id);
+            if ($cliente) {
+                return view('clientes.edit', compact('cliente'));
+            }
+            // return redirect()->route('facturas.index')->with('success', 'Cliente editada correctamente!');
+            // return response()->json([
+            //     'value'  => $cliente,
+            //     'status' => 'success',
+            //     'message' => 'Cliente Updated Successfully !!'
+            // ]);
+        } catch (Exception $e) {
+            // return [
+            //     'value'  => [],
+            //     'status' => 'error',
+            //     'message'   => $e->getMessage()
+
+            // ];
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
     public function update(Request $request, Cliente $cliente)
@@ -95,19 +115,20 @@ class ClienteController extends Controller
             if ($cliente) {
                 $cliente->update($request->all());
             }
-            // return redirect()->route('facturas.index')->with('success', 'Cliente editada correctamente!');
-            return response()->json([
-                'value'  => $cliente,
-                'status' => 'success',
-                'message' => 'Cliente Updated Successfully !!'
-            ]);
-        } catch (Exception $e) {
-            return [
-                'value'  => [],
-                'status' => 'error',
-                'message'   => $e->getMessage()
 
-            ];
+            return redirect()->route('clientes.index')->with('success', 'Cliente editado correctamente!');
+            // return response()->json([
+            //     'value'  => $cliente,
+            //     'status' => 'success',
+            //     'message' => 'Cliente Updated Successfully !!'
+            // ]);
+        } catch (Exception $e) {
+            // return [
+            //     'value'  => [],
+            //     'status' => 'error',
+            //     'message'   => $e->getMessage()
+            // ];
+            return redirect()->back()->withErrors($e->getMessage());
         }
     }
 
@@ -117,7 +138,7 @@ class ClienteController extends Controller
             $cliente = Cliente::find($id);
             //cascade
             $cu = Cliente_Usuario::where('cliente_id', '=', $cliente->id)->firstOrFail();
-            
+
             $cu->delete();
 
             if ($cliente) {

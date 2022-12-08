@@ -12,18 +12,21 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
-Route::get('/', 'Auth\LoginController@showLoginForm');
-Route::get('/home', 'ClienteController@index');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', 'Auth\LoginController@showLoginForm');
+    Route::get('/home', 'ClienteController@index');
 
 
-Route::get('clientes/{id}/romper', 'ClienteController@romper');
+    Route::get('clientes/{id}/romper', 'ClienteController@romper');
 
 
-//========= RESOURCES =========
-// Route::resource('facturas', 'FacturaController');
-Route::resource('compras', 'LibroCompraController');
-Route::resource('ventas', 'LibroVentaController');
-Route::resource('resumenes', 'ResumenesController');
-Route::resource('clientes', 'ClienteController');
+    //========= RESOURCES =========
+    // Route::resource('facturas', 'FacturaController');
+    Route::resource('compras', 'LibroCompraController');
+    Route::resource('ventas', 'LibroVentaController');
+    Route::resource('resumenes', 'ResumenesController');
+    Route::resource('clientes', 'ClienteController');
+});
