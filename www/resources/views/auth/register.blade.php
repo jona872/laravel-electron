@@ -3,6 +3,10 @@
 @section('content')
 
 <div class="card">
+  <div class="card--row">
+    <h2>Registrar Nuevo Usuario</h2>
+  </div>
+
   <form method="POST" action="{{ route('register') }}">
     @csrf
 
