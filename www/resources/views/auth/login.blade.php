@@ -1,72 +1,58 @@
 @extends('layout')
 
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-        <div class="card-header">{{ __('Login') }}</div>
+<div class="card">
+  <div class="card--row">
+    <h2>Ingresar al sistema</h2>
+  </div>
 
-        <div class="card-body">
-          <form method="POST" action="{{ route('login') }}">
-            @csrf
+  <form method="POST" action="{{ route('login') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @csrf
+    <div class="card--row">
+      <label for="email" class="card--row--item card--label">E-Mail</label>
 
-            <div class="form-group row">
-              <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-              <div class="col-md-6">
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-              <div class="col-md-6">
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                @error('password')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-md-6 offset-md-4">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                  <label class="form-check-label" for="remember">
-                    {{ __('Recordarme') }}
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group row mb-0">
-              <div class="col-md-8 offset-md-4">
-                <button type="submit" class="btn btn-primary">
-                  {{ __('Entrar') }}
-                </button>
-
-                @if (Route::has('register'))
-                <a class="btn btn-primary" href="{{ route('register') }}">{{ __('Register') }}</a>
-                @endif
-              </div>
-
-            </div>
-          </form>
-
-        </div>
+      <div class="card--row--item card--input">
+        <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+        @error('email')
+        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        @enderror
       </div>
     </div>
-  </div>
+
+    <div class="card--row">
+      <label for="password" class="card--row--item card--label">Contraseña</label>
+
+      <div class="card--row--item card--input">
+        <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="password" autofocus>
+        @error('password')
+        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        @enderror
+      </div>
+    </div>
+
+    <div class="card--row">
+      <input class="card--label" type="checkbox" name="remember" id="remember" value="{{ old('remember') ? 'checked' : '' }}">
+      <label class="card--input" for="remember"> Recordarme </label>
+    </div>
+
+    <div class="card--row">
+      <div class="card--row--item card--label">
+        <button type="submit" class="card--btn"> Entrar </button>
+      </div>
+      @if (Route::has('register'))
+      <div class="card--row--item card--input">
+        <button class="card--btn">
+          <a href="{{ route('register') }}">{{ __('Register') }}</a>
+        </button>
+      </div>
+      @endif
+
+    </div>
+
+  </form>
 </div>
+
 @endsection
