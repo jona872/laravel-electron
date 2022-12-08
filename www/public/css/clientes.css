@@ -2,6 +2,12 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    text-decoration: none;
+
+}
+
+a, a:visited {
+    color: inherit;
 }
 
 :root {
@@ -42,9 +48,9 @@ table {
     table-layout: fixed;
     overflow: scroll;
     width: 100%;
-    box-shadow: 0px 2px 11px 3px rgba(112,100,100,0.76);
-    -webkit-box-shadow: 0px 2px 11px 3px rgba(112,100,100,0.76);
-    -moz-box-shadow: 0px 2px 11px 3px rgba(112,100,100,0.76);
+    box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);
+    -webkit-box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);
+    -moz-box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);
 }
 
 td,
@@ -90,6 +96,7 @@ tr:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .header-btn {
@@ -106,4 +113,12 @@ tr:hover {
 
 .header-left {
     justify-content: flex-start;
+}
+
+.centered-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
