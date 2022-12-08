@@ -8,14 +8,15 @@
     <h2>Ingresar al sistema</h2>
   </div>
 
-  <form method="POST" action="{{ route('login') }}">
+  <form method="POST" action="{{ route('login') }}" class="card--form">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @csrf
+
     <div class="card--row">
       <label for="email" class="card--row--item card--label">E-Mail</label>
 
       <div class="card--row--item card--input">
-        <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+        <input id="email" type="email" name="email" value="{{ old('email') }}" required title="Por favor complete este campo">
         @error('email')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
@@ -26,7 +27,7 @@
       <label for="password" class="card--row--item card--label">Contraseña</label>
 
       <div class="card--row--item card--input">
-        <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="password" autofocus>
+        <input id="password" type="password" name="password" value="{{ old('password') }}" required title="Por favor complete este campo">
         @error('password')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror

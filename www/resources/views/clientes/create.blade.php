@@ -5,107 +5,126 @@
 
 @section('content')
 
-<main class="main">
-	<div class="container">
+
+<h1 class="title--header">
+	<a href="/" role="button" class="row--centered">
+		<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+			<path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
+		</svg>
+		<span>Clientes</span>
+	</a>
+</h1>
+
+<div class="card">
+
+	<div class="card--row">
+		<h2>Creando cliente para el usuario: {{ Auth::user()->name }}</h2>
+	</div>
 
 	@if ($errors->any())
-		<div class="alert alert-danger">
-			<ul>
-				@foreach ($errors->all() as $error)
-				<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div>
-		@endif
-		
-		<h1>
-			<a href="/" role="button" class="header-btn header-left">
-				<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-					<path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
-				</svg>Clientes
-			</a>
-		</h1>
+	<div class="invalid-feedback">
+		<ul>
+			@foreach ($errors->all() as $error)
+			<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+	</div>
+	@endif
 
 
+	<form action="{{ route('clientes.store') }}" method="POST" class="card--form">
+		@csrf
 
-		<div class="container-xl">
-			<div class="card">
-				<form action="{{ route('clientes.store') }}" method="POST" class="form-horizontal form-create">
-					@csrf
-					<div class="card-header">
-						<i class="fa fa-plus"></i> CREAR CLIENTE para el usuario: {{ Auth::user()->name }}
-					</div>
+		<div class="card--row">
+			<label for="name" class="card--row--item card--label">Nombre del Cliente</label>
 
-					<div class="card-body">
-
-						<div class="form-group row align-items-center has-success">
-							<label for="name" class="col-form-label text-md-right col-md-3">
-								<strong> Nombre del Cliente </strong>
-							</label>
-							<div class="col-md-9 col-xl-7">
-								<input type="text" id="name" name="name" class="form-control form-control-success" aria-required="true" aria-invalid="false" value="Cliente">
-							</div>
-						</div>
-
-						<div class="form-group row align-items-center has-success">
-							<label for="cuit" class="col-form-label text-md-right col-md-3">
-								<strong> CUIT </strong>
-							</label>
-							<div class="col-md-9 col-xl-7">
-								<input type="text" id="cuit" name="cuit" class="form-control form-control-success" aria-required="true" aria-invalid="false" value="12-35706608-1">
-							</div>
-						</div>
-
-						<div class="form-group row align-items-center has-success">
-							<label for="condition" class="col-form-label text-md-right col-md-3">
-								<strong> Condicion </strong>
-							</label>
-							<div class="col-md-9 col-xl-7">
-								<input type="text" id="condition" name="condition" class="form-control form-control-success" aria-required="true" aria-invalid="false" value="Inscripto">
-							</div>
-						</div>
-
-						<div class="form-group row align-items-center has-success">
-							<label for="direction" class="col-form-label text-md-right col-md-3">
-								<strong> Direccion </strong>
-							</label>
-							<div class="col-md-9 col-xl-7">
-								<input type="text" id="direction" name="direction" class="form-control form-control-success" aria-required="true" aria-invalid="false" value="Av. Almafuertes 4777">
-							</div>
-						</div>
-
-						<div class="form-group row align-items-center has-success">
-							<label for="activity_start" class="col-form-label text-md-right col-md-3">
-								<strong> Inicio de Actividades </strong>
-							</label>
-							<div class="col-md-9 col-xl-7">
-								<input type="text" id="activity_start" name="activity_start" class="form-control form-control-success" aria-required="true" aria-invalid="false" value="12/12/2020">
-							</div>
-						</div>
-
-						<div class="form-group row align-items-center has-success">
-							<label for="gross_receipts_tax" class="col-form-label text-md-right col-md-3">
-								<strong> Ingresos Brutos </strong>
-							</label>
-							<div class="col-md-9 col-xl-7">
-								<input type="text" id="gross_receipts_tax" name="gross_receipts_tax" class="form-control form-control-success" aria-required="true" aria-invalid="false" value="{{ Auth::user()->name }}">
-							</div>
-						</div>
-
-
-						<div class="col-xs-12 col-sm-12 col-md-12 text-center">
-							<a class="btn btn-danger" href="{{ route('clientes.index') }}">
-								<i class="fa fa-ban"></i> Cancelar</a>
-							<button type="submit" class="btn btn-primary">
-								<i class="fa fa-download"></i> Guardar
-							</button>
-						</div>
-
-
-					</div>
-				</form>
+			<div class="card--row--item card-input">
+				<input id="name" type="text" name="name" value="{{ old('name') }}" autocomplete="name" autofocus>
+				@error('name')
+				<span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+				@enderror
 			</div>
-</main>
+		</div>
+
+
+		<div class="card--row">
+			<label for="cuit" class="card--row--item card--label">CUIT</label>
+
+			<div class="card--row--item card-input">
+				<input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" required autocomplete="cuit" oninvalid="this.setCustomValidity('Esta campo en requerido!')">
+				@error('cuit')
+				<span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+				@enderror
+			</div>
+		</div>
+
+
+		<div class="card--row">
+			<label for="condition" class="card--row--item card--label">Condicion</label>
+
+			<div class="card--row--item card-input">
+				<input id="condition" type="text" name="condition" value="{{ old('condition') }}" required autocomplete="condition">
+				@error('condition')
+				<span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+				@enderror
+			</div>
+		</div>
+
+		<div class="card--row">
+			<label for="direction" class="card--row--item card--label">Direccion</label>
+
+			<div class="card--row--item card-input">
+				<input id="direction" type="text" name="direction" value="{{ old('direction') }}" required autocomplete="direction">
+				@error('direction')
+				<span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+				@enderror
+			</div>
+		</div>
+
+		<div class="card--row">
+			<label for="activity_start" class="card--row--item card--label">Fecha de Inicio de Actividades</label>
+
+			<div class="card--row--item card-input">
+				<input id="activity_start" type="text" name="activity_start" value="{{ old('activity_start') }}" required autocomplete="activity_start">
+				@error('activity_start')
+				<span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+				@enderror
+			</div>
+		</div>
+
+		<div class="card--row">
+			<label for="gross_receipts_tax" class="card--row--item card--label">Ingresos Brutos</label>
+
+			<div class="card--row--item card-input">
+				<input id="gross_receipts_tax" type="text" name="gross_receipts_tax" value="{{ old('gross_receipts_tax') }}" required autocomplete="gross_receipts_tax">
+				@error('gross_receipts_tax')
+				<span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+				@enderror
+			</div>
+		</div>
+
+
+		<div class="card--row">
+			<div class="card--row--item card--label">
+				<button class="card--btn">
+					<a href="{{ route('clientes.index') }}">{{ __('Cancelar') }}</a>
+				</button>
+			</div>
+
+			<div class="card--row--item card--input">
+				<button type="submit" class="card--btn"> Guardar </button>
+			</div>
+
+		</div>
+
+
+
+
+
+
+	</form>
+
+</div>
 
 
 @endsection

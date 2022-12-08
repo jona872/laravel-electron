@@ -25,10 +25,10 @@ class CreateClienteUsuarioTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('cliente_usuario', function($table){
-            $table->foreign()->references("id")->on("clientes")->onDelete("cascade");
-            $table->foreign()->references("id")->on("users")->onDelete("cascade");
-        }) ;
+        // Schema::table('cliente_usuario', function($table){
+        //     $table->foreign()->references("id")->on("clientes")->onDelete("cascade");
+        //     $table->foreign()->references("id")->on("users")->onDelete("cascade");
+        // }) ;
     }
 
     /**
