@@ -94,30 +94,11 @@
             @endforeach
             @else
             <tr>
-                <td align="center" colspan="5"> No se encontraron ventas </td>
+                <td align="center" colspan="18"> No se encontraron ventas </td>
             </tr>
             @endif
         </table>
     </div>
 </main>
-
-<table>
-  <tr>
-    <td><div>one</div></td>
-    <td><div>two</div></td>
-    <td><div>three</div></td>
-  </tr>
-  <tr>
-    <td><div>four</div></td>
-    <td><div>five</div></td>
-    <td><div>six</div></td>        
-  </tr>
-  <tr>
-    <td><div>seven</div></td>
-    <td><div>eight</div></td>
-    <td><div>nine</div></td>       
-  </tr>   
-</table>
-
 
 @endsection

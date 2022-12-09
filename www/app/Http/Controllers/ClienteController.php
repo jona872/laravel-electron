@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Cliente;
 use App\Cliente_Usuario;
 use Exception;
+use Facade\FlareClient\Http\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -171,6 +172,26 @@ class ClienteController extends Controller
                 $cliente->delete();
             }
             return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
+        } catch (Exception $e) {
+            return [
+                'value'  => [],
+                'status' => 'error',
+                'message'   => $e->getMessage()
+
+            ];
+        }
+    }
+
+    public function listAll()
+    {
+        try {
+            $clientes = Cliente::all();
+
+            return response()->json([
+                'value'  => $clientes,
+                'status' => 'success',
+                'message' => 'Cliente Added Successfully !!'
+            ]);
         } catch (Exception $e) {
             return [
                 'value'  => [],

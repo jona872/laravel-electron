@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/export-ventas', 'LibroVentaController@exportVentas');
 
     Route::get('clientes/{id}/romper', 'ClienteController@romper');
+    Route::get('clientes/listado', 'ClienteController@listAll');
 
 
     //========= RESOURCES =========
