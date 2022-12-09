@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm');
     Route::get('/home', 'ClienteController@index');
 
+    Route::get('/export-ventas', 'LibroVentaController@exportVentas');
 
     Route::get('clientes/{id}/romper', 'ClienteController@romper');
 

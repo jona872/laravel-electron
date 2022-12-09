@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use League\Csv\Writer;
+use League\Csv\Reader;
+
+use SplTempFileObject;
+use SplFileObject;
+use SplFileInfo;
+
 class LibroVentaController extends Controller
 {
     /**
@@ -101,5 +108,27 @@ class LibroVentaController extends Controller
     public function destroy(LibroVenta $libroVenta)
     {
         //
+    }
+
+    public function exportVentas()
+    {
+        // $tmp = new Factura();
+
+        // $tmp->code = Str::random(10);
+        // $tmp->save();
+
+        $ventas = DB::table('libro_ventas')->get(); //me dev un array de obj, $v->value
+        // $ventas = LibroVenta::all(); //me dev un array de arrays, $v['value']
+        //$ventas = LibroVenta::find(1);
+        // dd($ventas);
+        
+        $csv = Writer::createFromFileObject(new SplTempFileObject());
+        $csv->insertOne(['id','sender_id','receiver_id','fecha', 'pto_venta', 'codigo', 'tipo_comprobante','nombre' ,'cuit', 'condicion', 'neto', 'iva','iva_liquidado','iva_sobretasa', 'percepcion','iva_retencion','conceptos_no_gravados', 'ingresos_exentos','ganancias_retencion','total','tipo_op']);
+        foreach ($ventas as $key => $f) {
+            //dd(get_object_vars($f));
+            $csv->insertOne(get_object_vars($f));
+        }
+        //descarga
+        $csv->output('ventas.csv');
     }
 }

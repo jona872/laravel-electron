@@ -30,6 +30,7 @@ class CreateLibroVentasTable extends Migration
             $table->string('tipo_comprobante')->nullable();
             
             //datos del vendedor ============================
+            $table->string('nombre')->nullable();
             $table->string('cuit')->nullable();
             $table->string('condicion')->nullable();
             //===============================================
