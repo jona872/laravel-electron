@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\LibroVenta;
+use Exception;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class LibroVentaController extends Controller
 {
@@ -14,7 +18,23 @@ class LibroVentaController extends Controller
      */
     public function index()
     {
-        return view('ventas.index');
+        try {
+            $ventas = DB::table('libro_ventas')->get();
+
+            // $clientes = DB::table('libro_ventas')
+            //     ->select('libro_ventas.*')
+            //     ->join('cliente_usuario', 'clientes.id', '=', 'cliente_usuario.cliente_id')
+            //     ->where('cliente_usuario.user_id', Auth::user()->id)
+            //     ->get();
+
+            return view('ventas.index', compact('ventas'));
+        } catch (Exception $e) {
+            return [
+                'value'  => [],
+                'status' => 'error',
+                'message'   => $e->getMessage()
+            ];
+        }
     }
 
     /**

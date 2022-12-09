@@ -29,4 +29,5 @@ Route::get('/listado-facturas', 'FacturaController@getFacturas');
 Route::apiResources([
     '/v1/facturas' => 'FacturaController',
     '/v1/clientes' => 'ClienteController',
+    '/v1/ventas' => 'LibroVentaController',
 ]);
