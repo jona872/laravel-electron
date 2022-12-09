@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class LibroVentaSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class LibroVentaSeeder extends Seeder
         DB::table('libro_ventas')->insert([
             'sender_id' => 1,
             'receiver_id' => 1,
-            'fecha' => Str::random(10),
+            'fecha' => Carbon::create('2000', '01', '01'),
             'pto_venta' => Str::random(10),
             'codigo' => Str::random(10),
             'tipo_comprobante' => Str::random(10),

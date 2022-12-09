@@ -20,7 +20,7 @@
     <div class="dropdown">
         <button class="nav--btn">Ventas</button>
         <div class="dropdown-content">
-            <a href="/ventas">Agregar Venta</a>
+            <a href="/ventas/create">Agregar Venta</a>
             <a href="/ventas">Listado de Ventas</a>
         </div>
     </div>
