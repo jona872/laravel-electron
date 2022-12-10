@@ -1,7 +1,12 @@
+html {
+   width: fit-content;
+}
+
 table {
    margin-top: 1rem;
    overflow: scroll;
    width: 100%;
+   /* display: block; */
    box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);
    -webkit-box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);
    -moz-box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);

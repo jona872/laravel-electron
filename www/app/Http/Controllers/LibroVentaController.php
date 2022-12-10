@@ -28,12 +28,6 @@ class LibroVentaController extends Controller
         try {
             $ventas = DB::table('libro_ventas')->get();
 
-            // $clientes = DB::table('libro_ventas')
-            //     ->select('libro_ventas.*')
-            //     ->join('cliente_usuario', 'clientes.id', '=', 'cliente_usuario.cliente_id')
-            //     ->where('cliente_usuario.user_id', Auth::user()->id)
-            //     ->get();
-
             return view('ventas.index', compact('ventas'));
         } catch (Exception $e) {
             return [
@@ -44,77 +38,76 @@ class LibroVentaController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('ventas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) //floatval()
-    {
-        dd(floatval($request->tipo_op));
-        dd($request->all());
+    {        
+        //dd($request->all() + ['sender_id' => '1'] + ['receiver_id' => '1']);
+        // dd(floatval($request->tipo_op));
+        try {
+            // User::create($request->all() + ['index' => 'value']);
+            $venta = LibroVenta::create($request->all() + ['sender_id' => '1'] + ['receiver_id' => '1']);
+            return redirect()->route('ventas.index')->with('success', 'LibroVenta agregados correctamente!');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\LibroVenta  $libroVenta
-     * @return \Illuminate\Http\Response
-     */
     public function show(LibroVenta $libroVenta)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\LibroVenta  $libroVenta
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LibroVenta $libroVenta)
+    public function edit($id)
     {
-        //
+        try {
+            $venta = LibroVenta::find($id);
+            if ($venta) {
+                return view('ventas.edit', compact('venta'));
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\LibroVenta  $libroVenta
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, LibroVenta $libroVenta)
     {
-        //
+        try {
+            $venta = LibroVenta::find($request->id);
+            if ($venta) {
+                $venta->update($request->all());
+            }
+
+            return redirect()->route('ventas.index')->with('success', 'Venta editada correctamente!');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\LibroVenta  $libroVenta
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(LibroVenta $libroVenta)
+    public function destroy($id)
     {
-        //
+        try {
+            $venta = LibroVenta::find($id);
+
+            if ($venta) {
+                $venta->delete();
+            }
+            return redirect()->route('ventas.index')->with('success', 'Venta eliminada correctamente');
+        } catch (Exception $e) {
+            return [
+                'value'  => [],
+                'status' => 'error',
+                'message'   => $e->getMessage()
+            ];
+        }
     }
 
     public function exportVentas()
     {
         $ventas = DB::table('libro_ventas')->get(); //me dev un array de obj, $v->value
-
      
         $csv = Writer::createFromFileObject(new SplTempFileObject());
      
@@ -122,7 +115,6 @@ class LibroVentaController extends Controller
         foreach ($ventas as $key => $f) {
             $csv->insertOne(get_object_vars($f));
         }
-        
         //descarga
         $csv->output('ventas.csv');
     }

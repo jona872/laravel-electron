@@ -1,5 +1,7 @@
 @extends('layout')
-
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/ventas.css')}}">
+@endpush
 
 @section('content')
 
@@ -12,28 +14,29 @@
     </a>
 </h1>
 
-
-
-<form action="{{ route('ventas.store') }}" method="POST" class="card--form">
+<form action="{{ route('ventas.update',$venta->id) }}" method="POST" class="card--form">
     @csrf
+    @method('PUT')
+    <input name="id" type="hidden" value="{{ $venta->id }}">
     <div>
         <label for="fecha"> Fecha </label>
-        <input id="fecha" type="text" name="fecha" value="{{ old('fecha') }}" />
+        <input id="fecha" type="text" name="fecha" value="{{ $venta->fecha }}" />
     </div>
 
     <div>
         <label for="pto_venta"> Pto de Venta </label>
-        <input id="pto_venta" type="text" name="pto_venta" value="{{ old('pto_venta') }}" />
+        <input id="pto_venta" type="text" name="pto_venta" value="{{ $venta->pto_venta }}" />
     </div>
 
     <div>
         <label for="codigo"> Nro Comprobante </label>
-        <input id="codigo" type="text" name="codigo" value="{{ old('codigo') }}" />
+        <input id="codigo" type="text" name="codigo" value="{{ $venta->codigo }}" />
     </div>
 
     <div>
         <label for="tipo_comprobante"> Tipo de Comprobante </label>
         <select name="tipo_comprobante" id="tipo_comprobante">
+            <option selected="selected"> {{ $venta->tipo_comprobante }} </option>
             <option value="Otros">Otros</option>
             <option value="Factura A">Factura A</option>
             <option value="Factura B">Factura B</option>
@@ -45,69 +48,69 @@
     <br>
     <div>
         <label for="codigo"> Codigo Cliente </label>
-        <input id="codigo" type="text" name="codigo" value="{{ old('codigo') }}" />
+        <input id="codigo" type="text" name="codigo" value="{{ $venta->codigo }}" />
     </div>
     <div>
         <label for="nombre"> Nombre Cliente </label>
-        <input id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" />
+        <input id="nombre" type="text" name="nombre" value="{{ $venta->nombre }}" />
     </div>
     <div>
         <label for="cuit"> CUIT </label>
-        <input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" />
+        <input id="cuit" type="text" name="cuit" value="{{ $venta->cuit }}" />
     </div>
     <div>
         <label for="condicion"> Condicion </label>
-        <input id="condicion" type="text" name="condicion" value="{{ old('condicion') }}" />
+        <input id="condicion" type="text" name="condicion" value="{{ $venta->condicion }}" />
     </div>
     <br>
     <hr>
     <br>
     <div>
         <label for="neto"> Neto </label>
-        <input id="neto" type="text" name="neto" value="{{ old('neto') }}" />
+        <input id="neto" type="text" name="neto" value="{{ $venta->neto }}" />
     </div>
     <div>
         <label for="iva"> I.V.A. </label>
-        <input id="iva" type="text" name="iva" value="{{ old('iva') }}" />
+        <input id="iva" type="text" name="iva" value="{{ $venta->iva }}" />
     </div>
     <div>
         <label for="iva_liquidado"> I.V.A. Liquidado </label>
-        <input id="iva_liquidado" type="text" name="iva_liquidado" value="{{ old('iva_liquidado') }}" />
+        <input id="iva_liquidado" type="text" name="iva_liquidado" value="{{ $venta->iva_liquidado }}" />
     </div>
     <div>
         <label for="iva_sobretasa"> Sobre Ta. I.V.A. </label>
-        <input id="iva_sobretasa" type="text" name="iva_sobretasa" value="{{ old('iva_sobretasa') }}" />
+        <input id="iva_sobretasa" type="text" name="iva_sobretasa" value="{{ $venta->iva_sobretasa }}" />
     </div>
     <div>
         <label for="percepcion"> Percepcion </label>
-        <input id="percepcion" type="text" name="percepcion" value="{{ old('percepcion') }}" />
+        <input id="percepcion" type="text" name="percepcion" value="{{ $venta->percepcion }}" />
     </div>
     <div>
         <label for="iva_retencion"> I.V.A. Retencion </label>
-        <input id="iva_retencion" type="text" name="iva_retencion" value="{{ old('iva_retencion') }}" />
+        <input id="iva_retencion" type="text" name="iva_retencion" value="{{ $venta->iva_retencion }}" />
     </div>
     <div>
         <label for="conceptos_no_gravados"> Conceptos No Gravados </label>
-        <input id="conceptos_no_gravados" type="text" name="conceptos_no_gravados" value="{{ old('conceptos_no_gravados') }}" />
+        <input id="conceptos_no_gravados" type="text" name="conceptos_no_gravados" value="{{ $venta->conceptos_no_gravados }}" />
     </div>
     <div>
         <label for="ingresos_exentos"> Ingresos Externos </label>
-        <input id="ingresos_exentos" type="text" name="ingresos_exentos" value="{{ old('ingresos_exentos') }}" />
+        <input id="ingresos_exentos" type="text" name="ingresos_exentos" value="{{ $venta->ingresos_exentos }}" />
     </div>
     <div>
         <label for="ganancias_retencion"> Retencion de Ganancias </label>
-        <input id="ganancias_retencion" type="text" name="ganancias_retencion" value="{{ old('ganancias_retencion') }}" />
+        <input id="ganancias_retencion" type="text" name="ganancias_retencion" value="{{ $venta->ganancias_retencion }}" />
     </div>
     <br>
     <hr>
     <br>
     <div>
         <label for="total"> Total </label>
-        <input id="total" type="text" step="any" name="total" value="{{ old('total') }}" />
+        <input id="total" type="text" step="any" name="total" value="{{ $venta->total }}" />
     </div>
     <div>
         <label for="tipo_op"> Tipo de Operacion </label>
-        <input id="tipo_op" type="text" step="any" name="tipo_op" value="{{ old('tipo_op') }}" />
+        <input id="tipo_op" type="text" step="any" name="tipo_op" value="{{ $venta->tipo_op }}" />
     </div>
 
     <div class="card--row">

@@ -89,6 +89,7 @@ class ClienteController extends Controller
     {
         try {
             $cliente = Cliente::find($id);
+
             if ($cliente) {
                 return view('clientes.edit', compact('cliente'));
             }
@@ -151,47 +152,6 @@ class ClienteController extends Controller
             //     'status' => 'success',
             //     'message' => 'Cliente Completely Deleted Successfully !!'
             // ]);
-        } catch (Exception $e) {
-            return [
-                'value'  => [],
-                'status' => 'error',
-                'message'   => $e->getMessage()
-
-            ];
-        }
-    }
-
-    public function romper($id)
-    {
-        try {
-            $cliente = Cliente::find($id);
-            $cu = Cliente_Usuario::where('cliente_id', '=', $cliente->id)->firstOrFail();
-            $cu->delete();
-
-            if ($cliente) {
-                $cliente->delete();
-            }
-            return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
-        } catch (Exception $e) {
-            return [
-                'value'  => [],
-                'status' => 'error',
-                'message'   => $e->getMessage()
-
-            ];
-        }
-    }
-
-    public function listAll()
-    {
-        try {
-            $clientes = Cliente::all();
-
-            return response()->json([
-                'value'  => $clientes,
-                'status' => 'success',
-                'message' => 'Cliente Added Successfully !!'
-            ]);
         } catch (Exception $e) {
             return [
                 'value'  => [],
