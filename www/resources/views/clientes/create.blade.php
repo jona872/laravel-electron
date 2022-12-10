@@ -106,13 +106,12 @@
 
 		<div class="card--row">
 			<div class="card--row--item card--label">
-				<button class="card--btn">
-					<a href="{{ route('clientes.index') }}">{{ __('Cancelar') }}</a>
-				</button>
+				<a class="btn btn--cancel a--btn" href="{{ route('clientes.index') }}">{{ __('Cancelar') }}</a>
 			</div>
 
+
 			<div class="card--row--item card--input">
-				<button type="submit" class="card--btn"> Guardar </button>
+				<button type="submit" class="btn btn--confirm"> Guardar </button>
 			</div>
 
 		</div>

@@ -1,5 +1,6 @@
 @extends('layout')
 
+
 @section('content')
 
 <h1 class="title--header">
@@ -110,11 +111,9 @@
     </div>
 
     <div class="card--row">
-        <button class="card--btn">
-            <a href="{{ route('ventas.index') }}">{{ __('Cancelar') }}</a>
-        </button>
+        <a class="btn btn--cancel a--btn" href="{{ route('ventas.index') }}">{{ __('Cancelar') }}</a>
 
-        <button type="submit" class="card--btn"> Guardar </button>
+        <button type="submit" class="btn btn--confirm"> Guardar </button>
     </div>
 
 </form>

@@ -1,27 +1,5 @@
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-
-}
-
 a, a:visited {
     color: inherit;
-}
-
-:root {
-    --nav-bg: #a6e1fa;
-    --nav-btn: #a6e1fa;
-    --nav-btn-hover: #1DABD2;
-    --nav-a-hover: #f1f1f1;
-
-    --icon: #000;
-    --icon-blue: blue;
-
-    --bg: #fff;
-    --hover: #777;
-
 }
 
 table {
