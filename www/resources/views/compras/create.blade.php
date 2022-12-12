@@ -150,7 +150,6 @@
         source: globalClientClienteCode,
         select: function(event, ui) { //ui.item -> label and value
             dataGlobal.map(element => { //element = cada obj cliente            
-                console.log(ui.item);
                 if (element.id.toString() === ui.item.value) {
                     document.getElementById("client_id").value = element.id
                     document.getElementById("name").value = element.name
@@ -166,7 +165,7 @@
         select: function(event, ui) { //ui.item -> label and value
             dataGlobal.map(element => { //element = cada obj cliente            
                 if (element.name === ui.item.value) {
-                    document.getElementById("id").value = element.id
+                    document.getElementById("client_id").value = element.id
                     document.getElementById("name").value = element.name
                     document.getElementById("cuit").value = element.cuit
                     document.getElementById("condition").value = element.condition
@@ -180,7 +179,7 @@
         select: function(event, ui) { //ui.item -> label and value
             dataGlobal.map(element => { //element = cada obj cliente
                 if (element.cuit === ui.item.value) {
-                    document.getElementById("id").value = element.id
+                    document.getElementById("client_id").value = element.id
                     document.getElementById("name").value = element.name
                     document.getElementById("cuit").value = element.cuit
                     document.getElementById("condition").value = element.condition
