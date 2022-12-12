@@ -46,58 +46,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
 
 </script>
+
+
+
 <script type="text/javascript">
-   var subjects = [
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "jQuery",
-      "PHP",
-      "React",
-      "Node.js"
-   ];
+   let dataGlobal;
+   let globalClientClienteCode = [];
+   let globalClientClienteName = [];
+   let globalClientClienteCuit = [];
+
+   const getData = async () => {
+      const response = await fetch("/api/v1/clientes/listado");
+      const data = await response.json();
+      dataGlobal = data;
+      data.map(element => {
+         globalClientClienteCode.push(element.id)
+         globalClientClienteName.push(element.name)
+         globalClientClienteCuit.push(element.cuit)
+      });
+      return dataGlobal;
+   };
+   (async () => {
+      await getData();
+   })();
+
+   const clientsFetched = []; //lista con todos los clientes y sus att
 
    $("#search").autocomplete({
-      source: subjects,
-      select: function(event, ui) {
-         alert("Select Event Triggered");
+      source: globalClientClienteName,
+      select: function(event, ui) { //ui.item -> label and value
+         dataGlobal.map(element => {
+            console.log(element);
+            if (element.name === ui.item.value) {
+               document.getElementById("name").value = ui.item.value
+               document.getElementById("cuit").value = element.cuit
+               document.getElementById("condition").value = element.condition
+            }
+         });
       }
    });
-
-
-   // var route = "{{ url('autocomplete-search') }}";
-   // var client =
-   //    $('#search').typeahead({
-   //       source: function(query, process) {
-   //          return $.get(route, {
-   //                query: query
-   //             },
-   //             function(data) {
-   //                return process(data);
-   //             });
-   //       }
-   //    });
-
-   // $('#search').change(function() {
-   //    $.ajax({
-   //       cache: false,
-   //       type: "GET",
-   //       async: true,
-   //       url: "{{ url('autocomplete-search') }}?query=" + $(this).val(),
-   //       contentType: "application/json; charset=ytf-8",
-   //       dataType: "json",
-   //       processData: true,
-   //       success: function(result) {
-   //          // console.log("Ajax Result "+JSON.stringify(result));
-   //          $.map(result, function(element, index) {
-   //             console.log("Element= "+JSON.stringify(element.name), "Index= "+index);
-   //             // consol   e.log("Element= "+element,"Index= "+index);
-   //          });
-   //       },
-   //       error: function(xhr, textStatus, errorThrown) {
-   //          alert(textStatus + ':' + errorThrown);
-   //       }
-   //    });
-   // });
 </script>
 @endsection

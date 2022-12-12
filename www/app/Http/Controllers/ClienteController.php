@@ -47,6 +47,22 @@ class ClienteController extends Controller
         }
     }
 
+    public function apiClients(){
+        try {
+            $clientes = Cliente::all();
+            // dd($clientes->toArray());
+            return response()->json($clientes->toArray());
+
+        } catch (Exception $e) {
+            return [
+                'value'  => [],
+                'status' => 'error',
+                'message'   => $e->getMessage()
+
+            ];
+        }
+    }
+
     public function create()
     {
         return view('clientes.create');
