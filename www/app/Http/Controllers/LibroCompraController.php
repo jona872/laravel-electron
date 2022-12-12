@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\LibroCompra;
+use App\Cliente;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +18,25 @@ use SplFileInfo;
 
 class LibroCompraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function autocompleteSearch(Request $request)
+    {
+        $query = $request->get('query');
+        $filterResult = Cliente::where('name', 'LIKE', '%' . $query . '%')->get();
+        
+        return response()->json($filterResult);
+    }
+
+    public function autocompleteSearch2(Request $request)
+    {
+        $query = $request->get('query');
+        $filterResult = Cliente::where('name', 'LIKE', '%' . $query . '%')->get();
+        
+        return response()->json($filterResult);
+    }
+
+
+
     public function index()
     {
         try {

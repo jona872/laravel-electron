@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+// Route::view('/tmp/show', 'LibroCompraController@showSearch');
+Route::get("/tmp/show", function(){
+    return view("compras.tmp");
+ });
+
+Route::get('autocomplete-search', 'LibroCompraController@autocompleteSearch');
+
+
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
