@@ -21,9 +21,10 @@ class LibroCompraController extends Controller
 
     public function autocompleteSearch(Request $request)
     {
+        dd($request->all());
         $query = $request->get('query');
         $filterResult = Cliente::where('name', 'LIKE', '%' . $query . '%')->get();
-        
+
         return response()->json($filterResult);
     }
 
@@ -60,6 +61,7 @@ class LibroCompraController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         try {
             $compra = LibroCompra::create($request->all() + ['sender_id' => '1'] + ['receiver_id' => '1']);
             return redirect()->route('compras.index')->with('success', 'LibroCompra agregados correctamente!');

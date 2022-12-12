@@ -50,7 +50,6 @@ class ClienteController extends Controller
     public function apiClients(){
         try {
             $clientes = Cliente::all();
-            // dd($clientes->toArray());
             return response()->json($clientes->toArray());
 
         } catch (Exception $e) {

@@ -8,7 +8,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
         </svg>
-        <span>Ventas</span>
+        <span>Compras</span>
     </a>
 </h1>
 
@@ -44,20 +44,21 @@
     <hr>
     <br>
     <div>
-        <label for="codigo"> Codigo Cliente </label>
-        <input id="codigo" type="text" name="codigo" value="{{ old('codigo') }}" />
+        <label for="client_id"> Codigo Cliente </label>
+        <input id="client_id" type="text" name="client_id" value="{{ old('client_id') }}" />
     </div>
     <div>
-        <label for="nombre"> Nombre Cliente </label>
-        <input id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" />
+        <label for="name"> Nombre Cliente </label>
+        <input id="name" type="text" name="name" value="{{ old('name') }}" />
     </div>
     <div>
         <label for="cuit"> CUIT </label>
         <input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" />
     </div>
+
     <div>
-        <label for="condicion"> Condicion </label>
-        <input id="condicion" type="text" name="condicion" value="{{ old('condicion') }}" />
+        <label for="condition"> Condicion </label>
+        <input id="condition" type="text" name="condition" value="{{ old('condition') }}" />
     </div>
     <br>
     <hr>
@@ -118,5 +119,75 @@
 
 </form>
 
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> <!-- MANDATORY -->
+<script src="//code.jquery.com/jquery-1.12.4.js"> </script> <!-- MANDATORY -->
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"> </script> <!-- MANDATORY -->
+
+
+<script type="text/javascript">
+    let dataGlobal;
+    let globalClientClienteCode = [];
+    let globalClientClienteName = [];
+    let globalClientClienteCuit = [];
+    // fetch all data and filters
+    const getData = async () => {
+        const response = await fetch("/api/v1/clientes/listado");
+        const data = await response.json();
+        dataGlobal = data;
+        data.map(element => {
+            globalClientClienteCode.push(element.id.toString())
+            globalClientClienteName.push(element.name)
+            globalClientClienteCuit.push(element.cuit)
+        });
+        return dataGlobal;
+    };
+    (async () => {
+        await getData();
+    })();
+    //=============================================================
+    $("#client_id").autocomplete({
+        source: globalClientClienteCode,
+        select: function(event, ui) { //ui.item -> label and value
+            dataGlobal.map(element => { //element = cada obj cliente            
+                console.log(ui.item);
+                if (element.id.toString() === ui.item.value) {
+                    document.getElementById("client_id").value = element.id
+                    document.getElementById("name").value = element.name
+                    document.getElementById("cuit").value = element.cuit
+                    document.getElementById("condition").value = element.condition
+                }
+            });
+        }
+    });
+
+    $("#name").autocomplete({
+        source: globalClientClienteName,
+        select: function(event, ui) { //ui.item -> label and value
+            dataGlobal.map(element => { //element = cada obj cliente            
+                if (element.name === ui.item.value) {
+                    document.getElementById("id").value = element.id
+                    document.getElementById("name").value = element.name
+                    document.getElementById("cuit").value = element.cuit
+                    document.getElementById("condition").value = element.condition
+                }
+            });
+        }
+    });
+
+    $("#cuit").autocomplete({
+        source: globalClientClienteCuit,
+        select: function(event, ui) { //ui.item -> label and value
+            dataGlobal.map(element => { //element = cada obj cliente
+                if (element.cuit === ui.item.value) {
+                    document.getElementById("id").value = element.id
+                    document.getElementById("name").value = element.name
+                    document.getElementById("cuit").value = element.cuit
+                    document.getElementById("condition").value = element.condition
+                }
+            });
+        }
+    });
+</script>
 
 @endsection

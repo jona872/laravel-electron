@@ -1,22 +1,14 @@
 @extends('layout')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/resizeTable.css')}}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
-<style>
-   .container {
-      max-width: 600px;
-   }
-</style>
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" /> -->
+
 @endpush
 
 
 @section('content')
 
-<form action="/autocomplete-search">
-   <div>
-      <label for="query">Query</label>
-      <input id="query" name="query" type="text" />
-   </div>
+<form action="">
    <div>
       <label for="name">name</label>
       <input id="name" name="name" type="text" />
@@ -32,21 +24,9 @@
    <button type="submit">submit</button>
 </form>
 
-
-<div class="container mt-5">
-   <div classs="form-group">
-      <input type="text" id="search" name="search" placeholder="Search" class="form-control" />
-   </div>
-</div>
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.12.4.js"> </script>
-<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"> </script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
-
-</script>
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> <!-- MANDATORY -->
+<script src="//code.jquery.com/jquery-1.12.4.js"> </script> <!-- MANDATORY -->
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"> </script> <!-- MANDATORY -->
 
 
 <script type="text/javascript">
@@ -54,7 +34,7 @@
    let globalClientClienteCode = [];
    let globalClientClienteName = [];
    let globalClientClienteCuit = [];
-
+   // fetch all data and filters
    const getData = async () => {
       const response = await fetch("/api/v1/clientes/listado");
       const data = await response.json();
@@ -69,16 +49,26 @@
    (async () => {
       await getData();
    })();
-
-   const clientsFetched = []; //lista con todos los clientes y sus att
-
-   $("#search").autocomplete({
+   //=============================================================
+   $("#name").autocomplete({
       source: globalClientClienteName,
       select: function(event, ui) { //ui.item -> label and value
-         dataGlobal.map(element => {
-            console.log(element);
+         dataGlobal.map(element => { //element = cada obj cliente
             if (element.name === ui.item.value) {
-               document.getElementById("name").value = ui.item.value
+               document.getElementById("name").value = element.name
+               document.getElementById("cuit").value = element.cuit
+               document.getElementById("condition").value = element.condition
+            }
+         });
+      }
+   });
+
+   $("#cuit").autocomplete({
+      source: globalClientClienteCuit,
+      select: function(event, ui) { //ui.item -> label and value
+         dataGlobal.map(element => { //element = cada obj cliente
+            if (element.cuit === ui.item.value) {
+               document.getElementById("name").value = element.name
                document.getElementById("cuit").value = element.cuit
                document.getElementById("condition").value = element.condition
             }
