@@ -6,7 +6,9 @@
 
 @section('content')
 <h1>Compras</h1>
-
+@php
+//dd($compras);
+@endphp
 
 <main class="main">
     <div class="container">
@@ -34,10 +36,13 @@
                     <div>Punto de Venta</div>
                 </th>
                 <th class="col-fit">
-                    <div>Nrp de Compro</div>
+                    <div>Nº de Compro</div>
                 </th>
                 <th class="col-fit">
                     <div>Tipo de Compro</div>
+                </th>
+                <th class="col-fit">
+                    <div>Nombre</div>
                 </th>
                 <th class="col-fit">
                     <div>CUIT</div>
@@ -106,22 +111,24 @@
                         </div>
                     </form>
                 </td>
-
+     
+            
                 <td> {{$c->fecha }} </td>
-                <td> {{$c->pto_compra }} </td>
-                <td> {{$c->codigo }} </td>
+                <td> {{$c->pto_venta }} </td>
+                <td> {{$c->codigo_comprobante }} </td>
                 <td> {{$c->tipo_comprobante }} </td>
-                <td> {{$c->cuit }} </td>
-                <td> {{$c->condicion }} </td>
+                    <td> {{$c->name }} </td>
+                    <td> {{$c->cuit }} </td>
+                    <td> {{$c->condition }} </td>
                 <td> {{$c->neto }} </td>
                 <td> {{$c->iva }} </td>
                 <td> {{$c->iva_liquidado }} </td>
                 <td> {{$c->iva_sobretasa }} </td>
                 <td> {{$c->percepcion }} </td>
                 <td> {{$c->iva_retencion }} </td>
+                <td> {{$c->impuestos_internos }} </td>
                 <td> {{$c->conceptos_no_gravados }} </td>
-                <td> {{$c->ingresos_exentos }} </td>
-                <td> {{$c->ganancias_retencion }} </td>
+                <td> {{$c->compras_no_inscriptas }} </td>
                 <td> {{$c->total }} </td>
                 <td> {{$c->tipo_op }} </td>
             </tr>
