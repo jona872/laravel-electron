@@ -149,9 +149,9 @@
     $("#client_id").autocomplete({
         source: globalClientClienteCode,
         select: function(event, ui) { //ui.item -> label and value
-            dataGlobal.map(element => { //element = cada obj cliente            
-                if (element.id.toString() === ui.item.value) {
-                    document.getElementById("client_id").value = element.id
+            dataGlobal.map(element => { //element = cada obj cliente
+                if (element.id === parseInt(ui.item.value)) {
+                    document.getElementById("client_id").value = parseInt(element.id)
                     document.getElementById("name").value = element.name
                     document.getElementById("cuit").value = element.cuit
                     document.getElementById("condition").value = element.condition

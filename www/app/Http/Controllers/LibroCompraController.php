@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\LibroCompra;
 use App\Cliente;
 use Exception;
+use Facade\FlareClient\Http\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,7 @@ class LibroCompraController extends Controller
     {
         $query = $request->get('query');
         $filterResult = Cliente::where('name', 'LIKE', '%' . $query . '%')->get();
-        
+
         return response()->json($filterResult);
     }
 
@@ -59,11 +60,34 @@ class LibroCompraController extends Controller
         return view('compras.create');
     }
 
+    // public function addDinamicClient(Cliente $cliente) {
+    //     if (is_null(Cliente::find($cliente->id))) {
+
+    //     }
+
+    // }
+
     public function store(Request $request)
     {
-        dd($request->all());
+        $c = new Cliente;
+        if (isset($request->client_id) && !is_null($request->client_id)) {
+            //Si es nulo es xq no existe, asi que lo agrego con ese id
+            if (is_null(Cliente::find($request->client_id))) {
+                $c->id = $request->client_id;
+                $c->name = $request->name;
+                $c->cuit = $request->cuit;
+                $c->condition = $request->condition;
+                $c->save();
+            }
+        } else { //client_id == null => agrego todo a la bd
+            $c->name = $request->name;
+            $c->cuit = $request->cuit;
+            $c->condition = $request->condition;
+            $c->save();
+        }
+
         try {
-            $compra = LibroCompra::create($request->all() + ['sender_id' => '1'] + ['receiver_id' => '1']);
+            $compra = LibroCompra::create($request->all() + ['sender_id' => $c->id] + ['receiver_id' => '1']);
             return redirect()->route('compras.index')->with('success', 'LibroCompra agregados correctamente!');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
