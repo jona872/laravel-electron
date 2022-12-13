@@ -20,29 +20,25 @@ use SplFileInfo;
 class LibroCompraController extends Controller
 {
 
-    public function autocompleteSearch(Request $request)
-    {
-        dd($request->all());
-        $query = $request->get('query');
-        $filterResult = Cliente::where('name', 'LIKE', '%' . $query . '%')->get();
+    // public function autocompleteSearch(Request $request)
+    // {
+    //     dd($request->all());
+    //     $query = $request->get('query');
+    //     $filterResult = Cliente::where('name', 'LIKE', '%' . $query . '%')->get();
 
-        return response()->json($filterResult);
-    }
-
-    public function autocompleteSearch2(Request $request)
-    {
-        $query = $request->get('query');
-        $filterResult = Cliente::where('name', 'LIKE', '%' . $query . '%')->get();
-
-        return response()->json($filterResult);
-    }
-
-
+    //     return response()->json($filterResult);
+    // }
 
     public function index()
     {
         try {
             $compras = DB::table('libro_compras')->get();
+            
+            $relevamientos = DB::table('libro_compras as lc')
+                ->join('clientes as c', 'lc.sender_id', '=', 'c.id')
+                ->select('c.*', 'lc.*')
+                ->get();
+            dd($relevamientos);
 
             return view('compras.index', compact('compras'));
         } catch (Exception $e) {
@@ -52,6 +48,39 @@ class LibroCompraController extends Controller
                 'message'   => $e->getMessage()
             ];
         }
+
+
+        +"id": 2
+        +"name": "Angelica"
+        +"cuit": "cuit de la bd"
+        +"condition": "Responsable Inscripto"
+        +"direction": "Av. Almafuertes 4777"
+        +"activity_start": "12/2/2022"
+        +"gross_receipts_tax": "12123123"
+        +"created_at": null
+        +"updated_at": null
+        +"sender_id": 2
+        +"receiver_id": 1
+        +"fecha": "2022-12-13"
+        +"pto_venta": "001"
+        +"codigo": "00001"
+        +"tipo_comprobante": "Otros"
+        +"nombre": "nombre de la bd"
+        +"condicion": "condicion de la bd"
+        +"neto": null
+        +"iva": null
+        +"iva_liquidado": null
+        +"iva_sobretasa": null
+        +"percepcion": null
+        +"iva_retencion": null
+        +"impuestos_internos": null
+        +"conceptos_no_gravados": null
+        +"compras_no_inscriptas": null
+        +"total": null
+        +"tipo_op": null
+
+
+
         return view('compras.index');
     }
 
@@ -69,15 +98,20 @@ class LibroCompraController extends Controller
 
     public function store(Request $request)
     {
-        $c = new Cliente;
+        $libroCompra = new LibroCompra();
+        //  dd($cData->toArray());
+        $c = Cliente::find(1);
+
         if (isset($request->client_id) && !is_null($request->client_id)) {
-            //Si es nulo es xq no existe, asi que lo agrego con ese id
-            if (is_null(Cliente::find($request->client_id))) {
-                $c->id = $request->client_id;
-                $c->name = $request->name;
-                $c->cuit = $request->cuit;
-                $c->condition = $request->condition;
-                $c->save();
+            /*
+Si esta seteado y NO es nulo--> (Deberia estar en la bd, pero chequeo por las dudas)
+            1) Chequeo si existe 
+            2) Si verifico que SI existe solamente pongo los datos del model
+            3) Si NO existe agrego todo el nuevo cliente
+            */
+            // SI hay $c es xq existe en la bd, solamente pongo los datos del model.
+            if ($c) {
+                echo "si";
             }
         } else { //client_id == null => agrego todo a la bd
             $c->name = $request->name;
