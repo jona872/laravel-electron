@@ -13,7 +13,7 @@
   </a>
 </h1>
 
-<div class="card">
+<div class="card m-top-5vh">
   <div class="card--row">
     <h2>Registrar Nuevo Usuario</h2>
   </div>
@@ -133,11 +133,15 @@
 
     <div class="card--row">
       <div class="card--row--item card--center--btn">
-        <button type="submit" class="card--btn">
+        <!-- <button type="submit" class="card--btn">
           Registrar
-        </button>
+        </button> -->
+        <button type="submit" class="btn btn--confirm"> Registrar </button>
       </div>
     </div>
+
+
+    
 
   </form>
 
