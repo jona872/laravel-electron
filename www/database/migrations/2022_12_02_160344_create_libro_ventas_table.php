@@ -16,11 +16,11 @@ class CreateLibroVentasTable extends Migration
         Schema::create('libro_ventas', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            //Emite el cliente
+            //Emite la factura  el usuario (vendedor)
             $table->bigInteger('sender_id')->unsigned()->index()->nullable();
             $table->foreign('sender_id')->references('id')->on('users');
 
-            //recibe el usuario
+            //recibe la factura  el cliente (comprador)
             $table->bigInteger('receiver_id')->unsigned()->index()->nullable();
             $table->foreign('receiver_id')->references('id')->on('clientes');
             

@@ -15,18 +15,38 @@ class CreateLibroComprasTable extends Migration
     {
         Schema::create('libro_compras', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code')->nullable();
-            $table->string('type')->nullable();
 
-            $table->bigInteger('receiver_id')->unsigned()->index()->nullable();
-            $table->foreign('receiver_id')->references('id')->on('users');
-
+            //Emite la factura el cliente (vendedor)
             $table->bigInteger('sender_id')->unsigned()->index()->nullable();
             $table->foreign('sender_id')->references('id')->on('clientes');
 
+            //recibe la factura el usuario (comprador)
+            $table->bigInteger('receiver_id')->unsigned()->index()->nullable();
+            $table->foreign('receiver_id')->references('id')->on('users');
+
+            $table->date('fecha')->nullable();
+            $table->string('pto_venta')->nullable();
+            $table->string('codigo')->nullable();
+            $table->string('tipo_comprobante')->nullable();
+
+            //datos del vendedor ============================
+            //sender_id
+            $table->string('nombre')->nullable();
+            $table->string('cuit')->nullable();
+            $table->string('condicion')->nullable();
+            //===============================================
+            $table->float('neto')->nullable();
             $table->float('iva')->nullable();
-            $table->float('subtotal')->nullable();
+            $table->float('iva_liquidado')->nullable();
+            $table->float('iva_sobretasa')->nullable();
+            $table->float('percepcion')->nullable();
+            $table->float('iva_retencion')->nullable();//hasta aca todo igual
+            $table->float('impuestos_internos')->nullable();
+            $table->float('conceptos_no_gravados')->nullable();
+            $table->float('compras_no_inscriptas')->nullable();
             $table->float('total')->nullable();
+            $table->integer('tipo_op')->nullable();
+
             $table->timestamps();
         });
     }
