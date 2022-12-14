@@ -210,13 +210,20 @@ nav {
     color:#fff !important;
 }
 
+.m-top-10vh {
+    margin-top: 10vh;
+}
+
+.m-top-2vh {
+    margin-top: 2vh;
+}
+
 .card--form {
     padding: 1rem 0;
 }
 .title--header {
-    position: absolute;
-    left: 0;
-    top: 10vh;
+    display: flex;
+    width: 100%;
 }
 .row--centered {
     display: flex;

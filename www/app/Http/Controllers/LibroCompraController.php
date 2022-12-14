@@ -68,6 +68,34 @@ class LibroCompraController extends Controller
     //     +"compras_no_inscriptas": null
     //     +"total": null
     //     +"tipo_op": null
+        // +"id": 2
+        // +"name": "Angelica"
+        // +"cuit": "cuit de la bd"
+        // +"condition": "Responsable Inscripto"
+        // +"direction": "Av. Almafuertes 4777"
+        // +"activity_start": "12/2/2022"
+        // +"gross_receipts_tax": "12123123"
+        // +"created_at": null
+        // +"updated_at": null
+        // +"sender_id": 2
+        // +"receiver_id": 1
+        // +"fecha": "2022-12-13"
+        // +"pto_venta": "001"
+        // +"codigo": "00001"
+        // +"tipo_comprobante": "Otros"
+        // +"nombre": "nombre de la bd"
+        // +"condicion": "condicion de la bd"
+        // +"neto": null
+        // +"iva": null
+        // +"iva_liquidado": null
+        // +"iva_sobretasa": null
+        // +"percepcion": null
+        // +"iva_retencion": null
+        // +"impuestos_internos": null
+        // +"conceptos_no_gravados": null
+        // +"compras_no_inscriptas": null
+        // +"total": null
+        // +"tipo_op": null
 
 
 

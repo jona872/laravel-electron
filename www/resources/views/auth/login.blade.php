@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="card">
+<div class="card m-top-10vh">
   <div class="card--row">
     <h2>Ingresar al sistema</h2>
   </div>
@@ -39,19 +39,20 @@
       <label class="card--input" for="remember"> Recordarme </label>
     </div>
 
+    
     <div class="card--row">
       <div class="card--row--item card--label">
-        <button type="submit" class="card--btn"> Entrar </button>
+        <button type="submit" class="btn btn--confirm"> Entrar </button>
       </div>
       @if (Route::has('register'))
       <div class="card--row--item card--input">
-        <button class="card--btn">
-          <a href="{{ route('register') }}">{{ __('Register') }}</a>
-        </button>
+        <a class="btn btn--cancel a--btn" href="{{ route('register') }}">{{ __('Registrar') }}</a>
       </div>
       @endif
-
     </div>
+
+
+
 
   </form>
 </div>
