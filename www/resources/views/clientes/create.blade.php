@@ -18,7 +18,7 @@
 <div class="card">
 
 	<div class="card--row">
-		<h2>Creando cliente para el usuario: {{ Auth::user()->name }}</h2>
+		<h2>Nuevo Cliente</h2>
 	</div>
 
 	@if ($errors->any())
