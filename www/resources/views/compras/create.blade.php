@@ -12,6 +12,16 @@
     </a>
 </h1>
 
+@if ($errors->any())
+<div class="invalid-feedback">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
 
 
 <form action="{{ route('compras.store') }}" method="POST" class="card--form">

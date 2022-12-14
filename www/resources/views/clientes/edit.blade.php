@@ -25,7 +25,7 @@
 @endif
 
 <div class="card">
-    <form action="{{ route('clientes.update',$cliente->id) }}" method="POST" class="form-horizontal form-create">
+    <form action="{{ route('clientes.update',$cliente->id) }}" method="POST" class="card--form">
         @csrf
         @method('PUT')
         <input name="id" type="hidden" value="{{ $cliente->id }}">

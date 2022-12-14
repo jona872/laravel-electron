@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\LibroCompra;
 use App\Cliente;
+use App\Cliente_Usuario;
 use Exception;
 use Facade\FlareClient\Http\Client;
 use Illuminate\Http\Request;
@@ -68,7 +69,7 @@ class LibroCompraController extends Controller
 
    public function store(Request $request)
    {
-      dd($request->all());
+      // dd($request->all());
       try {
          $compra = new LibroCompra();
 
@@ -80,6 +81,12 @@ class LibroCompraController extends Controller
             $cliente->cuit = $request->cuit;
             $cliente->condition = $request->condition;
             $cliente->save();
+            //Agrego la relacion ClienteUsuario
+            $cu = new Cliente_Usuario();
+            $cu->cliente_id = $cliente->id;
+            $cu->user_id = Auth::user()->id;
+            $cu->save();
+
             $compra->sender_id = $cliente->id;
          }
          $compra->fecha = $request->fecha;
@@ -98,16 +105,10 @@ class LibroCompraController extends Controller
          $compra->compras_no_inscriptas = $request->compras_no_inscriptas;
          $compra->total = $request->total;
          $compra->tipo_op = $request->tipo_op;
+         $compra->save();
+         //$compra = LibroCompra::create($request->all() + ['sender_id' => $c->id] + ['receiver_id' => '1']);
 
 
-
-
-
-
-
-
-
-         $compra = LibroCompra::create($request->all() + ['sender_id' => $c->id] + ['receiver_id' => '1']);
          return redirect()->route('compras.index')->with('success', 'LibroCompra agregados correctamente!');
       } catch (Exception $e) {
          return redirect()->back()->withErrors($e->getMessage());
@@ -124,11 +125,13 @@ class LibroCompraController extends Controller
       try {
          $compra = LibroCompra::find($id);
          if ($compra) {
-            return view('com$compras.edit', compact('com$compra'));
+             return view('compras.edit', compact('compra'));
          }
-      } catch (Exception $e) {
+     } catch (Exception $e) {
          return redirect()->back()->withErrors($e->getMessage());
-      }
+     }
+         
+         
    }
 
    public function update(Request $request, LibroCompra $libroCompra)
