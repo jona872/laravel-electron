@@ -3,80 +3,123 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use League\Csv\Reader;
+use League\Csv\Statement;
+use League\Csv\Writer;
+use SplTempFileObject;
+use PhpParser\Node\Expr\FuncCall;
+use SplFileObject;
 
 class ResumenesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return view('resumenes.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function indexMensual()
+    {
+        return view('resumenes.mensuales.index');
+    }
+    public function mensualesPreview(Request $request)
+    {
+        $operatoria = $request->operatoria;
+        //Ventas no tiene el autocompletar aun,
+        if ($operatoria == "compras") {
+            $consulta = DB::table('libro_compras')
+                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+                ->whereYear('fecha', '=', $request->year)
+                ->whereMonth('fecha', '=', $request->mes)
+                ->get();
+
+            return view('resumenes.mensuales.listadoCompras', compact('consulta', 'operatoria'));
+        } else {
+            $consulta = DB::table('libro_ventas')
+                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
+                ->whereYear('fecha', '=', $request->year)
+                ->whereMonth('fecha', '=', $request->mes)
+                ->get();
+
+            return view('resumenes.mensuales.listadoVentas', compact('consulta', 'operatoria'));
+        }
+    }
+
+    public function mensualesExport(Request $request)
+    {
+        if ($request->exportData) {
+            $tmp = [];
+            $data = unserialize(base64_decode($request->exportData));
+            foreach ($data as $key => $f) {
+                array_push($tmp,get_object_vars($f));
+            }
+
+            // dd($tmp);
+
+            $csv = Writer::createFromFileObject(new SplTempFileObject());
+
+            $csv->insertOne(['id', 'sender_id', 'receiver_id', 'fecha', 'pto_venta', 'codigo', 'tipo_comprobante', 'nombre', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op']);
+            foreach ($tmp as $key => $array) {
+                dd($tmp, $key,$array);
+                //$csv->insertOne(get_object_vars($f));
+                $csv->insertOne(get_object_vars($array));
+            }
+            //descarga
+            $csv->output('Compras.csv');
+        } else {
+            $data = [];
+            $csv = Writer::createFromFileObject(new SplTempFileObject());
+            $csv->insertOne(['id', 'sender_id', 'receiver_id', 'fecha', 'pto_venta', 'codigo', 'tipo_comprobante', 'nombre', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op']);
+            foreach ($data as $key => $f) {
+                $csv->insertOne($f);
+            }
+
+            //descarga
+            $csv->output('Compras.csv');
+        }
+
+
+        dd($data, $request->operatoria);
+    }
+
+
+    public function indexAnual()
+    {
+        return view('resumenes.anual');
+    }
+    public function indexPeriodo()
+    {
+        return view('resumenes.periodo');
+    }
+
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

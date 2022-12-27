@@ -28,9 +28,9 @@
     <div class="dropdown">
         <button class="nav--btn">Resumenes</button>
         <div class="dropdown-content">
-            <a href="/resumenes"> Resumen Mensual </a>
-            <a href="/resumenes"> Resumen Anual </a>
-            <a href="/resumenes"> Resumen Periodos </a>
+            <a href="/mensuales"> Resumen Mensual </a>
+            <a href="/anuales"> Resumen Anual </a>
+            <a href="/periodos"> Resumen Periodos </a>
         </div>
     </div>
 
