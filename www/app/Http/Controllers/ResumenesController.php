@@ -87,13 +87,35 @@ class ResumenesController extends Controller
 
     public function indexAnual()
     {
-        return view('resumenes.anual');
+        return view('resumenes.anuales.index');
     }
+
+    public function anualesPreview(Request $request){
+        // dd($request->all());
+        $operatoria = $request->operatoria;
+        $year = $request->year;
+        
+        if ($request->operatoria && $request->operatoria == "compras") {
+            $consulta = DB::table('libro_compras')
+                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+                ->whereYear('libro_compras.fecha', '=', $request->year)
+                ->get();
+            // dd($comprasAnuales);
+
+            return view('resumenes.anuales.listadoCompras', compact('consulta', 'operatoria','year'));
+        }else {
+            dd('ventas');
+        }
+    }
+    public function anualesExport(Request $request){
+        dd($request->all());
+    }
+
+    
     public function indexPeriodo()
     {
         return view('resumenes.periodo');
     }
-
 
     public function create()
     {
