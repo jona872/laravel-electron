@@ -110,11 +110,36 @@ class ResumenesController extends Controller
             return view('resumenes.anuales.listadoVentas', compact('consulta', 'operatoria', 'year'));
         }
     }
+
     public function anualesExport(Request $request)
     {
+        // dd($request->operatoria, $request->year);
         // $data = DB::table("libro_" . $request->operatoria)->get();
         if ($request->operatoria && $request->operatoria == "compras") {
+
             $data = DB::table('libro_compras')
+                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+                ->whereYear('libro_compras.fecha', '=', $request->year)
+                ->select(
+                    'libro_compras.fecha',
+                    'libro_compras.pto_venta',
+                    'libro_compras.codigo_comprobante',
+                    'libro_compras.tipo_comprobante',
+                    'clientes.name',
+                    'clientes.cuit',
+                    'clientes.condition',
+                    'libro_compras.neto',
+                    'libro_compras.iva',
+                    'libro_compras.iva_liquidado',
+                    'libro_compras.iva_sobretasa',
+                    'libro_compras.percepcion',
+                    'libro_compras.iva_retencion',
+                    'libro_compras.impuestos_internos',
+                    'libro_compras.conceptos_no_gravados',
+                    'libro_compras.compras_no_inscriptas',
+                    'libro_compras.total',
+                    'libro_compras.tipo_op'
+                )
                 ->get();
 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
@@ -133,23 +158,66 @@ class ResumenesController extends Controller
             $csv->output('ResumenAnualCompras.csv');
         } else {
             $data = DB::table('libro_ventas')
+                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
+                ->whereYear('libro_ventas.fecha', '=', $request->year)
+                ->select(
+                    'libro_ventas.fecha',
+                    'libro_ventas.pto_venta',
+                    'libro_ventas.codigo_comprobante',
+                    'libro_ventas.tipo_comprobante',
+                    'clientes.name',
+                    'clientes.cuit',
+                    'clientes.condition',
+                    'libro_ventas.neto',
+                    'libro_ventas.iva',
+                    'libro_ventas.iva_liquidado',
+                    'libro_ventas.iva_sobretasa',
+                    'libro_ventas.percepcion',
+                    'libro_ventas.iva_retencion',
+                    'libro_ventas.conceptos_no_gravados',
+                    'libro_ventas.ingresos_exentos',
+                    'libro_ventas.ganancias_retencion',
+                    'libro_ventas.total',
+                    'libro_ventas.tipo_op'
+                )
                 ->get();
-            dd($data);
 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
             $csv->insertOne([
-                'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 
-                'cuit','condicion', 
-                'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 
-                'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 
-                'ganancias_retencion', 'total', 'tipo_op' ]);
+                'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante',
+                'name', 'cuit', 'condicion',
+                'neto', 'iva', 'iva_liquidado', 'iva_sobretasa',
+                'percepcion', 'iva_retencion', 'conceptos_no_gravados',
+                'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op'
+            ]);
+
             foreach ($data as $key => $array) {
-                // dd($data, $key, $array);
+                //dd($array);
                 $csv->insertOne(get_object_vars($array));
+                // $csv->insertOne([
+                //     $array->fecha,
+                //     $array->pto_venta,
+                //     $array->codigo_comprobante,
+                //     $array->tipo_comprobante,
+                //     $array->name,
+                //     $array->cuit,
+                //     $array->condition,
+                //     $array->neto,
+                //     $array->iva,
+                //     $array->iva_liquidado,
+                //     $array->iva_sobretasa,
+                //     $array->percepcion,
+                //     $array->iva_retencion,
+                //     $array->conceptos_no_gravados,
+                //     $array->ingresos_exentos,
+                //     $array->ganancias_retencion,
+                //     $array->total,
+                //     $array->tipo_op
+                // ]);
             }
             //descarga
-            $csv->output('ResumenAnual.csv');
+            $csv->output('ResumenAnualVentas.csv');
         }
     }
 

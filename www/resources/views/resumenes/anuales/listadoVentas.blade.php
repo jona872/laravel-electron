@@ -85,9 +85,9 @@ Listado Anual
                     <td> {{$c->iva_sobretasa }} </td>
                     <td> {{$c->percepcion }} </td>
                     <td> {{$c->iva_retencion }} </td>
-                    <td> {{$c->impuestos_internos }} </td>
                     <td> {{$c->conceptos_no_gravados }} </td>
-                    <td> {{$c->compras_no_inscriptas }} </td>
+                    <td> {{$c->ingresos_exentos }} </td>
+                    <td> {{$c->ganancias_retencion }} </td>
                     <td> {{$c->total }} </td>
                     <td> {{$c->tipo_op }} </td>
                 </tr>

@@ -5,12 +5,12 @@
 
 @section('content')
 
-Listado Mensual
+Listado Mensual de {{ $operatoria }}
 
 <main class="main">
     <div class="container">
         <form action="{{url('/mensuales/export')}}" method="POST" class="card--form">
-            @csrf            
+            @csrf
             <input type="hidden" name="operatoria" value="{{ $operatoria }}">
             <table>
                 <tr>
@@ -74,18 +74,18 @@ Listado Mensual
                     <td> {{$c->pto_venta }} </td>
                     <td> {{$c->codigo_comprobante }} </td>
                     <td> {{$c->tipo_comprobante }} </td>
-                    <td> {{$c->name }} </td>
-                    <td> {{$c->cuit }} </td>
-                    <td> {{$c->condition }} </td>
+                        <td> {{$c->name }} </td>
+                        <td> {{$c->cuit }} </td>
+                        <td> {{$c->condition }} </td>
                     <td> {{$c->neto }} </td>
                     <td> {{$c->iva }} </td>
                     <td> {{$c->iva_liquidado }} </td>
                     <td> {{$c->iva_sobretasa }} </td>
                     <td> {{$c->percepcion }} </td>
                     <td> {{$c->iva_retencion }} </td>
-                    <td> {{$c->impuestos_internos }} </td>
                     <td> {{$c->conceptos_no_gravados }} </td>
-                    <td> {{$c->compras_no_inscriptas }} </td>
+                    <td> {{$c->ingresos_exentos }} </td>
+                    <td> {{$c->ganancias_retencion }} </td>
                     <td> {{$c->total }} </td>
                     <td> {{$c->tipo_op }} </td>
                 </tr>

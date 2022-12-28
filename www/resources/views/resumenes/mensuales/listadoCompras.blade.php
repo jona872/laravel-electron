@@ -5,7 +5,7 @@
 
 @section('content')
 
-Listado Mensual
+Listado Mensual de {{ $operatoria }}
 
 <main class="main">
     <div class="container">
