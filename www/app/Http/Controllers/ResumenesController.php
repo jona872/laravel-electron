@@ -53,7 +53,7 @@ class ResumenesController extends Controller
             $tmp = [];
             $data = unserialize(base64_decode($request->exportData));
             foreach ($data as $key => $f) {
-                array_push($tmp,get_object_vars($f));
+                array_push($tmp, get_object_vars($f));
             }
 
             // dd($tmp);
@@ -62,7 +62,7 @@ class ResumenesController extends Controller
 
             $csv->insertOne(['id', 'sender_id', 'receiver_id', 'fecha', 'pto_venta', 'codigo', 'tipo_comprobante', 'nombre', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op']);
             foreach ($tmp as $key => $array) {
-                dd($tmp, $key,$array);
+                dd($tmp, $key, $array);
                 //$csv->insertOne(get_object_vars($f));
                 $csv->insertOne(get_object_vars($array));
             }
@@ -90,28 +90,72 @@ class ResumenesController extends Controller
         return view('resumenes.anuales.index');
     }
 
-    public function anualesPreview(Request $request){
+    public function anualesPreview(Request $request)
+    {
         // dd($request->all());
         $operatoria = $request->operatoria;
         $year = $request->year;
-        
+
         if ($request->operatoria && $request->operatoria == "compras") {
             $consulta = DB::table('libro_compras')
                 ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
                 ->whereYear('libro_compras.fecha', '=', $request->year)
                 ->get();
-            // dd($comprasAnuales);
 
-            return view('resumenes.anuales.listadoCompras', compact('consulta', 'operatoria','year'));
-        }else {
-            dd('ventas');
+            return view('resumenes.anuales.listadoCompras', compact('consulta', 'operatoria', 'year'));
+        } else {
+            $consulta = DB::table('libro_ventas')
+                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
+                ->whereYear('libro_ventas.fecha', '=', $request->year)
+                ->get();
+
+            return view('resumenes.anuales.listadoVentas', compact('consulta', 'operatoria', 'year'));
         }
     }
-    public function anualesExport(Request $request){
-        dd($request->all());
+    public function anualesExport(Request $request)
+    {
+        // $data = DB::table("libro_" . $request->operatoria)->get();
+        if ($request->operatoria && $request->operatoria == "compras") {
+            $data = DB::table('libro_compras')
+                ->get();
+
+            $csv = Writer::createFromFileObject(new SplTempFileObject());
+
+            $csv->insertOne([
+                'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante',
+                'nombre', 'cuit', 'Resp. I.V.A.',
+                'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion',
+                'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op'
+            ]);
+
+            foreach ($data as $key => $array) {
+                $csv->insertOne(get_object_vars($array));
+            }
+            //descarga
+            $csv->output('ResumenAnualCompras.csv');
+        } else {
+            $data = DB::table('libro_ventas')
+                ->get();
+            dd($data);
+
+            $csv = Writer::createFromFileObject(new SplTempFileObject());
+
+            $csv->insertOne([
+                'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 
+                'cuit','condicion', 
+                'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 
+                'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 
+                'ganancias_retencion', 'total', 'tipo_op' ]);
+            foreach ($data as $key => $array) {
+                // dd($data, $key, $array);
+                $csv->insertOne(get_object_vars($array));
+            }
+            //descarga
+            $csv->output('ResumenAnual.csv');
+        }
     }
 
-    
+
     public function indexPeriodo()
     {
         return view('resumenes.periodo');
