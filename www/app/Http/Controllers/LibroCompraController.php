@@ -23,13 +23,10 @@ class LibroCompraController extends Controller
    public function index()
    {
       try {
-         // $compras = DB::table('libro_compras')->get();
-
          $compras = DB::table('libro_compras as lc')
             ->join('clientes as c', 'lc.sender_id', '=', 'c.id')
             ->select('c.*', 'lc.*')
             ->get();
-         // dd($relevamientos);
 
          return view('compras.index', compact('compras'));
       } catch (Exception $e) {
@@ -40,9 +37,6 @@ class LibroCompraController extends Controller
          ];
       }
 
-
-
-
       return view('compras.index');
    }
 
@@ -50,13 +44,6 @@ class LibroCompraController extends Controller
    {
       return view('compras.create');
    }
-
-   // public function addDinamicClient(Cliente $cliente) {
-   //     if (is_null(Cliente::find($cliente->id))) {
-
-   //     }
-
-   // }
 
    public function clientExists($id)
    {
@@ -69,7 +56,6 @@ class LibroCompraController extends Controller
 
    public function store(Request $request)
    {
-      // dd($request->all());
       try {
          $compra = new LibroCompra();
 
@@ -86,8 +72,9 @@ class LibroCompraController extends Controller
             $cu->cliente_id = $cliente->id;
             $cu->user_id = Auth::user()->id;
             $cu->save();
-
+            
             $compra->sender_id = $cliente->id;
+
          }
          $compra->fecha = $request->fecha;
          $compra->pto_venta = $request->pto_venta;
@@ -108,8 +95,8 @@ class LibroCompraController extends Controller
          $compra->save();
          //$compra = LibroCompra::create($request->all() + ['sender_id' => $c->id] + ['receiver_id' => '1']);
 
-
          return redirect()->route('compras.index')->with('success', 'LibroCompra agregados correctamente!');
+         
       } catch (Exception $e) {
          return redirect()->back()->withErrors($e->getMessage());
       }
@@ -125,13 +112,11 @@ class LibroCompraController extends Controller
       try {
          $compra = LibroCompra::find($id);
          if ($compra) {
-             return view('compras.edit', compact('compra'));
+            return view('compras.edit', compact('compra'));
          }
-     } catch (Exception $e) {
+      } catch (Exception $e) {
          return redirect()->back()->withErrors($e->getMessage());
-     }
-         
-         
+      }
    }
 
    public function update(Request $request, LibroCompra $libroCompra)

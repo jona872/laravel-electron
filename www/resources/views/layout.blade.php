@@ -11,8 +11,7 @@
 
    <!-- IMPORTANTE -->
    <link rel="stylesheet" href="{{ asset('css/layout.css')}}">
-   <!-- <link rel="stylesheet" href="{{ asset('css/bootstrap-icons/font/bootstrap-icons.css')}}"> -->
-   <!-- <link rel="stylesheet" href="{{ asset('css/craftIcons.css')}}"> -->
+
    @stack('styles')
 
 </head>
@@ -26,9 +25,8 @@
    </main>
    <!-- CONTENT -->
 
-
    @stack('scripts')
-   <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+   <!-- <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script> -->
 </body>
 
 </html>

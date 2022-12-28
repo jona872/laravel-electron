@@ -56,8 +56,6 @@ class ResumenesController extends Controller
                 array_push($tmp, get_object_vars($f));
             }
 
-            // dd($tmp);
-
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
             $csv->insertOne(['id', 'sender_id', 'receiver_id', 'fecha', 'pto_venta', 'codigo', 'tipo_comprobante', 'nombre', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op']);

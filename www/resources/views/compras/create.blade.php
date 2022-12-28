@@ -1,4 +1,7 @@
 @extends('layout')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui.min.css') }}">
+@endpush
 
 
 @section('content')
@@ -129,10 +132,15 @@
 
 </form>
 
+<!-- MANDATORY -->
+<script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> <!-- MANDATORY -->
-<script src="//code.jquery.com/jquery-1.12.4.js"> </script> <!-- MANDATORY -->
-<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"> </script> <!-- MANDATORY -->
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">  -->
+<!-- <script src="//code.jquery.com/jquery-1.12.4.js"> </script>  -->
+<!-- <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"> </script>  -->
+
+
 
 
 <script type="text/javascript">
@@ -140,6 +148,7 @@
     let globalClientClienteCode = [];
     let globalClientClienteName = [];
     let globalClientClienteCuit = [];
+
     // fetch all data and filters
     const getData = async () => {
         const response = await fetch("/api/v1/clientes/listado");
@@ -156,6 +165,8 @@
         await getData();
     })();
     //=============================================================
+
+    //Each field autocomplete
     $("#client_id").autocomplete({
         source: globalClientClienteCode,
         select: function(event, ui) { //ui.item -> label and value
@@ -169,7 +180,7 @@
             });
         }
     });
-
+    //=======================
     $("#name").autocomplete({
         source: globalClientClienteName,
         select: function(event, ui) { //ui.item -> label and value
@@ -183,7 +194,7 @@
             });
         }
     });
-
+    //=======================
     $("#cuit").autocomplete({
         source: globalClientClienteCuit,
         select: function(event, ui) { //ui.item -> label and value
@@ -197,6 +208,7 @@
             });
         }
     });
+    //=======================
 </script>
 
 @endsection
