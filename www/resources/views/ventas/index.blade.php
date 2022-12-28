@@ -40,6 +40,9 @@
                     <div>Tipo de Compro</div>
                 </th>
                 <th class="col-fit">
+                    <div>Nombre</div>
+                </th>
+                <th class="col-fit">
                     <div>CUIT</div>
                 </th>
                 <th class="col-fit">
@@ -109,10 +112,11 @@
 
                 <td> {{$c->fecha }} </td>
                 <td> {{$c->pto_venta }} </td>
-                <td> {{$c->codigo }} </td>
+                <td> {{$c->codigo_comprobante }} </td>
                 <td> {{$c->tipo_comprobante }} </td>
-                <td> {{$c->cuit }} </td>
-                <td> {{$c->condicion }} </td>
+                    <td> {{$c->name }} </td>
+                    <td> {{$c->cuit }} </td>
+                    <td> {{$c->condition }} </td>
                 <td> {{$c->neto }} </td>
                 <td> {{$c->iva }} </td>
                 <td> {{$c->iva_liquidado }} </td>

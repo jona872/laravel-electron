@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Cliente;
+use App\Cliente_Usuario;
 use App\LibroVenta;
 use Exception;
 use Illuminate\Http\Request;
@@ -26,7 +28,11 @@ class LibroVentaController extends Controller
     public function index()
     {
         try {
-            $ventas = DB::table('libro_ventas')->get();
+            // $ventas = DB::table('libro_ventas')->get();
+            $ventas = DB::table('libro_ventas as lc')
+            ->join('clientes as c', 'lc.sender_id', '=', 'c.id')
+            ->select('c.*', 'lc.*')
+            ->get();
 
             return view('ventas.index', compact('ventas'));
         } catch (Exception $e) {
@@ -42,14 +48,55 @@ class LibroVentaController extends Controller
     {
         return view('ventas.create');
     }
+    public function clientExists($id)
+    {
+       $flag = false;
+       if (Cliente::find($id)) {
+          $flag = true;
+       }
+       return $flag;
+    }
 
     public function store(Request $request) //floatval()
-    {        
-        //dd($request->all() + ['sender_id' => '1'] + ['receiver_id' => '1']);
-        // dd(floatval($request->tipo_op));
+    {
         try {
-            // User::create($request->all() + ['index' => 'value']);
-            $venta = LibroVenta::create($request->all() + ['sender_id' => '1'] + ['receiver_id' => '1']);
+            $venta = new LibroVenta();
+            if ($this->clientExists($request->client_id)) { //Si existe en la bd, solamente guardo el ID
+                $venta->sender_id = $request->client_id;
+            } else { //Si no existe creo el cliente nuevo desde el controller de compras
+                $cliente = new Cliente();
+                $cliente->name = $request->nombre;
+                $cliente->cuit = $request->cuit;
+                $cliente->condition = $request->condition;
+                $cliente->save();
+
+                //Agrego la relacion ClienteUsuario
+                $cu = new Cliente_Usuario();
+                $cu->cliente_id = $cliente->id;
+                $cu->user_id = Auth::user()->id;
+                $cu->save();
+
+                $venta->sender_id = Auth::user()->id;
+            }
+            $venta->fecha = $request->fecha;
+            $venta->pto_venta = $request->pto_venta;
+            $venta->codigo_comprobante = $request->codigo_comprobante;
+            $venta->tipo_comprobante  = $request->tipo_comprobante;
+            $venta->receiver_id = $request->client_id;
+            $venta->neto = $request->neto;
+            $venta->iva = $request->iva;
+            $venta->iva_liquidado = $request->iva_liquidado;
+            $venta->iva_sobretasa = $request->iva_sobretasa;
+            $venta->percepcion = $request->percepcion;
+            $venta->iva_retencion = $request->iva_retencion;
+            $venta->conceptos_no_gravados = $request->conceptos_no_gravados;
+            $venta->ingresos_exentos = $request->ingresos_exentos;
+            $venta->ganancias_retencion = $request->ganancias_retencion;
+            $venta->total = $request->total;
+            $venta->tipo_op = $request->tipo_op;
+            $venta->save();
+            //$compra = LibroCompra::create($request->all() + ['sender_id' => $c->id] + ['receiver_id' => '1']);
+
             return redirect()->route('ventas.index')->with('success', 'LibroVenta agregados correctamente!');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
@@ -108,10 +155,10 @@ class LibroVentaController extends Controller
     public function exportVentas()
     {
         $ventas = DB::table('libro_ventas')->get(); //me dev un array de obj, $v->value
-     
+
         $csv = Writer::createFromFileObject(new SplTempFileObject());
-     
-        $csv->insertOne(['id','sender_id','receiver_id','fecha', 'pto_venta', 'codigo', 'tipo_comprobante','nombre' ,'cuit', 'condicion', 'neto', 'iva','iva_liquidado','iva_sobretasa', 'percepcion','iva_retencion','conceptos_no_gravados', 'ingresos_exentos','ganancias_retencion','total','tipo_op']);
+
+        $csv->insertOne(['id', 'sender_id', 'receiver_id', 'fecha', 'pto_venta', 'codigo', 'tipo_comprobante', 'nombre', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op']);
         foreach ($ventas as $key => $f) {
             $csv->insertOne(get_object_vars($f));
         }

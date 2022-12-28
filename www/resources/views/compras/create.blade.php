@@ -31,7 +31,7 @@
     @csrf
     <div>
         <label for="fecha"> Fecha </label>
-        <input id="fecha" type="text" name="fecha" value="{{ old('fecha') }}" />
+        <input id="fecha" type="text" name="fecha" value="{{ old('fecha') }}" placeholder="aaaa-mm-dd"/>
     </div>
 
     <div>
