@@ -12,6 +12,8 @@ Listado Mensual de {{ $operatoria }}
     <form action="{{url('/mensuales/export')}}" method="POST" class="card--form">
             @csrf
         <input type="hidden" name="operatoria" value="{{ $operatoria }}">
+        <input type="hidden" name="mes" value="{{ $mes }}">
+        <input type="hidden" name="year" value="{{ $year }}">
         
         <table>
             <tr>

@@ -12,6 +12,8 @@ Listado Mensual de {{ $operatoria }}
         <form action="{{url('/mensuales/export')}}" method="POST" class="card--form">
             @csrf
             <input type="hidden" name="operatoria" value="{{ $operatoria }}">
+            <input type="hidden" name="mes" value="{{ $mes }}">
+            <input type="hidden" name="year" value="{{ $year }}">
             <table>
                 <tr>
                     <th class="col-fit">
@@ -67,7 +69,6 @@ Listado Mensual de {{ $operatoria }}
                     </th>
                 </tr>
                 @if (count($consulta ?? '') > 0)
-                <input type="hidden" name="exportData" value="{{base64_encode(serialize($consulta))}}">
                 @foreach ($consulta ?? '' as $c)
                 <tr>
                     <td> {{$c->fecha }} </td>
@@ -91,7 +92,6 @@ Listado Mensual de {{ $operatoria }}
                 </tr>
                 @endforeach
                 @else
-                <input type="hidden" name="exportData" value="">
                 <tr>
                     <td align="center" colspan="18"> No se encontraron compras </td>
                 </tr>
