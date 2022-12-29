@@ -31,9 +31,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/anuales', 'ResumenesController@indexAnual');
     Route::post('/anuales/preview', 'ResumenesController@anualesPreview');
     Route::post('/anuales/export', 'ResumenesController@anualesExport');
-    
-    Route::get('/anuales', 'ResumenesController@indexAnual');
+
     Route::get('/periodos', 'ResumenesController@indexPeriodo');
+    Route::post('/periodos/preview', 'ResumenesController@periodosPreview');
+    Route::post('/periodos/export', 'ResumenesController@periodosExport');
+    
+
 
     Route::get('/ventas/export', 'LibroVentaController@exportVentas');
 
