@@ -232,3 +232,6 @@ nav {
     align-items: center;
 }
 
+.evenly {
+    justify-content: space-evenly;
+}

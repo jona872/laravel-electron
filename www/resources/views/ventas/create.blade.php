@@ -1,4 +1,7 @@
 @extends('layout')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui.min.css') }}">
+@endpush
 
 
 @section('content')
@@ -12,13 +15,23 @@
     </a>
 </h1>
 
+@if ($errors->any())
+	<div class="invalid-feedback">
+		<ul>
+			@foreach ($errors->all() as $error)
+			<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+	</div>
+	@endif
+
 
 
 <form action="{{ route('ventas.store') }}" method="POST" class="card--form">
     @csrf
     <div>
         <label for="fecha"> Fecha </label>
-        <input id="fecha" type="text" name="fecha" value="{{ old('fecha') }}" />
+        <input id="fecha" type="text" name="fecha" value="{{ old('fecha') }}" placeholder="aaaa-mm-dd"/>
     </div>
 
     <div>
@@ -27,8 +40,8 @@
     </div>
 
     <div>
-        <label for="codigo"> Nro Comprobante </label>
-        <input id="codigo" type="text" name="codigo" value="{{ old('codigo') }}" />
+        <label for="codigo_comprobante"> Nro Comprobante </label>
+        <input id="codigo_comprobante" type="text" name="codigo_comprobante" value="{{ old('codigo_comprobante') }}" />
     </div>
 
     <div>
@@ -44,20 +57,20 @@
     <hr>
     <br>
     <div>
-        <label for="codigo"> Codigo Cliente </label>
-        <input id="codigo" type="text" name="codigo" value="{{ old('codigo') }}" />
+        <label for="client_id"> Codigo Cliente </label>
+        <input id="client_id" type="text" name="client_id" value="{{ old('client_id') }}" />
     </div>
     <div>
-        <label for="nombre"> Nombre Cliente </label>
-        <input id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" />
+        <label for="name"> Nombre Cliente </label>
+        <input id="name" type="text" name="name" value="{{ old('name') }}" />
     </div>
     <div>
         <label for="cuit"> CUIT </label>
         <input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" />
     </div>
     <div>
-        <label for="condicion"> Condicion </label>
-        <input id="condicion" type="text" name="condicion" value="{{ old('condicion') }}" />
+        <label for="condition"> Condicion </label>
+        <input id="condition" type="text" name="condition" value="{{ old('condition') }}" />
     </div>
     <br>
     <hr>
@@ -91,7 +104,7 @@
         <input id="conceptos_no_gravados" type="text" name="conceptos_no_gravados" value="{{ old('conceptos_no_gravados') }}" />
     </div>
     <div>
-        <label for="ingresos_exentos"> Ingresos Externos </label>
+        <label for="ingresos_exentos"> Ingresos Exentos </label>
         <input id="ingresos_exentos" type="text" name="ingresos_exentos" value="{{ old('ingresos_exentos') }}" />
     </div>
     <div>
@@ -118,5 +131,77 @@
 
 </form>
 
+<!-- MANDATORY -->
+<script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+
+<script type="text/javascript">
+    console.log("cargo ventas");
+    let dataGlobal;
+    let globalClientClienteCode = [];
+    let globalClientClienteName = [];
+    let globalClientClienteCuit = [];
+
+    // fetch all data and filters
+    const getData = async () => {
+        const response = await fetch("/api/v1/clientes/listado");
+        const data = await response.json();
+        dataGlobal = data;
+        data.map(element => {
+            globalClientClienteCode.push(element.id.toString())
+            globalClientClienteName.push(element.name)
+            globalClientClienteCuit.push(element.cuit)
+        });
+        return dataGlobal;
+    };
+    (async () => {
+        await getData();
+    })();
+    //=============================================================
+
+    //Each field autocomplete
+    $("#client_id").autocomplete({
+        source: globalClientClienteCode,
+        select: function(event, ui) { //ui.item -> label and value
+            dataGlobal.map(element => { //element = cada obj cliente
+                if (element.id === parseInt(ui.item.value)) {
+                    document.getElementById("client_id").value = parseInt(element.id)
+                    document.getElementById("name").value = element.name
+                    document.getElementById("cuit").value = element.cuit
+                    document.getElementById("condition").value = element.condition
+                }
+            });
+        }
+    });
+    //=======================
+    $("#name").autocomplete({
+        source: globalClientClienteName,
+        select: function(event, ui) { //ui.item -> label and value
+            dataGlobal.map(element => { //element = cada obj cliente            
+                if (element.name === ui.item.value) {
+                    document.getElementById("client_id").value = element.id
+                    document.getElementById("name").value = element.name
+                    document.getElementById("cuit").value = element.cuit
+                    document.getElementById("condition").value = element.condition
+                }
+            });
+        }
+    });
+    //=======================
+    $("#cuit").autocomplete({
+        source: globalClientClienteCuit,
+        select: function(event, ui) { //ui.item -> label and value
+            dataGlobal.map(element => { //element = cada obj cliente
+                if (element.cuit === ui.item.value) {
+                    document.getElementById("client_id").value = element.id
+                    document.getElementById("name").value = element.name
+                    document.getElementById("cuit").value = element.cuit
+                    document.getElementById("condition").value = element.condition
+                }
+            });
+        }
+    });
+    //=======================
+</script>
 
 @endsection

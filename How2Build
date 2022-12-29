@@ -11,3 +11,8 @@ sudo chmod -R 777 dist/
 cp -R dist/ /media/sf_Facu2/ACA/
 si tengo problema de session borrar www/boostrap/cache/config.php
 ==============================================
+
+
+================= Database Seeding =================
+php artisan db:seed --class=UserSeeder
+php artisan db:seed --class=ClienteSeeder

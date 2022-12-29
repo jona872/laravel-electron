@@ -24,6 +24,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm');
     Route::get('/home', 'ClienteController@index');
 
+    Route::get('/mensuales', 'ResumenesController@indexMensual');
+    Route::post('/mensuales/preview', 'ResumenesController@mensualesPreview');
+    Route::post('/mensuales/export', 'ResumenesController@mensualesExport');
+    
+    Route::get('/anuales', 'ResumenesController@indexAnual');
+    Route::post('/anuales/preview', 'ResumenesController@anualesPreview');
+    Route::post('/anuales/export', 'ResumenesController@anualesExport');
+
+    Route::get('/periodos', 'ResumenesController@indexPeriodo');
+    Route::post('/periodos/preview', 'ResumenesController@periodosPreview');
+    Route::post('/periodos/export', 'ResumenesController@periodosExport');
+    
+
+
     Route::get('/ventas/export', 'LibroVentaController@exportVentas');
 
     //========= RESOURCES =========

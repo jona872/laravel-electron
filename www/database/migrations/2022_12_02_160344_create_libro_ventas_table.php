@@ -26,13 +26,13 @@ class CreateLibroVentasTable extends Migration
             
             $table->date('fecha')->nullable();
             $table->string('pto_venta')->nullable();
-            $table->string('codigo')->nullable();
+            $table->string('codigo_comprobante')->nullable();
             $table->string('tipo_comprobante')->nullable();
             
             //datos del vendedor ============================
-            $table->string('nombre')->nullable();
-            $table->string('cuit')->nullable();
-            $table->string('condicion')->nullable();
+            // $table->string('nombre')->nullable();
+            // $table->string('cuit')->nullable();
+            // $table->string('condicion')->nullable();
             //===============================================
             $table->float('neto')->nullable();
             $table->float('iva')->nullable();
@@ -45,7 +45,7 @@ class CreateLibroVentasTable extends Migration
             $table->float('ganancias_retencion')->nullable();
             $table->float('total')->nullable();
             $table->integer('tipo_op')->nullable();
-
+        
             $table->timestamps();
         });
     }
