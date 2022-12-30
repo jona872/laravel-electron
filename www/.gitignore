@@ -3,3 +3,5 @@
 /public/storage
 /storage/*.key
 /.vscode
+vendor/*
+/vendor/*
