@@ -4,4 +4,5 @@
 /www/vendor/*
 /www/storage
 dist/
-/vendor
+www/vendor/*
+www/vendor

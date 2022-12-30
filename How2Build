@@ -16,3 +16,10 @@ si tengo problema de session borrar www/boostrap/cache/config.php
 ================= Database Seeding =================
 php artisan db:seed --class=UserSeeder
 php artisan db:seed --class=ClienteSeeder
+==============================================
+
+================= Fresh install notebook ===========
+clonar
+borrar vendor
+composer install & update
+==============================================

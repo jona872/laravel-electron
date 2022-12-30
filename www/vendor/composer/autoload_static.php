@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdd6a6606f76b33321b31e98197788f7e
+class ComposerStaticInit8fa3d58faddfe9f9339ce9b6557e4a1f
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -516,6 +516,7 @@ class ComposerStaticInitdd6a6606f76b33321b31e98197788f7e
         'Carbon\\Traits\\IntervalStep' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/IntervalStep.php',
         'Carbon\\Traits\\Localization' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Localization.php',
         'Carbon\\Traits\\Macro' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Macro.php',
+        'Carbon\\Traits\\MagicParameter' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/MagicParameter.php',
         'Carbon\\Traits\\Mixin' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Mixin.php',
         'Carbon\\Traits\\Modifiers' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Modifiers.php',
         'Carbon\\Traits\\Mutability' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Mutability.php',
@@ -532,7 +533,6 @@ class ComposerStaticInitdd6a6606f76b33321b31e98197788f7e
         'Carbon\\TranslatorImmutable' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/TranslatorImmutable.php',
         'Carbon\\TranslatorStrongTypeInterface' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/TranslatorStrongTypeInterface.php',
         'ClienteSeeder' => __DIR__ . '/../..' . '/database/seeds/ClienteSeeder.php',
-        'ClienteUsuarioSeeder' => __DIR__ . '/../..' . '/database/seeds/ClienteUsuarioSeeder.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
@@ -4544,8 +4544,6 @@ class ComposerStaticInitdd6a6606f76b33321b31e98197788f7e
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'UserSeeder' => __DIR__ . '/../..' . '/database/seeds/UserSeeder.php',
-        'UserTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UserTableSeeder.php',
-        'UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersTableSeeder.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'Whoops\\Exception\\ErrorException' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/ErrorException.php',
         'Whoops\\Exception\\Formatter' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/Formatter.php',
@@ -4571,10 +4569,10 @@ class ComposerStaticInitdd6a6606f76b33321b31e98197788f7e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdd6a6606f76b33321b31e98197788f7e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdd6a6606f76b33321b31e98197788f7e::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitdd6a6606f76b33321b31e98197788f7e::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitdd6a6606f76b33321b31e98197788f7e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8fa3d58faddfe9f9339ce9b6557e4a1f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8fa3d58faddfe9f9339ce9b6557e4a1f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit8fa3d58faddfe9f9339ce9b6557e4a1f::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit8fa3d58faddfe9f9339ce9b6557e4a1f::$classMap;
 
         }, null, ClassLoader::class);
     }
