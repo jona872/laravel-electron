@@ -1,5 +1,8 @@
 /node_modules
 /php
-
+/www/vendor
+/www/vendor/*
 /www/storage
 dist/
+www/vendor/*
+www/vendor
