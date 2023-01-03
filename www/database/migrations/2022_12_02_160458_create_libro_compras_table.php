@@ -46,6 +46,7 @@ class CreateLibroComprasTable extends Migration
             $table->float('compras_no_inscriptas')->nullable();
             $table->float('total')->nullable();
             $table->integer('tipo_op')->nullable();
+            $table->integer('tipo_calculo')->nullable();
 
             $table->timestamps();
         });

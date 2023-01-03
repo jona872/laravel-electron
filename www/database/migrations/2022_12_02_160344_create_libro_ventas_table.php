@@ -45,6 +45,7 @@ class CreateLibroVentasTable extends Migration
             $table->float('ganancias_retencion')->nullable();
             $table->float('total')->nullable();
             $table->integer('tipo_op')->nullable();
+            $table->integer('tipo_calculo')->nullable();
         
             $table->timestamps();
         });
