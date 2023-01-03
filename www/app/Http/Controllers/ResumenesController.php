@@ -76,13 +76,14 @@ class ResumenesController extends Controller
                     'libro_compras.conceptos_no_gravados',
                     'libro_compras.compras_no_inscriptas',
                     'libro_compras.total',
-                    'libro_compras.tipo_op'
+                    'libro_compras.tipo_op',
+                    'libro_compras.tipo_calculo'
                 )
                 ->get();
 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'nombre', 'cuit', 'Resp. I.V.A.', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op']);
+            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'nombre', 'cuit', 'Resp. I.V.A.', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op','tipo_calculo']);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
@@ -113,13 +114,14 @@ class ResumenesController extends Controller
                     'libro_ventas.ingresos_exentos',
                     'libro_ventas.ganancias_retencion',
                     'libro_ventas.total',
-                    'libro_ventas.tipo_op'
+                    'libro_ventas.tipo_op',
+                    'libro_ventas.tipo_calculo'
                 )
                 ->get();
                 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'name', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op' ]);
+            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'name', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op','tipo_calculo' ]);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
@@ -185,7 +187,8 @@ class ResumenesController extends Controller
                     'libro_compras.conceptos_no_gravados',
                     'libro_compras.compras_no_inscriptas',
                     'libro_compras.total',
-                    'libro_compras.tipo_op'
+                    'libro_compras.tipo_op',
+                    'libro_compras.tipo_calculo'
                 )
                 ->get();
 
@@ -195,7 +198,7 @@ class ResumenesController extends Controller
                 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante',
                 'nombre', 'cuit', 'Resp. I.V.A.',
                 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion',
-                'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op'
+                'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op','tipo_calculo'
             ]);
 
             foreach ($data as $key => $array) {
@@ -225,7 +228,8 @@ class ResumenesController extends Controller
                     'libro_ventas.ingresos_exentos',
                     'libro_ventas.ganancias_retencion',
                     'libro_ventas.total',
-                    'libro_ventas.tipo_op'
+                    'libro_ventas.tipo_op',
+                    'libro_ventas.tipo_calculo'
                 )
                 ->get();
 
@@ -236,7 +240,7 @@ class ResumenesController extends Controller
                 'name', 'cuit', 'condicion',
                 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa',
                 'percepcion', 'iva_retencion', 'conceptos_no_gravados',
-                'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op'
+                'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op','tipo_calculo'
             ]);
 
             foreach ($data as $key => $array) {
@@ -306,13 +310,14 @@ class ResumenesController extends Controller
                     'libro_compras.conceptos_no_gravados',
                     'libro_compras.compras_no_inscriptas',
                     'libro_compras.total',
-                    'libro_compras.tipo_op'
+                    'libro_compras.tipo_op',
+                    'libro_compras.tipo_calculo'
                 )
                 ->get();
 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'nombre', 'cuit', 'Resp. I.V.A.', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op']);
+            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'nombre', 'cuit', 'Resp. I.V.A.', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op','tipo_calculo']);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
@@ -344,13 +349,14 @@ class ResumenesController extends Controller
                     'libro_ventas.ingresos_exentos',
                     'libro_ventas.ganancias_retencion',
                     'libro_ventas.total',
-                    'libro_ventas.tipo_op'
+                    'libro_ventas.tipo_op',
+                    'libro_ventas.tipo_calculo'
                 )
                 ->get();
                 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'name', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op' ]);
+            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'name', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op','tipo_calculo' ]);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
