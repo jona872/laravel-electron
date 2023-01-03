@@ -94,6 +94,7 @@ class LibroVentaController extends Controller
             $venta->ganancias_retencion = $request->ganancias_retencion;
             $venta->total = $request->total;
             $venta->tipo_op = $request->tipo_op;
+            $venta->tipo_calculo = $request->tipo_calculo;
             $venta->save();
             //$compra = LibroCompra::create($request->all() + ['sender_id' => $c->id] + ['receiver_id' => '1']);
 
@@ -159,7 +160,7 @@ class LibroVentaController extends Controller
         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
         $csv->insertOne([
-            'id', 'sender_id', 'receiver_id', 'fecha', 'pto_venta', 'codigo', 'tipo_comprobante', 'nombre', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op'
+            'id', 'sender_id', 'receiver_id', 'fecha', 'pto_venta', 'codigo', 'tipo_comprobante', 'nombre', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op', 'tipo_calculo'
             ]);
         foreach ($ventas as $key => $f) {
             $csv->insertOne(get_object_vars($f));
