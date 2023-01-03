@@ -123,6 +123,12 @@
         <label for="tipo_op"> Tipo de Operacion </label>
         <input id="tipo_op" type="text" step="any" name="tipo_op" value="{{ old('tipo_op') }}" />
     </div>
+    <div>
+        <label for="tipo_calculo"> Tipo de Calculo </label>
+        <input id="tipo_calculo" type="text" step="any" name="tipo_calculo" value="{{ old('tipo_calculo') }}" />
+    </div>
+
+    
 
     <div class="card--row">
         <a class="btn btn--cancel a--btn" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
