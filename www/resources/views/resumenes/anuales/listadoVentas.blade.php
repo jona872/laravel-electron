@@ -23,7 +23,10 @@ Listado Anual
                         <div>Punto de Venta</div>
                     </th>
                     <th class="col-fit">
-                        <div>Nrp de Compro</div>
+                        <div>Nro de Compro</div>
+                    </th>
+                    <th class="col-fit">
+                        <div>Nombre</div>
                     </th>
                     <th class="col-fit">
                         <div>Tipo de Compro</div>
