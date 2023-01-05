@@ -81,7 +81,7 @@
     </div>
     <div>
         <label for="iva"> I.V.A. </label>
-        <input id="iva" type="number" name="iva" step='0.01' value="0.00" />
+        <input id="iva" type="number" name="iva" step='0.01' value="21" />
     </div>
     <div>
         <label for="iva_liquidado"> I.V.A. Liquidado </label>
