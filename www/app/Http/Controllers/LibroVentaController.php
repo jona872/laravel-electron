@@ -30,9 +30,9 @@ class LibroVentaController extends Controller
         try {
             // $ventas = DB::table('libro_ventas')->get();
             $ventas = DB::table('libro_ventas as lc')
-            ->join('clientes as c', 'lc.sender_id', '=', 'c.id')
-            ->select('c.*', 'lc.*')
-            ->get();
+                ->join('clientes as c', 'lc.sender_id', '=', 'c.id')
+                ->select('c.*', 'lc.*')
+                ->get();
 
             return view('ventas.index', compact('ventas'));
         } catch (Exception $e) {
@@ -50,19 +50,20 @@ class LibroVentaController extends Controller
     }
     public function clientExists($id)
     {
-       $flag = false;
-       if (Cliente::find($id)) {
-          $flag = true;
-       }
-       return $flag;
+        $flag = false;
+        if (Cliente::find($id)) {
+            $flag = true;
+        }
+        return $flag;
     }
 
     public function store(Request $request) //floatval()
     {
-        try {
+        // dd($request->all());
+        try { //receiver y sender
             $venta = new LibroVenta();
             if ($this->clientExists($request->client_id)) { //Si existe en la bd, solamente guardo el ID
-                $venta->sender_id = $request->client_id;
+                $venta->receiver_id = $request->client_id;
             } else { //Si no existe creo el cliente nuevo desde el controller de compras
                 $cliente = new Cliente();
                 $cliente->name = $request->nombre;
@@ -76,13 +77,13 @@ class LibroVentaController extends Controller
                 $cu->user_id = Auth::user()->id;
                 $cu->save();
 
-                $venta->sender_id = Auth::user()->id;
+                $venta->receiver_id = $cu->user_id; 
             }
             $venta->fecha = $request->fecha;
             $venta->pto_venta = $request->pto_venta;
             $venta->codigo_comprobante = $request->codigo_comprobante;
             $venta->tipo_comprobante  = $request->tipo_comprobante;
-            $venta->receiver_id = $request->client_id;
+            $venta->sender_id =  Auth::user()->id; //as i sell im the sender
             $venta->neto = $request->neto;
             $venta->iva = $request->iva;
             $venta->iva_liquidado = $request->iva_liquidado;
@@ -113,8 +114,9 @@ class LibroVentaController extends Controller
     {
         try {
             $venta = LibroVenta::find($id);
+            $cliente = Cliente::find($venta->receiver_id);
             if ($venta) {
-                return view('ventas.edit', compact('venta'));
+                return view('ventas.edit', compact('venta','cliente'));
             }
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
@@ -161,7 +163,7 @@ class LibroVentaController extends Controller
 
         $csv->insertOne([
             'id', 'sender_id', 'receiver_id', 'fecha', 'pto_venta', 'codigo', 'tipo_comprobante', 'nombre', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op', 'tipo_calculo'
-            ]);
+        ]);
         foreach ($ventas as $key => $f) {
             $csv->insertOne(get_object_vars($f));
         }

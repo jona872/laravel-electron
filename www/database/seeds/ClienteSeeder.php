@@ -16,12 +16,12 @@ class ClienteSeeder extends Seeder
     public function run()
     {
         DB::table('clientes')->insert([
-            'name' => Str::random(10),
-            'cuit' => Str::random(10),
-            'condition' => Str::random(10),
-            'direction' => Str::random(10),
-            'activity_start' => Str::random(10),
-            'gross_receipts_tax' => Str::random(10),
+            'name' => "NEWTON STATION S.R.L.",
+            'cuit' => "30-71198096-9",
+            'condition' => "Resp. Inscripto",
+            'direction' => "PARANA 552 Piso:8 Dpto:84",
+            'activity_start' => "01-08-2011",
+            'gross_receipts_tax' => "9015774730",
         ]);
         $id = DB::table('clientes')->count();
 

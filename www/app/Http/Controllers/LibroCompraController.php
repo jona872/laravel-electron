@@ -56,7 +56,6 @@ class LibroCompraController extends Controller
 
    public function store(Request $request)
    {
-      dd($request->all());
       try {
          $compra = new LibroCompra();
 
@@ -115,8 +114,11 @@ class LibroCompraController extends Controller
    {
       try {
          $compra = LibroCompra::find($id);
+         
+         $cliente = Cliente::find($compra->sender_id);
+
          if ($compra) {
-            return view('compras.edit', compact('compra'));
+            return view('compras.edit', compact('compra','cliente'));
          }
       } catch (Exception $e) {
          return redirect()->back()->withErrors($e->getMessage());

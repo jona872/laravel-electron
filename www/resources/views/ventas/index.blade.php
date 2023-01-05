@@ -25,7 +25,7 @@
         <table>
             <tr>
                 <th class="col-opt-header">
-                    <div>Opt</div>
+                    <div></div>
                 </th>
                 <th class="col-fit">
                     <div>Fecha</div>

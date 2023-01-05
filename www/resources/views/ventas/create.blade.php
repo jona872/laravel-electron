@@ -16,14 +16,14 @@
 </h1>
 
 @if ($errors->any())
-	<div class="invalid-feedback">
-		<ul>
-			@foreach ($errors->all() as $error)
-			<li>{{ $error }}</li>
-			@endforeach
-		</ul>
-	</div>
-	@endif
+<div class="invalid-feedback">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
 
 
@@ -31,7 +31,7 @@
     @csrf
     <div>
         <label for="fecha"> Fecha </label>
-        <input id="fecha" type="text" name="fecha" value="{{ old('fecha') }}" placeholder="aaaa-mm-dd"/>
+        <input id="fecha" type="text" name="fecha" value="{{ old('fecha') }}" placeholder="aaaa-mm-dd" />
     </div>
 
     <div>
@@ -77,46 +77,46 @@
     <br>
     <div>
         <label for="neto"> Neto </label>
-        <input id="neto" type="text" name="neto" value="{{ old('neto') }}" />
+        <input id="neto" type="number" name="neto" step='0.01' value="0.00" />
     </div>
     <div>
         <label for="iva"> I.V.A. </label>
-        <input id="iva" type="text" name="iva" value="{{ old('iva') }}" />
+        <input id="iva" type="number" name="iva" step='0.01' value="0.00" />
     </div>
     <div>
         <label for="iva_liquidado"> I.V.A. Liquidado </label>
-        <input id="iva_liquidado" type="text" name="iva_liquidado" value="{{ old('iva_liquidado') }}" />
+        <input id="iva_liquidado" type="number" name="iva_liquidado" step='0.01' value="0.00" />
     </div>
     <div>
         <label for="iva_sobretasa"> Sobre Ta. I.V.A. </label>
-        <input id="iva_sobretasa" type="text" name="iva_sobretasa" value="{{ old('iva_sobretasa') }}" />
+        <input id="iva_sobretasa" type="number" name="iva_sobretasa" step='0.01' value="0.00" />
     </div>
     <div>
         <label for="percepcion"> Percepcion </label>
-        <input id="percepcion" type="text" name="percepcion" value="{{ old('percepcion') }}" />
+        <input id="percepcion" type="number" name="percepcion" step='0.01' value="0.00" />
     </div>
     <div>
         <label for="iva_retencion"> I.V.A. Retencion </label>
-        <input id="iva_retencion" type="text" name="iva_retencion" value="{{ old('iva_retencion') }}" />
+        <input id="iva_retencion" type="number" name="iva_retencion" step='0.01' value="0.00" />
     </div>
     <div>
         <label for="conceptos_no_gravados"> Conceptos No Gravados </label>
-        <input id="conceptos_no_gravados" type="text" name="conceptos_no_gravados" value="{{ old('conceptos_no_gravados') }}" />
+        <input id="conceptos_no_gravados" type="number" name="conceptos_no_gravados" step='0.01' value="0.00" />
     </div>
     <div>
         <label for="ingresos_exentos"> Ingresos Exentos </label>
-        <input id="ingresos_exentos" type="text" name="ingresos_exentos" value="{{ old('ingresos_exentos') }}" />
+        <input id="ingresos_exentos" type="number" name="ingresos_exentos" step='0.01' value="0.00" />
     </div>
     <div>
         <label for="ganancias_retencion"> Retencion de Ganancias </label>
-        <input id="ganancias_retencion" type="text" name="ganancias_retencion" value="{{ old('ganancias_retencion') }}" />
+        <input id="ganancias_retencion" type="number" name="ganancias_retencion" step='0.01' value="0.00" />
     </div>
     <br>
     <hr>
     <br>
     <div>
         <label for="total"> Total </label>
-        <input id="total" type="text" step="any" name="total" value="{{ old('total') }}" />
+        <input id="total" type="number" step="any" name="total" step='0.01' value="{{ old('total') }}" />
     </div>
     <div>
         <label for="tipo_op"> Tipo de Operacion </label>
@@ -145,6 +145,54 @@
     let globalClientClienteCode = [];
     let globalClientClienteName = [];
     let globalClientClienteCuit = [];
+
+
+    let a1_neto = document.getElementById('neto');
+    let a2_iva = document.getElementById('iva');
+    let a3_iva_liquidado = document.getElementById('iva_liquidado');
+    let a4_iva_sobretasa = document.getElementById('iva_sobretasa');
+    let a5_percepcion = document.getElementById('percepcion');
+    let a6_iva_retencion = document.getElementById('iva_retencion');
+    let a7_conceptos_no_gravados = document.getElementById('conceptos_no_gravados');
+    let a8_ingresos_exentos = document.getElementById('ingresos_exentos');
+    let a9_ganancias_retencion = document.getElementById('ganancias_retencion');
+    let a11_total = document.getElementById('total');
+
+
+    // let editableButtons = [ a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a8_ingresos_exentos, a9_ganancias_retencion ];
+
+    function clearFields(vButtons) {
+        vButtons.map((btn) => {
+            btn.value = parseFloat('0').toFixed(2);
+        });
+    }
+
+    $("#tipo_calculo").focusout(function() {
+
+        switch (document.getElementById("tipo_calculo").value) {
+            case '1':
+                clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a8_ingresos_exentos, a9_ganancias_retencion]);
+                a1_neto.value = parseFloat((a11_total.value - a9_ganancias_retencion.value - a8_ingresos_exentos.value - a7_conceptos_no_gravados.value - a6_iva_retencion.value - a5_percepcion.value) / (1 + a2_iva.value) * 100).toFixed(2);
+                a3_iva_liquidado.value = parseFloat(a1_neto.value * (a2_iva.value / 100)).toFixed(2);
+                break;
+            case '4':
+                clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_conceptos_no_gravados, a9_ganancias_retencion]);
+                a8_ingresos_exentos.value = parseFloat(a11_total.value - a9_ganancias_retencion.value - a7_conceptos_no_gravados.value - a6_iva_retencion.value - a5_percepcion.value).toFixed(2);
+                break;
+            case '5':
+                clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_conceptos_no_gravados, a8_ingresos_exentos, a9_ganancias_retencion]);
+                a3_iva_liquidado.value = parseFloat(a11_total.value).toFixed(2);
+                break;
+            default:
+                console.log(`No op available`);
+        }
+
+
+    });
+
+
+
+
 
     // fetch all data and filters
     const getData = async () => {

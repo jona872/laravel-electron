@@ -10,7 +10,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
         </svg>
-        <span>Ventas</span>
+        <span>Compras</span>
     </a>
 </h1>
 
@@ -24,13 +24,13 @@
     </div>
 
     <div>
-        <label for="pto_compra"> Pto de Venta </label>
-        <input id="pto_compra" type="text" name="pto_compra" value="{{ $compra->pto_compra }}" />
+        <label for="pto_venta"> Pto de Venta </label>
+        <input id="pto_venta" type="text" name="pto_venta" value="{{ $compra->pto_venta }}" />
     </div>
 
     <div>
-        <label for="codigo"> Nro Comprobante </label>
-        <input id="codigo" type="text" name="codigo" value="{{ $compra->codigo }}" />
+        <label for="codigo_comprobante"> Nro Comprobante </label>
+        <input id="codigo_comprobante" type="text" name="codigo_comprobante" value="{{ $compra->codigo_comprobante }}" />
     </div>
 
     <div>
@@ -47,20 +47,20 @@
     <hr>
     <br>
     <div>
-        <label for="codigo"> Codigo Cliente </label>
-        <input id="codigo" type="text" name="codigo" value="{{ $compra->codigo }}" />
+        <label for="client_id"> Codigo Cliente </label>
+        <input readonly id="client_id" type="text" name="client_id" value="{{ $cliente->id }}" />
     </div>
     <div>
-        <label for="nombre"> Nombre Cliente </label>
-        <input id="nombre" type="text" name="nombre" value="{{ $compra->nombre }}" />
+        <label for="name"> Nombre Cliente </label>
+        <input readonly id="name" type="text" name="name" value="{{ $cliente->name }}" />
     </div>
     <div>
         <label for="cuit"> CUIT </label>
-        <input id="cuit" type="text" name="cuit" value="{{ $compra->cuit }}" />
+        <input readonly id="cuit" type="text" name="cuit" value="{{ $cliente->cuit }}" />
     </div>
     <div>
-        <label for="condicion"> Condicion </label>
-        <input id="condicion" type="text" name="condicion" value="{{ $compra->condicion }}" />
+        <label for="condition"> Condicion </label>
+        <input readonly id="condition" type="text" name="condition" value="{{ $cliente->condition }}" />
     </div>
     <br>
     <hr>
@@ -90,16 +90,20 @@
         <input id="iva_retencion" type="text" name="iva_retencion" value="{{ $compra->iva_retencion }}" />
     </div>
     <div>
-        <label for="conceptos_no_gravados"> Conceptos No Gravados </label>
+        <label for="impuestos_internos"> impuestos_internos </label>
+        <input id="impuestos_internos" type="text" name="impuestos_internos" value="{{ $compra->impuestos_internos }}" />
+    </div>
+    <div>
+        <label for="conceptos_no_gravados"> conceptos_no_gravados </label>
         <input id="conceptos_no_gravados" type="text" name="conceptos_no_gravados" value="{{ $compra->conceptos_no_gravados }}" />
     </div>
     <div>
-        <label for="ingresos_exentos"> Ingresos Externos </label>
-        <input id="ingresos_exentos" type="text" name="ingresos_exentos" value="{{ $compra->ingresos_exentos }}" />
+        <label for="compras_no_inscriptas"> compras_no_inscriptas </label>
+        <input id="compras_no_inscriptas" type="text" name="compras_no_inscriptas" value="{{ $compra->compras_no_inscriptas }}" />
     </div>
     <div>
-        <label for="ganancias_retencion"> Retencion de Ganancias </label>
-        <input id="ganancias_retencion" type="text" name="ganancias_retencion" value="{{ $compra->ganancias_retencion }}" />
+        <label for="tipo_calculo"> Tipo de Calculo </label>
+        <input id="tipo_calculo" type="text" step="any" name="tipo_calculo" value="{{ $compra->tipo_calculo }}" />
     </div>
     <br>
     <hr>
