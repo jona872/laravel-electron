@@ -3,6 +3,12 @@
     padding: 0;
     margin: 0;
     text-decoration: none;
+    font-family: system-ui;
+    /* font-family: 'proxima-nova', sans-serif;  mobile */
+}
+
+:root {
+    font-size: 16px;
 }
 
 a, a:visited {
@@ -108,7 +114,7 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     background-color: var(--bg);
     padding: 1rem 0.5rem 0 0.5rem;
 }
@@ -155,9 +161,11 @@ nav {
     display: flex;
     justify-content: center;
 }
+
 .a--btn {
     font-size: 1.15rem !important;
 }
+
 .btn {
     appearance: auto;
     writing-mode: horizontal-tb !important;
@@ -195,19 +203,19 @@ nav {
 .btn--confirm {
     background: var(--confirm);
     border-color: var(--confirm);
-    color:#fff;
+    color: #fff;
 }
 
 .btn--edit {
     background: var(--edit);
     border-color: var(--edit);
-    color:#fff;
+    color: #fff;
 }
 
 .btn--cancel {
     background: var(--cancel);
     border-color: var(--cancel);
-    color:#fff !important;
+    color: #fff !important;
 }
 
 .m-top-10vh {
@@ -221,11 +229,13 @@ nav {
 .card--form {
     padding: 1rem 0;
 }
+
 .title--header {
     display: flex;
     width: 100%;
     margin-bottom: 10px;
 }
+
 .row--centered {
     display: flex;
     flex-direction: row;
