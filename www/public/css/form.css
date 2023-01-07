@@ -11,17 +11,15 @@
    padding: 0 1rem;
 }
 
-.left-panel {
-   /* width: 80%; */
+.left--panel {
    background-color: bisque;
 }
 
-.right-panel {
-   /* width: 80%; */
+.right--panel {
    background-color: aquamarine;
 }
 
-.pad-y-05 {
+.form--row {
    padding: 0.5rem 0;
    display: flex;
    justify-content: space-between;
@@ -29,15 +27,11 @@
    gap: 0.5rem;
 }
 
-/* form {
-   margin: 0 auto;
-} */
-
-.form--row--label {
-
+.right--panel > .form--row > input {
+   width: 100px;
 }
-.form--row--input {
-   
+.left--panel > .form--row > input {
+   width: 100px;
 }
 
 .footer-btn {
@@ -49,7 +43,7 @@
    padding: 0 1rem;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 650px) {
    .container {
       width: 100%;
       display: flex;
@@ -58,12 +52,13 @@
       align-items: flex-start;
    }
 
-   .left-panel {
-      width: 100%;
+   .left--panel {
+      width: 80%;
+      max-width: 350px;
       padding: 1rem;
    }
 
-   .right-panel {
+   .right--panel {
       width: 100%;
       background-color: aquamarine;
       padding: 1rem;
