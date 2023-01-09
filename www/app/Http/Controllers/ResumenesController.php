@@ -12,9 +12,16 @@ use SplTempFileObject;
 use PhpParser\Node\Expr\FuncCall;
 use SplFileObject;
 
+const HEADER_COMPRAS = [
+    'Fecha', 'Punto de Venta', 'Nro. de Comprob.', 'Tipo de Comprob.', 'Nombre', 'C.U.I.T.', 'Resp. I.V.A.', 'Neto Gravado', 'Tasa de I.V.A.', 'I.V.A. Liquidado', 'Sobretasa I.V.A.', 'Percep. D.G.R.', 'Retenc. I.V.A.', 'Imp. Internos', 'Concep. No Gravados', 'Compras No Insc.', 'Total', 'Tipo Op.'
+];
+
+const HEADER_VENTAS = [
+    'Fecha', 'Punto de Venta', 'Nro. de Comprob.', 'Tipo de Comprob.', 'Nombre', 'C.U.I.T.', 'Responsable ante el I.V.A.', 'Neto Gravado', 'Tasa de I.V.A.', 'I.V.A. Liquidado', 'Sobretasa I.V.A.', 'Percep. D.G.R.', 'Retenc. I.V.A.', 'Concep. No Gravados', 'Ingresos Exentos', 'Retenc. Gcias.', 'Total', 'Tipo Op.'
+];
+
 class ResumenesController extends Controller
 {
-
     public function index()
     {
         return view('resumenes.index');
@@ -29,6 +36,7 @@ class ResumenesController extends Controller
         $operatoria = $request->operatoria;
         $mes = $request->mes;
         $year = $request->year;
+        
         //Ventas no tiene el autocompletar aun,
         if ($operatoria == "compras") {
             $consulta = DB::table('libro_compras')
@@ -45,7 +53,7 @@ class ResumenesController extends Controller
                 ->whereMonth('fecha', '=', $request->mes)
                 ->get();
 
-            return view('resumenes.mensuales.listadoVentas', compact('consulta', 'operatoria','year','mes'));
+            return view('resumenes.mensuales.listadoVentas', compact('consulta', 'operatoria', 'year', 'mes'));
         }
     }
 
@@ -54,35 +62,40 @@ class ResumenesController extends Controller
         //operatoria, mes, year
         if ($request->operatoria && $request->operatoria == "compras") {
 
-            $data = DB::table('libro_compras')
-                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
-                ->whereMonth('libro_compras.fecha', '=', $request->mes)
-                ->whereYear('libro_compras.fecha', '=', $request->year)
-                ->select(
-                    'libro_compras.fecha',
-                    'libro_compras.pto_venta',
-                    'libro_compras.codigo_comprobante',
-                    'libro_compras.tipo_comprobante',
-                    'clientes.name',
-                    'clientes.cuit',
-                    'clientes.condition',
-                    'libro_compras.neto',
-                    'libro_compras.iva',
-                    'libro_compras.iva_liquidado',
-                    'libro_compras.iva_sobretasa',
-                    'libro_compras.percepcion',
-                    'libro_compras.iva_retencion',
-                    'libro_compras.impuestos_internos',
-                    'libro_compras.conceptos_no_gravados',
-                    'libro_compras.compras_no_inscriptas',
-                    'libro_compras.total',
-                    'libro_compras.tipo_op'
-                )
-                ->get();
+            $data = $this->getComprasData($request->year, $request->mes);
+            // $data = DB::table('libro_compras')
+            //     ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+            //     ->whereMonth('libro_compras.fecha', '=', $request->mes)
+            //     ->whereYear('libro_compras.fecha', '=', $request->year)
+            //     ->select(
+            //         'libro_compras.fecha',
+            //         'libro_compras.pto_venta',
+            //         'libro_compras.codigo_comprobante',
+            //         'libro_compras.tipo_comprobante',
+            //         'clientes.name',
+            //         'clientes.cuit',
+            //         'clientes.condition',
+            //         'libro_compras.neto',
+            //         'libro_compras.iva',
+            //         'libro_compras.iva_liquidado',
+            //         'libro_compras.iva_sobretasa',
+            //         'libro_compras.percepcion',
+            //         'libro_compras.iva_retencion',
+            //         'libro_compras.impuestos_internos',
+            //         'libro_compras.conceptos_no_gravados',
+            //         'libro_compras.compras_no_inscriptas',
+            //         'libro_compras.total',
+            //         'libro_compras.tipo_op',
+            //         'libro_compras.tipo_calculo'
+            //     )
+            //     ->get();
 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'nombre', 'cuit', 'Resp. I.V.A.', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op']);
+            // $csv->insertOne([
+            //     'Fecha', 'Punto de Venta', 'Nro. de Comprob.', 'Tipo de Comprob.', 'Nombre', 'C.U.I.T.', 'Resp. I.V.A.', 'Neto Gravado', 'Tasa de I.V.A.', 'I.V.A. Liquidado', 'Sobretasa I.V.A.', 'Percep. D.G.R.', 'Retenc. I.V.A.', 'Imp. Internos', 'Concep. No Gravados', 'Compras No Insc.', 'Total', 'Tipo Op.'
+            // ]);
+            $csv->insertOne([HEADER_COMPRAS]);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
@@ -91,35 +104,39 @@ class ResumenesController extends Controller
             $csv->output('ResumenMensualCompras' . $request->mes . '.csv');
         } else {
             // dd($request->all(),$request->mes,$request->year);
-            $data = DB::table('libro_ventas')
-                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
-                ->whereMonth('libro_ventas.fecha', '=', $request->mes)
-                ->whereYear('libro_ventas.fecha', '=', $request->year)
-                ->select(
-                    'libro_ventas.fecha',
-                    'libro_ventas.pto_venta',
-                    'libro_ventas.codigo_comprobante',
-                    'libro_ventas.tipo_comprobante',
-                    'clientes.name',
-                    'clientes.cuit',
-                    'clientes.condition',
-                    'libro_ventas.neto',
-                    'libro_ventas.iva',
-                    'libro_ventas.iva_liquidado',
-                    'libro_ventas.iva_sobretasa',
-                    'libro_ventas.percepcion',
-                    'libro_ventas.iva_retencion',
-                    'libro_ventas.conceptos_no_gravados',
-                    'libro_ventas.ingresos_exentos',
-                    'libro_ventas.ganancias_retencion',
-                    'libro_ventas.total',
-                    'libro_ventas.tipo_op'
-                )
-                ->get();
-                
+            $data = $this->getVentasData($request->year, $request->mes);
+            // $data = DB::table('libro_ventas')
+            //     ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
+            //     ->whereMonth('libro_ventas.fecha', '=', $request->mes)
+            //     ->whereYear('libro_ventas.fecha', '=', $request->year)
+            //     ->select(
+            //         'libro_ventas.fecha',
+            //         'libro_ventas.pto_venta',
+            //         'libro_ventas.codigo_comprobante',
+            //         'libro_ventas.tipo_comprobante',
+            //         'clientes.name',
+            //         'clientes.cuit',
+            //         'clientes.condition',
+            //         'libro_ventas.neto',
+            //         'libro_ventas.iva',
+            //         'libro_ventas.iva_liquidado',
+            //         'libro_ventas.iva_sobretasa',
+            //         'libro_ventas.percepcion',
+            //         'libro_ventas.iva_retencion',
+            //         'libro_ventas.conceptos_no_gravados',
+            //         'libro_ventas.ingresos_exentos',
+            //         'libro_ventas.ganancias_retencion',
+            //         'libro_ventas.total',
+            //         'libro_ventas.tipo_op'
+            //     )
+            //     ->get();
+
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'name', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op' ]);
+            // $csv->insertOne([
+            //     'Fecha', 'Punto de Venta', 'Nro. de Comprob.', 'Tipo de Comprob.', 'Nombre', 'C.U.I.T.', 'Responsable ante el I.V.A.', 'Neto Gravado', 'Tasa de I.V.A.', 'I.V.A. Liquidado', 'Sobretasa I.V.A.', 'Percep. D.G.R.', 'Retenc. I.V.A.', 'Concep. No Gravados', 'Ingresos Exentos', 'Retenc. Gcias.', 'Total', 'Tipo Op.'
+            // ]);
+            $csv->insertOne([HEADER_VENTAS]);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
@@ -160,43 +177,13 @@ class ResumenesController extends Controller
 
     public function anualesExport(Request $request)
     {
-        // dd($request->operatoria, $request->year);
-        // $data = DB::table("libro_" . $request->operatoria)->get();
         if ($request->operatoria && $request->operatoria == "compras") {
 
-            $data = DB::table('libro_compras')
-                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
-                ->whereYear('libro_compras.fecha', '=', $request->year)
-                ->select(
-                    'libro_compras.fecha',
-                    'libro_compras.pto_venta',
-                    'libro_compras.codigo_comprobante',
-                    'libro_compras.tipo_comprobante',
-                    'clientes.name',
-                    'clientes.cuit',
-                    'clientes.condition',
-                    'libro_compras.neto',
-                    'libro_compras.iva',
-                    'libro_compras.iva_liquidado',
-                    'libro_compras.iva_sobretasa',
-                    'libro_compras.percepcion',
-                    'libro_compras.iva_retencion',
-                    'libro_compras.impuestos_internos',
-                    'libro_compras.conceptos_no_gravados',
-                    'libro_compras.compras_no_inscriptas',
-                    'libro_compras.total',
-                    'libro_compras.tipo_op'
-                )
-                ->get();
+            $data = $this->getComprasData($request->year);
 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([
-                'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante',
-                'nombre', 'cuit', 'Resp. I.V.A.',
-                'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion',
-                'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op'
-            ]);
+            $csv->insertOne(HEADER_COMPRAS);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
@@ -204,41 +191,11 @@ class ResumenesController extends Controller
             //descarga
             $csv->output('ResumenAnualCompras.csv');
         } else {
-            $data = DB::table('libro_ventas')
-                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
-                ->whereYear('libro_ventas.fecha', '=', $request->year)
-                ->select(
-                    'libro_ventas.fecha',
-                    'libro_ventas.pto_venta',
-                    'libro_ventas.codigo_comprobante',
-                    'libro_ventas.tipo_comprobante',
-                    'clientes.name',
-                    'clientes.cuit',
-                    'clientes.condition',
-                    'libro_ventas.neto',
-                    'libro_ventas.iva',
-                    'libro_ventas.iva_liquidado',
-                    'libro_ventas.iva_sobretasa',
-                    'libro_ventas.percepcion',
-                    'libro_ventas.iva_retencion',
-                    'libro_ventas.conceptos_no_gravados',
-                    'libro_ventas.ingresos_exentos',
-                    'libro_ventas.ganancias_retencion',
-                    'libro_ventas.total',
-                    'libro_ventas.tipo_op'
-                )
-                ->get();
+            $data = $this->getVentasData($request->year, $request->mes);
 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([
-                'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante',
-                'name', 'cuit', 'condicion',
-                'neto', 'iva', 'iva_liquidado', 'iva_sobretasa',
-                'percepcion', 'iva_retencion', 'conceptos_no_gravados',
-                'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op'
-            ]);
-
+            $csv->insertOne(HEADER_VENTAS);
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
             }
@@ -247,12 +204,12 @@ class ResumenesController extends Controller
         }
     }
 
-
     public function indexPeriodo()
     {
         return view('resumenes.periodos.index');
     }
-    public function periodosPreview(Request $request){
+    public function periodosPreview(Request $request)
+    {
         $operatoria = $request->operatoria;
         $mes = $request->mes;
         $mes_final = $request->mes_final;
@@ -266,7 +223,7 @@ class ResumenesController extends Controller
                 ->whereMonth('fecha', '<=', $request->mes_final)
                 ->get();
 
-            return view('resumenes.periodos.listadoCompras', compact('consulta', 'operatoria', 'year', 'mes' , 'mes_final'));
+            return view('resumenes.periodos.listadoCompras', compact('consulta', 'operatoria', 'year', 'mes', 'mes_final'));
         } else {
             $consulta = DB::table('libro_ventas')
                 ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
@@ -275,90 +232,113 @@ class ResumenesController extends Controller
                 ->whereMonth('fecha', '<=', $request->mes_final)
                 ->get();
 
-            return view('resumenes.periodos.listadoVentas', compact('consulta', 'operatoria','year','mes' , 'mes_final'));
+            return view('resumenes.periodos.listadoVentas', compact('consulta', 'operatoria', 'year', 'mes', 'mes_final'));
         }
-
     }
-    public function periodosExport(Request $request){
+    public function periodosExport(Request $request)
+    {
         //operatoria, mes, year
         if ($request->operatoria && $request->operatoria == "compras") {
 
-            $data = DB::table('libro_compras')
-                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
-                ->whereYear('libro_compras.fecha', '=', $request->year)
-                ->whereMonth('libro_compras.fecha', '>=', $request->mes)
-                ->whereMonth('libro_compras.fecha', '<=', $request->mes_final)
-                ->select(
-                    'libro_compras.fecha',
-                    'libro_compras.pto_venta',
-                    'libro_compras.codigo_comprobante',
-                    'libro_compras.tipo_comprobante',
-                    'clientes.name',
-                    'clientes.cuit',
-                    'clientes.condition',
-                    'libro_compras.neto',
-                    'libro_compras.iva',
-                    'libro_compras.iva_liquidado',
-                    'libro_compras.iva_sobretasa',
-                    'libro_compras.percepcion',
-                    'libro_compras.iva_retencion',
-                    'libro_compras.impuestos_internos',
-                    'libro_compras.conceptos_no_gravados',
-                    'libro_compras.compras_no_inscriptas',
-                    'libro_compras.total',
-                    'libro_compras.tipo_op'
-                )
-                ->get();
+            $data = $this->getComprasData($request->year, $request->mes, $request->mes_final);
 
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'nombre', 'cuit', 'Resp. I.V.A.', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'impuestos_internos', 'conceptos_no_gravados', 'compras_no_inscriptas', 'total', 'tipo_op']);
+            $csv->insertOne(HEADER_COMPRAS);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
             }
             //descarga
-            $csv->output('Resumen-Periodos-Compras-'.$request->mes.'-'.$request->mes_final.'.csv');
+            $csv->output('Resumen-Periodos-Compras-' . $request->mes . '-' . $request->mes_final . '.csv');
         } else {
-            // dd($request->all(),$request->mes,$request->year);
-            $data = DB::table('libro_ventas')
-                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
-                ->whereYear('libro_ventas.fecha', '=', $request->year)
-                ->whereMonth('libro_ventas.fecha', '>=', $request->mes)
-                ->whereMonth('libro_ventas.fecha', '<=', $request->mes_final)
-                ->select(
-                    'libro_ventas.fecha',
-                    'libro_ventas.pto_venta',
-                    'libro_ventas.codigo_comprobante',
-                    'libro_ventas.tipo_comprobante',
-                    'clientes.name',
-                    'clientes.cuit',
-                    'clientes.condition',
-                    'libro_ventas.neto',
-                    'libro_ventas.iva',
-                    'libro_ventas.iva_liquidado',
-                    'libro_ventas.iva_sobretasa',
-                    'libro_ventas.percepcion',
-                    'libro_ventas.iva_retencion',
-                    'libro_ventas.conceptos_no_gravados',
-                    'libro_ventas.ingresos_exentos',
-                    'libro_ventas.ganancias_retencion',
-                    'libro_ventas.total',
-                    'libro_ventas.tipo_op'
-                )
-                ->get();
-                
+
+            $data = $this->getVentasData($request->year, $request->mes, $request->mes_final);
+
             $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne([ 'fecha', 'pto_venta', 'codigo_comprobante', 'tipo_comprobante', 'name', 'cuit', 'condicion', 'neto', 'iva', 'iva_liquidado', 'iva_sobretasa', 'percepcion', 'iva_retencion', 'conceptos_no_gravados', 'ingresos_exentos', 'ganancias_retencion', 'total', 'tipo_op' ]);
+            $csv->insertOne(HEADER_VENTAS);
 
             foreach ($data as $key => $array) {
                 $csv->insertOne(get_object_vars($array));
             }
             //descarga
-            $csv->output('Resumen-Periodos-Ventas-'.$request->mes.'-'.$request->mes_final.'.csv');
+            $csv->output('Resumen-Periodos-Ventas-' . $request->mes . '-' . $request->mes_final . '.csv');
+        }
+    }
+
+    public function getComprasData($year, ?int $startMonth = null, ?int $endMonth = null)
+    {
+        if ($startMonth == null or empty($startMonth)) {
+            $startMonth = 1;
+            $endMonth = 12;
+        } else {
+            if ($endMonth == null or empty($endMonth)) $endMonth = $startMonth;
         }
 
+        return DB::table('libro_compras')
+            ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+            ->whereYear('libro_compras.fecha', '=', $year)
+            ->whereMonth('libro_compras.fecha', '>=', $startMonth)
+            ->whereMonth('libro_compras.fecha', '<=', $endMonth)
+            ->select(
+                'libro_compras.fecha',
+                'libro_compras.pto_venta',
+                'libro_compras.codigo_comprobante',
+                'libro_compras.tipo_comprobante',
+                'clientes.name',
+                'clientes.cuit',
+                'clientes.condition',
+                'libro_compras.neto',
+                'libro_compras.iva',
+                'libro_compras.iva_liquidado',
+                'libro_compras.iva_sobretasa',
+                'libro_compras.percepcion',
+                'libro_compras.iva_retencion',
+                'libro_compras.impuestos_internos',
+                'libro_compras.conceptos_no_gravados',
+                'libro_compras.compras_no_inscriptas',
+                'libro_compras.total',
+                'libro_compras.tipo_op'
+            )
+            ->get();
+    }
+
+    public function getVentasData($year, ?int $startMonth = null, ?int $endMonth = null)
+    {
+        if ($startMonth == null or empty($startMonth)) {
+            $startMonth = 1;
+            $endMonth = 12;
+        } else {
+            if ($endMonth == null or empty($endMonth)) $endMonth = $startMonth;
+        }
+
+        return DB::table('libro_ventas')
+            ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
+            ->whereYear('libro_ventas.fecha', '=', $year)
+            ->whereMonth('libro_ventas.fecha', '>=', $startMonth)
+            ->whereMonth('libro_ventas.fecha', '<=', $endMonth)
+            ->select(
+                'libro_ventas.fecha',
+                'libro_ventas.pto_venta',
+                'libro_ventas.codigo_comprobante',
+                'libro_ventas.tipo_comprobante',
+                'clientes.name',
+                'clientes.cuit',
+                'clientes.condition',
+                'libro_ventas.neto',
+                'libro_ventas.iva',
+                'libro_ventas.iva_liquidado',
+                'libro_ventas.iva_sobretasa',
+                'libro_ventas.percepcion',
+                'libro_ventas.iva_retencion',
+                'libro_ventas.conceptos_no_gravados',
+                'libro_ventas.ingresos_exentos',
+                'libro_ventas.ganancias_retencion',
+                'libro_ventas.total',
+                'libro_ventas.tipo_op'
+            )
+            ->get();
     }
 
     public function create()

@@ -92,6 +92,9 @@ class LibroCompraController extends Controller
          $compra->compras_no_inscriptas = $request->compras_no_inscriptas;
          $compra->total = $request->total;
          $compra->tipo_op = $request->tipo_op;
+         $compra->tipo_calculo = $request->tipo_calculo;
+
+         
          $compra->save();
          //$compra = LibroCompra::create($request->all() + ['sender_id' => $c->id] + ['receiver_id' => '1']);
 
@@ -111,8 +114,11 @@ class LibroCompraController extends Controller
    {
       try {
          $compra = LibroCompra::find($id);
+         
+         $cliente = Cliente::find($compra->sender_id);
+
          if ($compra) {
-            return view('compras.edit', compact('compra'));
+            return view('compras.edit', compact('compra','cliente'));
          }
       } catch (Exception $e) {
          return redirect()->back()->withErrors($e->getMessage());

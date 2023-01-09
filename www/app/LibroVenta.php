@@ -11,7 +11,7 @@ class LibroVenta extends Model
         'receiver_id', 'sender_id',
         'neto', 'iva','iva_liquidado','iva_sobretasa',
         'percepcion','iva_retencion','conceptos_no_gravados',
-        'ingresos_exentos','ganancias_retencion','total','tipo_op' 
+        'ingresos_exentos','ganancias_retencion','total','tipo_op' , 'tipo_calculo'
     ];
     
     protected $hidden = [];
