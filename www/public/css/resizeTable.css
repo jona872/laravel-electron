@@ -96,3 +96,7 @@ tr:hover {
 }
 
 ::-webkit-resizer{ background-color:transparent; }
+
+.fit-cnt {
+   width: fit-content;
+}
