@@ -3,4 +3,9 @@
 /public/storage
 /storage/*.key
 /.vscode
+<<<<<<< HEAD
+vendor/*
+/vendor/*
+=======
 /vendor
+>>>>>>> d20a195d21e9d65933f72aeb006ec6f7c9f117be

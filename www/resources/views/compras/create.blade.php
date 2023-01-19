@@ -1,6 +1,7 @@
 @extends('layout')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 @endpush
 
 
@@ -26,114 +27,107 @@
 @endif
 
 
-
-<form action="{{ route('compras.store') }}" method="POST" class="card--form">
+<form action="{{ route('compras.store') }}" method="POST">
   @csrf
-  <div>
-    <label for="fecha"> Fecha </label>
-    <input id="fecha" type="text" name="fecha" value="{{ old('fecha') }}" placeholder="aaaa-mm-dd" />
+  <div class="container">
+
+    <div class="left--panel">
+
+      <div class="form--row">
+        <label for="fecha" class="form--row--label"> Fecha </label>
+        <input id="fecha" class="form--row--input" type="text" name="fecha" value="{{ old('fecha') }}" placeholder="aaaa-mm-dd" />
+      </div>
+      <div class="form--row">
+        <label for="pto_venta"> Pto de Venta </label>
+        <input id="pto_venta" type="text" name="pto_venta" value="{{ old('pto_venta') }}" />
+      </div>
+      <div class="form--row">
+        <label for="codigo_comprobante"> Nº Comprobante </label>
+        <input id="codigo_comprobante" type="text" name="codigo_comprobante" value="{{ old('codigo_comprobante') }}" />
+      </div>
+      <div class="form--row">
+        <label for="tipo_comprobante"> Tipo de Comprobante </label>
+        <select name="tipo_comprobante" id="tipo_comprobante">
+          <option value="Otros">Otros</option>
+          <option value="Factura A">Factura A</option>
+          <option value="Factura B">Factura B</option>
+          <option value="Factura C">Factura C</option>
+        </select>
+      </div>
+      <div class="form--row">
+        <label for="client_id"> Codigo Cliente </label>
+        <input id="client_id" type="text" name="client_id" value="{{ old('client_id') }}" />
+      </div>
+      <div class="form--row">
+        <label for="name"> Nombre Cliente </label>
+        <input id="name" type="text" name="name" value="{{ old('name') }}" />
+      </div>
+      <div class="form--row">
+        <label for="cuit"> CUIT </label>
+        <input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" />
+      </div>
+      <div class="form--row">
+        <label for="condition"> Condicion </label>
+        <input id="condition" type="text" name="condition" value="{{ old('condition') }}" />
+      </div>
+    </div>
+
+    <div class="right--panel">
+      <div class="form--row">
+        <label for="neto"> Neto </label>
+        <input id="neto" type="number" name="neto" step='0.01' value="0.00" />
+      </div>
+      <div class="form--row">
+        <label for="iva"> I.V.A. </label>
+        <input id="iva" type="number" name="iva" value="21" />
+      </div>
+      <div class="form--row">
+        <label for="iva_liquidado"> I.V.A. Liquidado </label>
+        <input id="iva_liquidado" type="number" name="iva_liquidado" step='0.01' value="0.00" />
+      </div>
+      <div class="form--row">
+        <label for="iva_sobretasa"> Sobre Ta. I.V.A. </label>
+        <input id="iva_sobretasa" type="number" name="iva_sobretasa" step='0.01' value="0.00" />
+      </div>
+      <div class="form--row">
+        <label for="percepcion"> Percepcion </label>
+        <input id="percepcion" type="number" name="percepcion" step='0.01' value="0.00" />
+      </div>
+      <div class="form--row">
+        <label for="iva_retencion"> I.V.A. Retencion </label>
+        <input id="iva_retencion" type="number" name="iva_retencion" value="0.00" />
+      </div>
+      <div class="form--row">
+        <label for="impuestos_internos"> Impuestos Internos </label>
+        <input id="impuestos_internos" type="number" name="impuestos_internos" value="0.00" />
+      </div>
+      <div class="form--row">
+        <label for="conceptos_no_gravados"> Conceptos No Gravados </label>
+        <input id="conceptos_no_gravados" type="number" name="conceptos_no_gravados" value="0.00" />
+      </div>
+      <div class="form--row">
+        <label for="compras_no_inscriptas"> Compras no Inscriptas </label>
+        <input id="compras_no_inscriptas" type="number" name="compras_no_inscriptas" value="0.00" />
+      </div>
+      <div class="form--row">
+        <label for="total"> Total </label>
+        <input id="total" type="text" step="any" name="total" value="{{ old('total') }}" />
+      </div>
+      <div class="form--row">
+        <label for="tipo_op"> Tipo de Operacion </label>
+        <input id="tipo_op" type="text" step="any" name="tipo_op" value="{{ old('tipo_op') }}" />
+      </div>
+      <div class="form--row">
+        <label for="tipo_calculo"> Tipo de Calculo </label>
+        <input id="tipo_calculo" type="text" step="any" name="tipo_calculo" value="{{ old('tipo_calculo') }}" />
+      </div>
+    </div>
   </div>
 
-  <div>
-    <label for="pto_venta"> Pto de Venta </label>
-    <input id="pto_venta" type="text" name="pto_venta" value="{{ old('pto_venta') }}" />
-  </div>
+  <div class="footer-btn">
+    <a class="btn btn--cancel a--btn no-space" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
 
-  <div>
-    <label for="codigo_comprobante"> Nro Comprobante </label>
-    <input id="codigo_comprobante" type="text" name="codigo_comprobante" value="{{ old('codigo_comprobante') }}" />
-  </div>
-
-  <div>
-    <label for="tipo_comprobante"> Tipo de Comprobante </label>
-    <select name="tipo_comprobante" id="tipo_comprobante">
-      <option value="Otros">Otros</option>
-      <option value="Factura A">Factura A</option>
-      <option value="Factura B">Factura B</option>
-      <option value="Factura C">Factura C</option>
-    </select>
-  </div>
-  <br>
-  <hr>
-  <br>
-  <div>
-    <label for="client_id"> Codigo Cliente </label>
-    <input id="client_id" type="text" name="client_id" value="{{ old('client_id') }}" />
-  </div>
-  <div>
-    <label for="name"> Nombre Cliente </label>
-    <input id="name" type="text" name="name" value="{{ old('name') }}" />
-  </div>
-  <div>
-    <label for="cuit"> CUIT </label>
-    <input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" />
-  </div>
-
-  <div>
-    <label for="condition"> Condicion </label>
-    <input id="condition" type="text" name="condition" value="{{ old('condition') }}" />
-  </div>
-  <br>
-  <hr>
-  <br>
-  <div>
-    <label for="neto"> Neto </label>
-    <input id="neto" type="number" name="neto" step='0.01' value="0.00" />
-  </div>
-  <div>
-    <label for="iva"> I.V.A. </label>
-    <input id="iva" type="number" name="iva" value="21" />
-  </div>
-  <div>
-    <label for="iva_liquidado"> I.V.A. Liquidado </label>
-    <input id="iva_liquidado" type="number" name="iva_liquidado" step='0.01' value="0.00" />
-  </div>
-  <div>
-    <label for="iva_sobretasa"> Sobre Ta. I.V.A. </label>
-    <input id="iva_sobretasa" type="number" name="iva_sobretasa" step='0.01' value="0.00" />
-  </div>
-  <div>
-    <label for="percepcion"> Percepcion </label>
-    <input id="percepcion" type="number" name="percepcion" step='0.01' value="0.00" />
-  </div>
-  <div>
-    <label for="iva_retencion"> I.V.A. Retencion </label>
-    <input id="iva_retencion" type="number" name="iva_retencion" value="0.00" />
-  </div>
-  <div>
-    <label for="impuestos_internos"> Impuestos Internos </label>
-    <input id="impuestos_internos" type="number" name="impuestos_internos" value="0.00" />
-  </div>
-  <div>
-    <label for="conceptos_no_gravados"> Conceptos No Gravados </label>
-    <input id="conceptos_no_gravados" type="number" name="conceptos_no_gravados" value="0.00" />
-  </div>
-  <div>
-    <label for="compras_no_inscriptas"> Compras no Inscriptas </label>
-    <input id="compras_no_inscriptas" type="number" name="compras_no_inscriptas" value="0.00" />
-  </div>
-  <br>
-  <hr>
-  <br>
-  <div>
-    <label for="total"> Total </label>
-    <input id="total" type="text" step="any" name="total" value="{{ old('total') }}" />
-  </div>
-  <div>
-    <label for="tipo_op"> Tipo de Operacion </label>
-    <input id="tipo_op" type="text" step="any" name="tipo_op" value="{{ old('tipo_op') }}" />
-  </div>
-  <div>
-    <label for="tipo_calculo"> Tipo de Calculo </label>
-    <input id="tipo_calculo" type="text" step="any" name="tipo_calculo" value="{{ old('tipo_calculo') }}" />
-  </div>
-
-
-
-  <div class="card--row">
-    <a class="btn btn--cancel a--btn" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
-
-    <button type="submit" class="btn btn--confirm"> Guardar </button>
+    <button type="submit" class="btn btn--confirm no-space"> Guardar </button>
   </div>
 
 </form>
@@ -161,26 +155,26 @@
   let a11_total = document.getElementById('total');
   // let editableButtons = [ a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a8_conceptos_no_gravados, a9_compras_no_inscriptas ];
 
-  function clearFields(vButtons){
-    vButtons.map((btn)=>{
-          btn.value = parseFloat('0').toFixed(2);
-        });
+  function clearFields(vButtons) {
+    vButtons.map((btn) => {
+      btn.value = parseFloat('0').toFixed(2);
+    });
   }
 
   $("#tipo_calculo").focusout(function() {
 
     switch (document.getElementById("tipo_calculo").value) {
       case '1':
-        clearFields([ a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a8_conceptos_no_gravados, a9_compras_no_inscriptas ]);
+        clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a8_conceptos_no_gravados, a9_compras_no_inscriptas]);
         a1_neto.value = parseFloat((a11_total.value - a9_compras_no_inscriptas.value - a8_conceptos_no_gravados.value - a7_impuestos_internos.value - a6_iva_retencion.value - a5_percepcion.value) / (1 + a2_iva.value) * 100).toFixed(2);
         a3_iva_liquidado.value = parseFloat(a1_neto.value * (a2_iva.value / 100)).toFixed(2);
         break;
       case '4':
-        clearFields([ a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a9_compras_no_inscriptas ]);
+        clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a9_compras_no_inscriptas]);
         a8_conceptos_no_gravados.value = parseFloat(a11_total.value - a9_compras_no_inscriptas.value - a7_impuestos_internos.value - a6_iva_retencion.value - a5_percepcion.value).toFixed(2);
         break;
       case '5':
-        clearFields([ a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a8_conceptos_no_gravados, a9_compras_no_inscriptas ]);
+        clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a8_conceptos_no_gravados, a9_compras_no_inscriptas]);
         a3_iva_liquidado.value = parseFloat(a11_total.value).toFixed(2);
         break;
       default:
