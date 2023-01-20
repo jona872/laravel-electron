@@ -100,7 +100,7 @@ Listado Mensual de {{ $operatoria }}
 
             <div class="card--row">
                 <div class="row--centered">
-                    <button type="submit" class="btn btn--confirm"> Continuar </button>
+                    <button type="submit" class="btn btn--confirm"> Descargar </button>
                 </div>
             </div>
         </form>
