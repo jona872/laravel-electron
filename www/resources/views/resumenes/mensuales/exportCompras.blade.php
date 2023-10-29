@@ -18,7 +18,7 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
    }
 </style>
 
-<h1>Libro de I.V.A. Compras de: {{$user->name}} - Período: {{$mes}}/{{$year}} - ()</h1>
+<h1>Libro de I.V.A. Compras de: {{$user->name}} - Perï¿½odo: {{$mes}}/{{$year}} - ()</h1>
 <b>Domicilio: RUTA 18 - KM. 10</b>
 <br>
 <b>C.U.I.T.: {{$user->cuit}}</b>
@@ -34,7 +34,7 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
          Punto de Venta
       </th>
       <th style="background-color: #bfbfbf;">
-         Nº de Compro
+         Nï¿½ de Compro
       </th>
       <th style="background-color: #bfbfbf;">
          Tipo de Compro
