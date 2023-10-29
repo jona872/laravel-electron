@@ -22,6 +22,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'Auth\LoginController@showLoginForm');
+    Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
     Route::get('/home', 'ClienteController@index');
 
     Route::get('/mensuales', 'ResumenesController@indexMensual');

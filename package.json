@@ -13,7 +13,9 @@
     "windows-from-docker": "electron-packager . --overwrite --platform win32 --arch x64 --out=dist",
     "first": "sudo docker pull hackash/electron-windows-build",
     "second": "sudo docker run -it --rm -v ${PWD}:/project hackash/electron-windows-build",
-    "third": "npm run windows-from-docker"
+    "third": "npm run windows-from-docker",
+    "cuatro": "sudo chmod -R 777 dist/",
+    "cinco": "cp -R dist/ /media/sf_Facu2/ACA/"
   },
   "repository": "",
   "keywords": [
