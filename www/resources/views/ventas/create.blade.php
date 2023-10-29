@@ -28,7 +28,7 @@
 
 
 
-<form action="{{ route('ventas.store') }}" method="POST" class="card--form">
+<form action="{{ route('ventas.store') }}" method="POST">
   @csrf
   <div class="container">
 
