@@ -1,7 +1,6 @@
 @extends('layout')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/buckup/smoothness/jquery-ui.min.css') }}">
-<!-- <link rel="stylesheet" href="{{ asset('css/buckup/compras.css') }}"> -->
 <link rel="stylesheet" href="{{ asset('css/buckup/form.css') }}">
 @endpush
 
@@ -132,6 +131,9 @@
       <button type="submit" class="btn btn-primary"> Guardar </button>
     </div>
   </div>
+
+
+
 
 </form>
 
