@@ -1,7 +1,8 @@
 @extends('layout')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/buckup/smoothness/jquery-ui.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('css/buckup/compras.css') }}"> -->
+<link rel="stylesheet" href="{{ asset('css/buckup/form.css') }}">
 @endpush
 
 
@@ -124,10 +125,12 @@
     </div>
   </div>
 
-  <div class="footer-btn">
-    <a class="btn btn--cancel a--btn no-space" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
 
-    <button type="submit" class="btn btn--confirm no-space"> Guardar </button>
+  <div class="row text-center mt-2">
+    <div class="d-flex justify-content-center gap-2 flex-wrap">
+      <a class="btn btn-danger" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
+      <button type="submit" class="btn btn-primary"> Guardar </button>
+    </div>
   </div>
 
 </form>

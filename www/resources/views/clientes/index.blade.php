@@ -1,13 +1,10 @@
 @extends('layout')
 @push('styles')
 <!-- <link rel="stylesheet" href="{{ asset('css/clientes.css')}}"> -->
-<!-- <link rel="stylesheet" href="{{ asset('css/jquery.resizableColumns.css') }}"> -->
 <link rel="stylesheet" href="{{ asset('css/resizeTable.css')}}">
-
 @endpush
 
 @section('content')
-
 
 
 <div class="container.fluid">
@@ -25,11 +22,11 @@
   <table id="resizeMe" class="table table-striped">
     <thead>
       <tr>
-        <th class="">Opt</th>
-        <th class="">Nombre</th>
-        <th class="">CUIT</th>
-        <th class="">Condicion</th>
-        <th class="">Direccion</th>
+        <th>Opt</th>
+        <th>Nombre</th>
+        <th>CUIT</th>
+        <th>Condicion</th>
+        <th>Direccion</th>
       </tr>
     </thead>
     <tbody>
@@ -86,59 +83,5 @@
 @endsection
 
 @push('scripts')
-<script>
-  // $(function() {
-  //     console.log("entro");
-  //     $('#table').bootstrapTable()
-  // })
-  document.addEventListener('DOMContentLoaded', function() {
-    const createResizableTable = function(table) {
-      const cols = table.querySelectorAll('th');
-      [].forEach.call(cols, function(col) {
-        // Add a resizer element to the column
-        const resizer = document.createElement('div');
-        resizer.classList.add('resizer');
-
-        // Set the height
-        resizer.style.height = table.offsetHeight + 'px';
-
-        col.appendChild(resizer);
-
-        createResizableColumn(col, resizer);
-      });
-    };
-
-    const createResizableColumn = function(col, resizer) {
-      let x = 0;
-      let w = 0;
-
-      const mouseDownHandler = function(e) {
-        x = e.clientX;
-
-        const styles = window.getComputedStyle(col);
-        w = parseInt(styles.width, 10);
-
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
-
-        resizer.classList.add('resizing');
-      };
-
-      const mouseMoveHandler = function(e) {
-        const dx = e.clientX - x;
-        col.style.width = (w + dx) + 'px';
-      };
-
-      const mouseUpHandler = function() {
-        resizer.classList.remove('resizing');
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
-      };
-
-      resizer.addEventListener('mousedown', mouseDownHandler);
-    };
-
-    createResizableTable(document.getElementById('resizeMe'));
-  });
-</script>
+<script src="{{ asset('js/resizeTables.js') }}"></script>
 @endpush
