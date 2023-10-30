@@ -19,7 +19,7 @@
   <h2>Registrar Nuevo Usuario</h2>
   <form method="POST" action="{{ route('register') }}" class="card p-3">
     @csrf
-    
+
     <!-- autocomplete="off" -->
     <div class="row mb-1">
       <label for="name" class="col-form-label">Nombre</label>
@@ -27,8 +27,8 @@
       <div class="col">
         <input id="name" class="form-control" type="text" name="name" value="{{ old('name') }}" autofocus title="Por favor complete este campo">
         @error('name')
-        <span class="invalid" role="alert"> 
-          <strong>{{ $message }}</strong> 
+        <span class="invalid" role="alert">
+          <strong>{{ $message }}</strong>
         </span>
         @enderror
       </div>
@@ -60,7 +60,7 @@
       <label for="password-confirm" class="col-form-label">{{ __('Confirm Password') }}</label>
 
       <div class="col">
-        <input id="password-confirm"class="form-control"  type="password" name="password_confirmation" value="{{ old('password-confirm') }}" autocomplete="password-confirm" title="Por favor complete este campo" />
+        <input id="password-confirm" class="form-control" type="password" name="password_confirmation" value="{{ old('password-confirm') }}" autocomplete="password-confirm" title="Por favor complete este campo" />
         @error('password-confirm')
         <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
