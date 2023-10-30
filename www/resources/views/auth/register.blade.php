@@ -22,31 +22,17 @@
   <form method="POST" action="{{ route('register') }}" class="card p-3">
     @csrf
     
-    <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-
     <!-- autocomplete="off" -->
     <div class="row mb-1">
       <label for="name" class="col-form-label">Nombre</label>
 
       <div class="col">
-        <input id="name" class="form-control" type="text" name="name" value="{{ old('name') }}" autofocus title="Por favor complete este campo" required>
-        
+        <input id="name" class="form-control" type="text" name="name" value="{{ old('name') }}" autofocus title="Por favor complete este campo">
         @error('name')
-        <span class="invalid-feedback" role="alert"> 
+        <span class="invalid" role="alert"> 
           <strong>{{ $message }}</strong> 
         </span>
         @enderror
-        <div class="invalid-feedback">
-          Please choose a username.
-        </div>
-
       </div>
     </div>
 
@@ -56,7 +42,7 @@
       <div class="col">
         <input id="email" class="form-control" type="text" name="email" value="{{ old('email') }}" title="Por favor complete este campo">
         @error('email')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
@@ -67,7 +53,7 @@
       <div class="col">
         <input id="password" class="form-control" type="password" name="password" value="{{ old('password') }}" autocomplete="password" title="Por favor complete este campo" />
         @error('password')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
@@ -78,7 +64,7 @@
       <div class="col">
         <input id="password-confirm"class="form-control"  type="password" name="password_confirmation" value="{{ old('password-confirm') }}" autocomplete="password-confirm" title="Por favor complete este campo" />
         @error('password-confirm')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
@@ -90,7 +76,7 @@
       <div class="col">
         <input id="cuit" class="form-control" type="text" name="cuit" value="{{ old('cuit') }}" autocomplete="cuit" title="Por favor complete este campo">
         @error('cuit')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
@@ -101,7 +87,7 @@
       <div class="col">
         <input id="condition" class="form-control" type="text" name="condition" value="{{ old('condition') }}" autocomplete="condition" title="Por favor complete este campo">
         @error('condition')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
@@ -112,7 +98,7 @@
       <div class="col">
         <input id="direction" class="form-control" type="text" name="direction" value="{{ old('direction') }}" autocomplete="direction" title="Por favor complete este campo">
         @error('direction')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
@@ -123,7 +109,7 @@
       <div class="col">
         <input id="activity_start" class="form-control" type="text" name="activity_start" value="{{ old('activity_start') }}" autocomplete="activity_start" title="Por favor complete este campo">
         @error('activity_start')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
@@ -134,7 +120,7 @@
       <div class="col">
         <input id="gross_receipts_tax" class="form-control" type="text" name="gross_receipts_tax" value="{{ old('gross_receipts_tax') }}" autocomplete="gross_receipts_tax" title="Por favor complete este campo">
         @error('gross_receipts_tax')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
