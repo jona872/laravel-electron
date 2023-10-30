@@ -1,7 +1,7 @@
 @extends('layout')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/ventas.css')}}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buckup/smoothness/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buckup/form.css') }}">
 @endpush
 
 @section('content')
@@ -48,26 +48,26 @@
                <option value="Factura C">Factura C</option>
             </select>
          </div>
-         
+
          <div class="form--row">
             <label for="client_id"> Codigo Cliente </label>
-            <input readonly id="client_id" type="text" name="client_id" value="{{ $cliente->id }}" />
+            <input id="client_id" type="text" name="client_id" value="{{ $cliente->id }}" />
          </div>
          <div class="form--row">
             <label for="name"> Nombre Cliente </label>
-            <input readonly id="name" type="text" name="name" value="{{ $cliente->name }}" />
+            <input id="name" type="text" name="name" value="{{ $cliente->name }}" />
          </div>
          <div class="form--row">
             <label for="cuit"> CUIT </label>
-            <input readonly id="cuit" type="text" name="cuit" value="{{ $cliente->cuit }}" />
+            <input id="cuit" type="text" name="cuit" value="{{ $cliente->cuit }}" />
          </div>
          <div class="form--row">
             <label for="condition"> Condicion </label>
-            <input readonly id="condition" type="text" name="condition" value="{{ $cliente->condition }}" />
+            <input id="condition" type="text" name="condition" value="{{ $cliente->condition }}" />
          </div>
-         </div>
+      </div>
 
-         <div class="right--panel">
+      <div class="right--panel">
          <div class="form--row">
             <label for="neto"> Neto </label>
             <input id="neto" type="number" name="neto" step='0.01' value="{{ $venta->neto }}" />
@@ -104,7 +104,7 @@
             <label for="ganancias_retencion"> Retencion de Ganancias </label>
             <input id="ganancias_retencion" type="number" name="ganancias_retencion" step='0.01' value="{{ $venta->ganancias_retencion }}" />
          </div>
-         
+
          <div class="form--row">
             <label for="total"> Total </label>
             <input id="total" type="text" step="any" name="total" value="{{ $venta->total }}" />
@@ -113,16 +113,25 @@
             <label for="tipo_op"> Tipo de Operacion </label>
             <input id="tipo_op" type="text" step="any" name="tipo_op" value="{{ $venta->tipo_op }}" />
          </div>
-
-         <div class="card--row">
-            <a class="btn btn--cancel a--btn" href="{{ route('ventas.index') }}">{{ __('Cancelar') }}</a>
-
-            <button type="submit" class="btn btn--confirm"> Guardar </button>
-         </div>
       </div>
    </div>
+
+      <div class="row text-center mt-3">
+         <div class="d-flex justify-content-center gap-2 flex-wrap">
+            <a class="btn btn-danger" href="{{ route('ventas.index') }}">{{ __('Cancelar') }}</a>
+
+            <button class="btn btn-primary" type="submit"> Guardar </button>
+         </div>
+      </div>
 
 </form>
 
 
 @endsection
+
+@push('scripts')
+<script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+
+<script src="{{ asset('js/handleFormVentas.js') }}"></script>
+@endpush

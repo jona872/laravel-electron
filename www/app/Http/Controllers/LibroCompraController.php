@@ -114,7 +114,6 @@ class LibroCompraController extends Controller
    {
       try {
          $compra = LibroCompra::find($id);
-         
          $cliente = Cliente::find($compra->sender_id);
 
          if ($compra) {
@@ -134,7 +133,6 @@ class LibroCompraController extends Controller
             // dd($compra->sender_id);
             $compra->sender_id = $request->client_id;
             $compra->update($request->all());
-            
          }
 
          return redirect()->route('compras.index')->with('success', 'Compra editada correctamente!');

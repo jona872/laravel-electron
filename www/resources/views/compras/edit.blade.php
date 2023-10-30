@@ -134,5 +134,5 @@
 <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 
-<script src="{{ asset('js/handleLibrosForm.js') }}"></script>
+<script src="{{ asset('js/handleFormCompras.js') }}"></script>
 @endpush

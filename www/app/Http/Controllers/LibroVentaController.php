@@ -125,8 +125,10 @@ class LibroVentaController extends Controller
     public function update(Request $request, LibroVenta $libroVenta)
     {
         try {
+            // dd($request->all());
             $venta = LibroVenta::find($request->id);
             if ($venta) {
+                $venta->receiver_id = $request->client_id;
                 $venta->update($request->all());
             }
 
