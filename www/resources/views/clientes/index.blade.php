@@ -1,6 +1,5 @@
 @extends('layout')
 @push('styles')
-<!-- <link rel="stylesheet" href="{{ asset('css/clientes.css')}}"> -->
 <link rel="stylesheet" href="{{ asset('css/resizeTable.css')}}">
 @endpush
 
@@ -76,8 +75,6 @@
   </table>
 
 </div>
-
-
 
 
 @endsection

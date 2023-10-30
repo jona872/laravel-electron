@@ -28,12 +28,11 @@ class LibroVentaController extends Controller
     public function index()
     {
         try {
-            // $ventas = DB::table('libro_ventas')->get();
-            $ventas = DB::table('libro_ventas as lc')
-                ->join('clientes as c', 'lc.sender_id', '=', 'c.id')
-                ->select('c.*', 'lc.*')
-                ->get();
-
+            $ventas = DB::table('libro_ventas as lv')
+            ->join('clientes as c', 'lv.receiver_id', '=', 'c.id')
+            ->select('c.*', 'lv.*')
+            ->get();
+            
             return view('ventas.index', compact('ventas'));
         } catch (Exception $e) {
             return [
@@ -59,7 +58,7 @@ class LibroVentaController extends Controller
 
     public function store(Request $request) //floatval()
     {
-        // dd($request->all());
+        //dd($request->all());
         try { //receiver y sender
             $venta = new LibroVenta();
             if ($this->clientExists($request->client_id)) { //Si existe en la bd, solamente guardo el ID
