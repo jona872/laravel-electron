@@ -1,7 +1,5 @@
 @extends('layout')
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/bootstrap/css/bootstrap.min.css') }}">
-@endpush
+
 
 @section('content')
 
