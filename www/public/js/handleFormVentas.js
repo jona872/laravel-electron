@@ -26,7 +26,7 @@ function clearFields(vButtons) {
 }
 
 function calcular() {
-  switch (document.getElementById("tipo_calculo").value) {
+  switch (document.getElementById("tipo_op").value) {
     case '1':
       clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a8_ingresos_exentos, a9_ganancias_retencion]);
       a1_neto.value = parseFloat((a11_total.value - a9_ganancias_retencion.value - a8_ingresos_exentos.value - a7_conceptos_no_gravados.value - a6_iva_retencion.value - a5_percepcion.value) / (1 + a2_iva.value) * 100).toFixed(2);
@@ -44,7 +44,7 @@ function calcular() {
       console.log(`No op available`);
   }
 }
-$("#tipo_calculo, #total").focusout(function () {
+$("#tipo_op, #total").focusout(function () {
   calcular();
 });
 
