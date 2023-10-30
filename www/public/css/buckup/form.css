@@ -28,13 +28,13 @@
 }
 
 .left--panel > .form--row > input {
-    width: 110px;
+    width: 160px;
 }
 .left--panel > .form--row > select {
-   width: 110px;
+   width: 160px;
 }
 .right--panel > .form--row > input {
-    width: 110px;
+    width: 160px;
 }
 
 
@@ -72,7 +72,6 @@
     }
 
     .left--panel {
-        /* background-color: bisque; */
         width: 90%;
         max-width: 350px;
         padding: 1rem;
@@ -80,18 +79,27 @@
     }
 
     .right--panel {
-        /* background-color: aquamarine; */
         width: 90%;
         max-width: 400px;
         padding: 1rem;
         border: 1px solid black;
     }
-}
-
-@media (min-width: 720px) {
+    .left--panel > .form--row > input {
+        width: 110px;
+    }
+    .left--panel > .form--row > select {
+       width: 110px;
+    }
+    .right--panel > .form--row > input {
+        width: 110px;
+    }
     .container,
     .container-md,
     .container-sm {
         max-width: 100%;
     }
 }
+
+/* @media (min-width: 720px) {
+    
+} */
