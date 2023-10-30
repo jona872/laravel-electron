@@ -4,18 +4,18 @@
 @endpush
 
 @section('content')
+<h1>Listado Mensual de {{ $operatoria }}</h1>
 
-Listado Mensual de {{ $operatoria }}
 
-<main class="main">
-  <div class="container">
-    <form action="{{url('/mensuales/export')}}" method="POST">
-      @csrf
-      <input type="hidden" name="operatoria" value="{{ $operatoria }}">
-      <input type="hidden" name="mes" value="{{ $mes }}">
-      <input type="hidden" name="year" value="{{ $year }}">
+<div class="container.fluid">
+  <form action="{{url('/mensuales/export')}}" method="POST">
+    @csrf
+    <input type="hidden" name="operatoria" value="{{ $operatoria }}">
+    <input type="hidden" name="mes" value="{{ $mes }}">
+    <input type="hidden" name="year" value="{{ $year }}">
 
-      <table>
+    <table id="resizeMe" class="table table-striped">
+      <thead>
         <tr>
           <th class="col-fit">
             <div>Fecha</div>
@@ -72,57 +72,67 @@ Listado Mensual de {{ $operatoria }}
             <div>Tipo Op</div>
           </th>
         </tr>
-        @if (count($consulta ?? '') > 0)
-        <input type="hidden" name="exportData" value="{{base64_encode(serialize($consulta))}}">
-        @foreach ($consulta ?? '' as $c)
-        <tr>
-          <td> {{$c->fecha }} </td>
-          <td> {{$c->pto_venta }} </td>
-          <td> {{$c->codigo_comprobante }} </td>
-          <td> {{$c->tipo_comprobante }} </td>
-          <td> {{$c->name }} </td>
-          <td> {{$c->cuit }} </td>
-          <td> {{$c->condition }} </td>
-          <td> {{$c->neto }} </td>
-          <td> {{$c->iva }} </td>
-          <td> {{$c->iva_liquidado }} </td>
-          <td> {{$c->iva_sobretasa }} </td>
-          <td> {{$c->percepcion }} </td>
-          <td> {{$c->iva_retencion }} </td>
-          <td> {{$c->impuestos_internos }} </td>
-          <td> {{$c->conceptos_no_gravados }} </td>
-          <td> {{$c->compras_no_inscriptas }} </td>
-          <td> {{$c->total }} </td>
-          <td> {{$c->tipo_op }} </td>
-        </tr>
-        @endforeach
-        @else
-        <input type="hidden" name="exportData" value="">
-        <tr>
-          <td align="center" colspan="18"> No se encontraron compras </td>
-        </tr>
-        @endif
-      </table>
+      </thead>
+      @if (count($consulta ?? '') > 0)
+      <input type="hidden" name="exportData" value="{{base64_encode(serialize($consulta))}}">
+      @foreach ($consulta ?? '' as $c)
+      <tr>
+        <td> {{$c->fecha }} </td>
+        <td> {{$c->pto_venta }} </td>
+        <td> {{$c->codigo_comprobante }} </td>
+        <td> {{$c->tipo_comprobante }} </td>
+        <td> {{$c->name }} </td>
+        <td> {{$c->cuit }} </td>
+        <td> {{$c->condition }} </td>
+        <td> {{$c->neto }} </td>
+        <td> {{$c->iva }} </td>
+        <td> {{$c->iva_liquidado }} </td>
+        <td> {{$c->iva_sobretasa }} </td>
+        <td> {{$c->percepcion }} </td>
+        <td> {{$c->iva_retencion }} </td>
+        <td> {{$c->impuestos_internos }} </td>
+        <td> {{$c->conceptos_no_gravados }} </td>
+        <td> {{$c->compras_no_inscriptas }} </td>
+        <td> {{$c->total }} </td>
+        <td> {{$c->tipo_op }} </td>
+      </tr>
+      @endforeach
+      @else
+      <input type="hidden" name="exportData" value="">
+      <tr>
+        <td align="center" colspan="18"> No se encontraron compras </td>
+      </tr>
+      @endif
+    </table>
 
-      <div class="card--row">
-        <div class="row--centered">
-          <button type="submit" class="btn btn--confirm"> Descargar </button>
-        </div>
-
-        <div class="row--centered">
-          <div class="row--centered">
-            <a href="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}"> DescargarV2 </a>
-          </div>
-        </div>
-
+    <div class="card--row">
+      <div class="row--centered">
+        <button type="submit" class="btn btn-primary"> Descargar </button>
       </div>
 
-    </form>
+      <!-- <div class="row--centered">
+        <div class="row--centered">
+          <a href="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}"> DescargarV2 </a>
+        </div>
+      </div> -->
+
+      <div class="row text-center mt-3">
+        <div class="d-flex justify-content-center gap-2 flex-wrap">
+          <a class="btn btn-primary" href="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}"> DescargarV2 </a>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
 
 
 
 
-</main>
 
 
-@endsection
+  @endsection
+
+  @push('scripts')
+  <script src="{{ asset('js/resizeTables.js') }}"></script>
+  @endpush
