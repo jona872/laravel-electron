@@ -1,6 +1,7 @@
 @extends('layout')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/clientes.css')}}">
+<!-- <link rel="stylesheet" href="{{ asset('css/clientes.css')}}"> -->
+
 @endpush
 
 @section('content')
@@ -52,7 +53,6 @@
 				@enderror
 			</div>
 		</div>
-
 
 		<div class="row mb-1">
 			<label for="condition" class="col-form-label">Condicion</label>
@@ -113,4 +113,10 @@
 </div>
 
 
+
+
 @endsection
+
+@push('scripts')
+<!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script> -->
+@endpush
