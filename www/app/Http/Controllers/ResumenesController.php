@@ -49,7 +49,7 @@ class ResumenesController extends Controller
             return view('resumenes.mensuales.listadoCompras', compact('consulta', 'operatoria', 'year', 'mes'));
         } else {
             $consulta = DB::table('libro_ventas')
-                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
+                ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
                 ->whereYear('fecha', '=', $request->year)
                 ->whereMonth('fecha', '=', $request->mes)
                 ->get();
@@ -114,22 +114,23 @@ class ResumenesController extends Controller
 
     public function anualesPreview(Request $request)
     {
-        // dd($request->all());
         $operatoria = $request->operatoria;
         $year = $request->year;
-
+        
         if ($request->operatoria && $request->operatoria == "compras") {
             $consulta = DB::table('libro_compras')
-                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
-                ->whereYear('libro_compras.fecha', '=', $request->year)
-                ->get();
-
+            ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+            ->whereYear('libro_compras.fecha', '=', $request->year)
+            ->get();
+            
             return view('resumenes.anuales.listadoCompras', compact('consulta', 'operatoria', 'year'));
         } else {
             $consulta = DB::table('libro_ventas')
-                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
-                ->whereYear('libro_ventas.fecha', '=', $request->year)
-                ->get();
+            ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
+            ->whereYear('libro_ventas.fecha', '=', $request->year)
+            ->get();
+            // dd($operatoria, $year);
+            // dd($consulta);
 
             return view('resumenes.anuales.listadoVentas', compact('consulta', 'operatoria', 'year'));
         }
@@ -186,7 +187,7 @@ class ResumenesController extends Controller
             return view('resumenes.periodos.listadoCompras', compact('consulta', 'operatoria', 'year', 'mes', 'mes_final'));
         } else {
             $consulta = DB::table('libro_ventas')
-                ->join('clientes', 'libro_ventas.sender_id', '=', 'clientes.id')
+                ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
                 ->whereYear('fecha', '=', $request->year)
                 ->whereMonth('fecha', '>=', $request->mes)
                 ->whereMonth('fecha', '<=', $request->mes_final)

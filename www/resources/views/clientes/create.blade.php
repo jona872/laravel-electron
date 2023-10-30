@@ -1,7 +1,6 @@
 @extends('layout')
 @push('styles')
 <!-- <link rel="stylesheet" href="{{ asset('css/clientes.css')}}"> -->
-
 @endpush
 
 @section('content')
