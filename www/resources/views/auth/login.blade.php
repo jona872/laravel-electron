@@ -7,7 +7,7 @@
 @section('content')
 
 
-<div class=".container-fluid">
+<div class=".container-fluid mx-auto">
   <h2 class="">Ingresar al sistema</h2>
 
   <form method="POST" action="{{ route('login') }}" class="card p-3">
@@ -38,9 +38,9 @@
     </div>
 
     <!-- RememberMe -->
-    <div class="col-md-12">
+    <div class="mb-3 col-md-12">
       
-      <div class="d-block sm-text-center">
+      <div class="d-block">
         <input class="col-sm-3" type="checkbox" name="remember" id="remember" value="{{ old('remember') ? 'checked' : '' }}">
         <label class="col-sm-8 " for="remember"> Recordarme </label>
       </div>
