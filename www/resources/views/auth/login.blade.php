@@ -1,7 +1,6 @@
 @extends('layout')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/bootstrap/css/bootstrap.min.css') }}">
-
 @endpush
 
 @section('content')
@@ -38,13 +37,20 @@
     </div>
 
     <!-- RememberMe -->
-    <div class="mb-3 col-md-12">
+    <!-- <div class="mb-3 col-md-12">
       
       <div class="d-block">
         <input class="col-sm-3" type="checkbox" name="remember" id="remember" value="{{ old('remember') ? 'checked' : '' }}">
         <label class="col-sm-8 " for="remember"> Recordarme </label>
       </div>
+    </div> -->
+
+    <div class="form-group">
+    <div class="form-check mx-4">
+      <input class="form-check-input col-sm-3" type="checkbox" name="remember" id="remember" value="{{ old('remember') ? 'checked' : '' }}">
+      <label class="form-check-label col-sm-8 " for="remember"> Recordarme </label>
     </div>
+  </div>
 
     <!-- Buttons -->
     <div class="row text-center">

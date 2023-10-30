@@ -1,4 +1,7 @@
 @extends('layout')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/bootstrap/css/bootstrap.min.css') }}">
+@endpush
 
 @section('content')
 
@@ -12,56 +15,68 @@
   </a>
 </h1>
 
-<div class="card m-top-5vh">
-  <div class="card--row">
-    <h2>Registrar Nuevo Usuario</h2>
+
+
+<div class=".container-fluid mx-auto">
+  <h2>Registrar Nuevo Usuario</h2>
+  <form method="POST" action="{{ route('register') }}" class="card p-3">
+    @csrf
+    
+    <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
   </div>
 
-  <form method="POST" action="{{ route('register') }}" class="card--form">
-    @csrf
-
     <!-- autocomplete="off" -->
-    <div class="card--row">
-      <label for="name" class="card--row--item card--label">Nombre</label>
+    <div class="row mb-1">
+      <label for="name" class="col-form-label">Nombre</label>
 
-      <div class="card--row--item card-input">
-        <input id="name" type="text" name="name" value="{{ old('name') }}" autofocus title="Por favor complete este campo">
+      <div class="col">
+        <input id="name" class="form-control" type="text" name="name" value="{{ old('name') }}" autofocus title="Por favor complete este campo" required>
+        
         @error('name')
-        <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+        <span class="invalid-feedback" role="alert"> 
+          <strong>{{ $message }}</strong> 
+        </span>
         @enderror
+        <div class="invalid-feedback">
+          Please choose a username.
+        </div>
+
       </div>
     </div>
 
-    <div class="card--row">
-      <label for="email" class="card--row--item card--label">E-Mail</label>
+    <div class="row mb-1">
+      <label for="email" class="col-form-label">E-Mail</label>
 
-      <div class="card--row--item card-input">
-        <input id="email" type="text" name="email" value="{{ old('email') }}" title="Por favor complete este campo">
+      <div class="col">
+        <input id="email" class="form-control" type="text" name="email" value="{{ old('email') }}" title="Por favor complete este campo">
         @error('email')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
 
+    <div class="row mb-1">
+      <label for="password" class="col-form-label">Password</label>
 
-
-    <div class="card--row">
-      <label for="password" class="card--row--item card--label">Password</label>
-
-      <div class="card--row--item card-input">
-        <input id="password" type="password" name="password" value="{{ old('password') }}" autocomplete="password" title="Por favor complete este campo" />
+      <div class="col">
+        <input id="password" class="form-control" type="password" name="password" value="{{ old('password') }}" autocomplete="password" title="Por favor complete este campo" />
         @error('password')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
 
+    <div class="row mb-1">
+      <label for="password-confirm" class="col-form-label">{{ __('Confirm Password') }}</label>
 
-    <div class="card--row">
-      <label for="password-confirm" class="card--row--item card--label">{{ __('Confirm Password') }}</label>
-
-      <div class="card--row--item card-input">
-        <input id="password-confirm" type="password" name="password_confirmation" value="{{ old('password-confirm') }}" autocomplete="password-confirm" title="Por favor complete este campo" />
+      <div class="col">
+        <input id="password-confirm"class="form-control"  type="password" name="password_confirmation" value="{{ old('password-confirm') }}" autocomplete="password-confirm" title="Por favor complete este campo" />
         @error('password-confirm')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
@@ -69,81 +84,74 @@
     </div>
 
 
+    <div class="row mb-1">
+      <label for="cuit" class="col-form-label">CUIT</label>
 
-
-
-
-    <div class="card--row">
-      <label for="cuit" class="card--row--item card--label">CUIT</label>
-
-      <div class="card--row--item card-input">
-        <input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" autocomplete="cuit" title="Por favor complete este campo">
+      <div class="col">
+        <input id="cuit" class="form-control" type="text" name="cuit" value="{{ old('cuit') }}" autocomplete="cuit" title="Por favor complete este campo">
         @error('cuit')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
 
-    <div class="card--row">
-      <label for="condition" class="card--row--item card--label">Condicion</label>
+    <div class="row mb-1">
+      <label for="condition" class="col-form-label">Condicion</label>
 
-      <div class="card--row--item card-input">
-        <input id="condition" type="text" name="condition" value="{{ old('condition') }}" autocomplete="condition" title="Por favor complete este campo">
+      <div class="col">
+        <input id="condition" class="form-control" type="text" name="condition" value="{{ old('condition') }}" autocomplete="condition" title="Por favor complete este campo">
         @error('condition')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
 
-    <div class="card--row">
-      <label for="direction" class="card--row--item card--label">Direccion</label>
+    <div class="row mb-1">
+      <label for="direction" class="col-form-label">Direccion</label>
 
-      <div class="card--row--item card-input">
-        <input id="direction" type="text" name="direction" value="{{ old('direction') }}" autocomplete="direction" title="Por favor complete este campo">
+      <div class="col">
+        <input id="direction" class="form-control" type="text" name="direction" value="{{ old('direction') }}" autocomplete="direction" title="Por favor complete este campo">
         @error('direction')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
 
-    <div class="card--row">
-      <label for="activity_start" class="card--row--item card--label">Inicio de Actividades</label>
+    <div class="row mb-1">
+      <label for="activity_start" class="col-form-label">Inicio de Actividades</label>
 
-      <div class="card--row--item card-input">
-        <input id="activity_start" type="text" name="activity_start" value="{{ old('activity_start') }}" autocomplete="activity_start" title="Por favor complete este campo">
+      <div class="col">
+        <input id="activity_start" class="form-control" type="text" name="activity_start" value="{{ old('activity_start') }}" autocomplete="activity_start" title="Por favor complete este campo">
         @error('activity_start')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
 
-    <div class="card--row">
-      <label for="gross_receipts_tax" class="card--row--item card--label">Ingresos Brutos</label>
+    <div class="row mb-1">
+      <label for="gross_receipts_tax" class="col-form-label">Ingresos Brutos</label>
 
-      <div class="card--row--item card-input">
-        <input id="gross_receipts_tax" type="text" name="gross_receipts_tax" value="{{ old('gross_receipts_tax') }}" autocomplete="gross_receipts_tax" title="Por favor complete este campo">
+      <div class="col">
+        <input id="gross_receipts_tax" class="form-control" type="text" name="gross_receipts_tax" value="{{ old('gross_receipts_tax') }}" autocomplete="gross_receipts_tax" title="Por favor complete este campo">
         @error('gross_receipts_tax')
         <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
         @enderror
       </div>
     </div>
 
-
-
-    <div class="card--row">
+    <div class="row text-center mt-1">
       <div class="card--row--item card--center--btn">
-        <!-- <button type="submit" class="card--btn">
-          Registrar
-        </button> -->
-        <button type="submit" class="btn btn--confirm"> Registrar </button>
+        <button type="submit" class="btn btn-primary"> Registrar </button>
       </div>
     </div>
 
 
-    
+
 
   </form>
 
 </div>
+
+
 
 @endsection
