@@ -3,7 +3,6 @@
 @section('content')
 
 
-
 <h1 class="title--header">
   <a href="/" role="button" class="row--centered">
     <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">

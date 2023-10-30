@@ -1,6 +1,6 @@
 @extends('layout')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buckup/smoothness/jquery-ui.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 @endpush
 

@@ -10,7 +10,9 @@
    <meta name="csrf-token" content="{{ csrf_token() }}">
 
    <!-- IMPORTANTE -->
+   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
    <link rel="stylesheet" href="{{ asset('css/layout.css')}}">
+   
 
    @stack('styles')
 
@@ -27,6 +29,7 @@
 
    @stack('scripts')
    <!-- <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script> -->
+   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </body>
 
 </html>
