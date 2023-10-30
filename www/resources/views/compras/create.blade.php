@@ -166,8 +166,7 @@
     });
   }
 
-  $("#tipo_calculo").focusout(function() {
-
+  function calcular() {
     switch (document.getElementById("tipo_calculo").value) {
       case '1':
         clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a8_conceptos_no_gravados, a9_compras_no_inscriptas]);
@@ -185,8 +184,10 @@
       default:
         console.log(`No op available`);
     }
+  }
 
-
+  $("#tipo_calculo, #total").focusout(function() {
+    calcular();
   });
 
 
