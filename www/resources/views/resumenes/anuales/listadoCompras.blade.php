@@ -6,7 +6,7 @@
 @section('content')
 
 
-<h1>Listado Anual de {{ $operatoria }}</h1>
+<h1>Listado Anual de {{ $operatoria }} {{ $year }}</h1>
 
 <div class="container.fluid">
   <form action="{{url('/anuales/export')}}" method="POST" class="card--form">
