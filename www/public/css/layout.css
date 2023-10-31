@@ -123,6 +123,10 @@ nav {
     color: var(--bs-form-invalid-color);
 }
 
+.btn{
+    padding: 5px 10px;
+}
+
 /* .container {
     width: 100%;
     height: 100%;
