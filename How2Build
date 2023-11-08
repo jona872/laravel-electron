@@ -23,3 +23,7 @@ clonar
 borrar vendor
 composer install & update
 ==============================================
+
+//TODO=======
+*Mostrar cliente ID y simular que es el codigo de cliente
+*Verificar el funcionamiento de los headers de los resumenes cuando es xls

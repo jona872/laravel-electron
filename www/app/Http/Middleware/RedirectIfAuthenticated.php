@@ -19,6 +19,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             return redirect('/home');
+            // return 'https://kbfc7t4c.brs.devtunnels.ms:8000/' . route('/home');
         }
 
         return $next($request);
