@@ -33,3 +33,7 @@
     width: 100px;
     position: relative;
 }
+
+.vertical-middle {
+    vertical-align: middle;
+}

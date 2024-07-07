@@ -5,17 +5,13 @@
 
 
 @section('content')
-<h1>Compras</h1>
-@php
-//dd($compras);
-@endphp
+<h2>Compras</h2>
 
+<div class="container-fluid">
 
-<div class="container.fluid">
-
-  <a href="compras/create" class="d-flex flex-row m-2 gap-2">
+  <a href="compras/create" class="d-flex flex-row align-items-center m-2 gap-2">
     <div class="btn-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
       </svg>
@@ -113,24 +109,24 @@
         </div>
       </td>
 
-      <td> {{$c->fecha }} </td>
-      <td> {{$c->pto_venta }} </td>
-      <td> {{$c->codigo_comprobante }} </td>
-      <td> {{$c->tipo_comprobante }} </td>
-      <td> {{$c->name }} </td>
-      <td> {{$c->cuit }} </td>
-      <td> {{$c->condition }} </td>
-      <td> {{$c->neto }} </td>
-      <td> {{$c->iva }} </td>
-      <td> {{$c->iva_liquidado }} </td>
-      <td> {{$c->iva_sobretasa }} </td>
-      <td> {{$c->percepcion }} </td>
-      <td> {{$c->iva_retencion }} </td>
-      <td> {{$c->impuestos_internos }} </td>
-      <td> {{$c->conceptos_no_gravados }} </td>
-      <td> {{$c->compras_no_inscriptas }} </td>
-      <td> {{$c->total }} </td>
-      <td> {{$c->tipo_op }} </td>
+      <td class="vertical-middle"> {{$c->fecha }} </td>
+      <td class="vertical-middle"> {{$c->pto_venta }} </td>
+      <td class="vertical-middle"> {{$c->codigo_comprobante }} </td>
+      <td class="vertical-middle"> {{$c->tipo_comprobante }} </td>
+      <td class="vertical-middle"> {{$c->name }} </td>
+      <td class="vertical-middle"> {{$c->cuit }} </td>
+      <td class="vertical-middle"> {{$c->condition }} </td>
+      <td class="vertical-middle"> {{$c->neto }} </td>
+      <td class="vertical-middle"> {{$c->iva }} </td>
+      <td class="vertical-middle"> {{$c->iva_liquidado }} </td>
+      <td class="vertical-middle"> {{$c->iva_sobretasa }} </td>
+      <td class="vertical-middle"> {{$c->percepcion }} </td>
+      <td class="vertical-middle"> {{$c->iva_retencion }} </td>
+      <td class="vertical-middle"> {{$c->impuestos_internos }} </td>
+      <td class="vertical-middle"> {{$c->conceptos_no_gravados }} </td>
+      <td class="vertical-middle"> {{$c->compras_no_inscriptas }} </td>
+      <td class="vertical-middle"> {{$c->total }} </td>
+      <td class="vertical-middle"> {{$c->tipo_op }} </td>
     </tr>
     @endforeach
     @else

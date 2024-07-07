@@ -16,7 +16,7 @@
 </h1>
 
 <div class=".container-fluid mx-auto">
-	<h2>Nuevo Cliente</h2>
+	<h3>Nuevo Cliente</h3>
 
 	@if ($errors->any())
 	<div class="invalid">

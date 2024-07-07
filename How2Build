@@ -1,3 +1,6 @@
+RAMA newCss ultima version. (build wind32 no anda, x64 si)
+
+
 https://strong-pointer.medium.com/use-docker-container-to-build-windows-installers-for-electron-apps-on-macos-91c2d631dcbd
 
 sudo docker pull hackash/electron-windows-build (solo para bajarlo la primera vez)
