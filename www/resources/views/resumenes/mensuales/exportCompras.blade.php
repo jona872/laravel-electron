@@ -2,10 +2,13 @@
 header("Pragma: public");
 header("Expires: 0");
 $filename = "nombreArchivoQueDescarga.xls";
-header("Content-type: application/x-msdownload");
+header("Content-type: application/vnd.ms-excel; charset=UTF-8");
 header("Content-Disposition: attachment; filename=$filename");
 header("Pragma: no-cache");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+// Agrega BOM para UTF-8
+echo "\xEF\xBB\xBF";
 ?>
 
 <style>
@@ -18,7 +21,7 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
    }
 </style>
 
-<h1>Libro de I.V.A. Compras de: {{$user->name}} - Per�odo: {{$mes}}/{{$year}} - ()</h1>
+<h1>Libro de I.V.A. Compras de: {{$user->name}} - Período: {{$mes}}/{{$year}} - ()</h1>
 <b>Domicilio: RUTA 18 - KM. 10</b>
 <br>
 <b>C.U.I.T.: {{$user->cuit}}</b>
@@ -31,10 +34,10 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
          Fecha
       </th>
       <th style="background-color: #bfbfbf;">
-         Punto de Venta
+         Pto de Venta
       </th>
       <th style="background-color: #bfbfbf;">
-         N� de Compro
+         Nº de Compro
       </th>
       <th style="background-color: #bfbfbf;">
          Tipo de Compro
