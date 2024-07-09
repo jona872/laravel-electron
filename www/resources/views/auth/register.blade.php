@@ -123,11 +123,11 @@
       </div>
     </div>
 
-    <div class="row text-center mt-1">
-      <div class="card--row--item card--center--btn">
+    <div class="d-grid mt-2">
         <button type="submit" class="btn btn-primary"> Registrar </button>
-      </div>
     </div>
+
+  
 
 
 
