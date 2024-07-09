@@ -19,7 +19,7 @@ jobs:
         node-version: '14'
 
     - name: Install Wine (for Electron packager)
-      run: apt-get update && apt-get install -y wine wine32 wine64
+      run: sudo apt-get update && sudo apt-get install -y wine wine32 wine64
 
     - name: Install Wine Gecko (if needed)
       run: wineboot --init
@@ -28,10 +28,10 @@ jobs:
       run: npm install
 
     - name: Run First Step
-      run: docker pull hackash/electron-windows-build
+      run: sudo docker pull hackash/electron-windows-build
 
     - name: Run Second Step
-      run: docker run --rm -v ${PWD}:/project hackash/electron-windows-build
+      run: sudo docker run --rm -v ${PWD}:/project hackash/electron-windows-build
 
     - name: Run Third Step (Electron packager)
       run: electron-packager . --overwrite --platform win32 --arch x64 --out=dist
@@ -40,7 +40,7 @@ jobs:
       run: npm run fourth
 
     - name: Set permissions
-      run: chmod -R 777 dist/
+      run: sudo chmod -R 777 dist/
 
     - name: Move files
       run: mv dist/ /media/sf_Facu2/ACA/
