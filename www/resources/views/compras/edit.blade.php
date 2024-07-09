@@ -1,7 +1,7 @@
 @extends('layout')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/compras.css')}}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buckup/smoothness/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buckup/form.css') }}">
 @endpush
 
 @section('content')
@@ -50,19 +50,19 @@
 
             <div class="form--row">
                 <label for="client_id"> Codigo Cliente </label>
-                <input readonly id="client_id" type="text" name="client_id" value="{{ $cliente->id }}" />
+                <input id="client_id" type="text" name="client_id" value="{{ $cliente->id }}" />
             </div>
             <div class="form--row">
                 <label for="name"> Nombre Cliente </label>
-                <input readonly id="name" type="text" name="name" value="{{ $cliente->name }}" />
+                <input id="name" type="text" name="name" value="{{ $cliente->name }}" />
             </div>
             <div class="form--row">
                 <label for="cuit"> CUIT </label>
-                <input readonly id="cuit" type="text" name="cuit" value="{{ $cliente->cuit }}" />
+                <input id="cuit" type="text" name="cuit" value="{{ $cliente->cuit }}" />
             </div>
             <div class="form--row">
                 <label for="condition"> Condicion </label>
-                <input readonly id="condition" type="text" name="condition" value="{{ $cliente->condition }}" />
+                <input id="condition" type="text" name="condition" value="{{ $cliente->condition }}" />
             </div>
         </div>
 
@@ -92,15 +92,15 @@
                 <input id="iva_retencion" type="text" name="iva_retencion" value="{{ $compra->iva_retencion }}" />
             </div>
             <div class="form--row">
-                <label for="impuestos_internos"> impuestos_internos </label>
+                <label for="impuestos_internos"> Impuestos Internos </label>
                 <input id="impuestos_internos" type="text" name="impuestos_internos" value="{{ $compra->impuestos_internos }}" />
             </div>
             <div class="form--row">
-                <label for="conceptos_no_gravados"> conceptos_no_gravados </label>
+                <label for="conceptos_no_gravados"> Conceptos No Gravados </label>
                 <input id="conceptos_no_gravados" type="text" name="conceptos_no_gravados" value="{{ $compra->conceptos_no_gravados }}" />
             </div>
             <div class="form--row">
-                <label for="compras_no_inscriptas"> compras_no_inscriptas </label>
+                <label for="compras_no_inscriptas"> Compras No Inscriptas </label>
                 <input id="compras_no_inscriptas" type="text" name="compras_no_inscriptas" value="{{ $compra->compras_no_inscriptas }}" />
             </div>
             <div class="form--row">
@@ -119,13 +119,20 @@
         </div>
     </div>
 
-    <div class="card--row">
-        <a class="btn btn--cancel a--btn" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
+    <div class="row text-center mt-3">
+        <div class="d-flex justify-content-center gap-2 flex-wrap">
+            <a class="btn btn-danger" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
 
-        <button type="submit" class="btn btn--confirm"> Guardar </button>
+            <button type="submit" class="btn btn-primary"> Guardar </button>
+        </div>
     </div>
 
 </form>
-
-
 @endsection
+
+@push('scripts')
+<script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+
+<script src="{{ asset('js/handleFormCompras.js') }}"></script>
+@endpush

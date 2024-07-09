@@ -1,102 +1,39 @@
-html {
-   width: fit-content;
+.table {
+    border-collapse: collapse;
+}
+.table,
+.table th,
+.table td {
+    border: 1px solid #ccc;
+}
+.table th,
+.table td {
+    padding: 0.5rem;
+}
+.table th {
+    position: relative;
+    background-clip: padding-box;
+}
+.resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15px;
+    cursor: col-resize;
+    user-select: none;
+}
+.resizer:hover,
+.resizing {
+    border-right: 2px solid blue;
 }
 
-table {
-   margin-top: 1rem;
-   overflow: scroll;
-   width: 100%;
-   /* display: block; */
-   box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);
-   -webkit-box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);
-   -moz-box-shadow: 0px 2px 11px 3px rgba(112, 100, 100, 0.76);
+.resizable {
+    border: 1px solid gray;
+    height: 100px;
+    width: 100px;
+    position: relative;
 }
 
-td,
-th {
-   text-align: center;
-   padding: 0.5rem;
-   word-wrap: break-word;
-}
- 
- th>div {
-   resize: horizontal;
-   overflow: auto;
-   border: 0;
-   width: auto;
-   height: auto;
- }
-tr > th {
-   background-color: #a6e1fa;
-}
-
-tr:nth-child(even) {
-   background-color: #dddddd;
-}
-
-tr:hover {
-   background-color: #D6EEEE;
-}
-
-.col-opt-header {
-   width: min-content;
-}
-
-.col-opt-body {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   gap: 0.2rem;
-}
-
-.col-min {
-   width: min-content;
-}
-
-.col-fit {
-   width: fit-content;
-}
-
-.btn-icon {
-   text-decoration: none;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-
-}
-
-.header-btn {
-   text-decoration: none;
-   display: flex;
-   align-items: center;
-   gap: 1rem;
-   color: #000;
-}
-
-.header-right {
-   justify-content: flex-end;
-}
-
-.header-left {
-   justify-content: flex-start;
-}
-
-.centered-icon {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 100%;
-   width: 100%;
-}
-
-.invalid-feedback {
-   color: red;
-   font-weight: 1.5rem;
-}
-
-::-webkit-resizer{ background-color:transparent; }
-
-.fit-cnt {
-   width: fit-content;
+.vertical-middle {
+    vertical-align: middle;
 }

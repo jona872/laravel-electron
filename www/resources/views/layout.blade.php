@@ -8,9 +8,12 @@
 
    <!-- CSRF Token -->
    <meta name="csrf-token" content="{{ csrf_token() }}">
+   
 
-   <!-- IMPORTANTE -->
+   <!-- IMPORTANTE -->   
+   <link rel="stylesheet" href="{{ asset('css/bootstrap/css/bootstrap.min.css') }}">
    <link rel="stylesheet" href="{{ asset('css/layout.css')}}">
+  
 
    @stack('styles')
 
@@ -26,7 +29,10 @@
    <!-- CONTENT -->
 
    @stack('scripts')
-   <!-- <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script> -->
+   
+   <!-- <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+   <script src="{{ asset('js/jquery-ui.min.js') }}"></script> -->
+   
 </body>
 
 </html>

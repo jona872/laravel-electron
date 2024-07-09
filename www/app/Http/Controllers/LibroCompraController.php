@@ -114,7 +114,6 @@ class LibroCompraController extends Controller
    {
       try {
          $compra = LibroCompra::find($id);
-         
          $cliente = Cliente::find($compra->sender_id);
 
          if ($compra) {
@@ -128,8 +127,11 @@ class LibroCompraController extends Controller
    public function update(Request $request, LibroCompra $libroCompra)
    {
       try {
+         // dd($request->all());
          $compra = LibroCompra::find($request->id);
          if ($compra) {
+            // dd($compra->sender_id);
+            $compra->sender_id = $request->client_id;
             $compra->update($request->all());
          }
 

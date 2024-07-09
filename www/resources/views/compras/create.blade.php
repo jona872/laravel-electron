@@ -1,23 +1,23 @@
 @extends('layout')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buckup/smoothness/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buckup/form.css') }}">
 @endpush
 
 
 @section('content')
 
-<h1 class="title--header">
+<h2 class="title--header">
   <a href="/compras" role="button" class="row--centered">
     <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
     </svg>
     <span>Compras</span>
   </a>
-</h1>
+</h2>
 
 @if ($errors->any())
-<div class="invalid-feedback">
+<div class="invalid">
   <ul>
     @foreach ($errors->all() as $error)
     <li>{{ $error }}</li>
@@ -64,7 +64,7 @@
       </div>
       <div class="form--row">
         <label for="cuit"> CUIT </label>
-        <input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" />
+        <input id="cuit" type="text" name="cuit" value="{{ old('cuit') }}" required />
       </div>
       <div class="form--row">
         <label for="condition"> Condicion </label>
@@ -124,128 +124,25 @@
     </div>
   </div>
 
-  <div class="footer-btn">
-    <a class="btn btn--cancel a--btn no-space" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
 
-    <button type="submit" class="btn btn--confirm no-space"> Guardar </button>
+  <div class="row text-center mt-3">
+    <div class="d-flex justify-content-center gap-2 flex-wrap">
+      <a class="btn btn-danger" href="{{ route('compras.index') }}">{{ __('Cancelar') }}</a>
+      <button class="btn btn-primary" type="submit"> Guardar </button>
+    </div>
   </div>
+
+
+
 
 </form>
 
-<!-- MANDATORY -->
+
+@endsection
+
+@push('scripts')
 <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 
-<script type="text/javascript">
-  let dataGlobal;
-  let globalClientClienteCode = [];
-  let globalClientClienteName = [];
-  let globalClientClienteCuit = [];
-
-
-  let a1_neto = document.getElementById('neto');
-  let a2_iva = document.getElementById('iva');
-  let a3_iva_liquidado = document.getElementById('iva_liquidado');
-  let a4_iva_sobretasa = document.getElementById('iva_sobretasa');
-  let a5_percepcion = document.getElementById('percepcion');
-  let a6_iva_retencion = document.getElementById('iva_retencion');
-  let a7_impuestos_internos = document.getElementById('impuestos_internos');
-  let a8_conceptos_no_gravados = document.getElementById('conceptos_no_gravados');
-  let a9_compras_no_inscriptas = document.getElementById('compras_no_inscriptas');
-  let a11_total = document.getElementById('total');
-  // let editableButtons = [ a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a8_conceptos_no_gravados, a9_compras_no_inscriptas ];
-
-  function clearFields(vButtons) {
-    vButtons.map((btn) => {
-      btn.value = parseFloat('0').toFixed(2);
-    });
-  }
-
-  $("#tipo_calculo").focusout(function() {
-
-    switch (document.getElementById("tipo_calculo").value) {
-      case '1':
-        clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a8_conceptos_no_gravados, a9_compras_no_inscriptas]);
-        a1_neto.value = parseFloat((a11_total.value - a9_compras_no_inscriptas.value - a8_conceptos_no_gravados.value - a7_impuestos_internos.value - a6_iva_retencion.value - a5_percepcion.value) / (1 + a2_iva.value) * 100).toFixed(2);
-        a3_iva_liquidado.value = parseFloat(a1_neto.value * (a2_iva.value / 100)).toFixed(2);
-        break;
-      case '4':
-        clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a9_compras_no_inscriptas]);
-        a8_conceptos_no_gravados.value = parseFloat(a11_total.value - a9_compras_no_inscriptas.value - a7_impuestos_internos.value - a6_iva_retencion.value - a5_percepcion.value).toFixed(2);
-        break;
-      case '5':
-        clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a8_conceptos_no_gravados, a9_compras_no_inscriptas]);
-        a3_iva_liquidado.value = parseFloat(a11_total.value).toFixed(2);
-        break;
-      default:
-        console.log(`No op available`);
-    }
-
-
-  });
-
-
-
-  // fetch all data and filters
-  const getData = async () => {
-    const response = await fetch("/api/v1/clientes/listado");
-    const data = await response.json();
-    dataGlobal = data;
-    data.map(element => {
-      globalClientClienteCode.push(element.id.toString())
-      globalClientClienteName.push(element.name)
-      globalClientClienteCuit.push(element.cuit)
-    });
-    return dataGlobal;
-  };
-  (async () => {
-    await getData();
-  })();
-  //=============================================================
-
-  //Each field autocomplete
-  $("#client_id").autocomplete({
-    source: globalClientClienteCode,
-    select: function(event, ui) { //ui.item -> label and value
-      dataGlobal.map(element => { //element = cada obj cliente
-        if (element.id === parseInt(ui.item.value)) {
-          document.getElementById("client_id").value = parseInt(element.id)
-          document.getElementById("name").value = element.name
-          document.getElementById("cuit").value = element.cuit
-          document.getElementById("condition").value = element.condition
-        }
-      });
-    }
-  });
-  //=======================
-  $("#name").autocomplete({
-    source: globalClientClienteName,
-    select: function(event, ui) { //ui.item -> label and value
-      dataGlobal.map(element => { //element = cada obj cliente            
-        if (element.name === ui.item.value) {
-          document.getElementById("client_id").value = element.id
-          document.getElementById("name").value = element.name
-          document.getElementById("cuit").value = element.cuit
-          document.getElementById("condition").value = element.condition
-        }
-      });
-    }
-  });
-  //=======================
-  $("#cuit").autocomplete({
-    source: globalClientClienteCuit,
-    select: function(event, ui) { //ui.item -> label and value
-      dataGlobal.map(element => { //element = cada obj cliente
-        if (element.cuit === ui.item.value) {
-          document.getElementById("client_id").value = element.id
-          document.getElementById("name").value = element.name
-          document.getElementById("cuit").value = element.cuit
-          document.getElementById("condition").value = element.condition
-        }
-      });
-    }
-  });
-  //=======================
-</script>
-
-@endsection
+<script src="{{ asset('js/handleFormCompras.js') }}"></script>
+@endpush

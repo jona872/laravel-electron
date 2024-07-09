@@ -2,67 +2,66 @@
 
 @section('content')
 
-<main class="main">
-    <div class="container">
-        <form action="{{url('/periodos/preview')}}" method="POST" class="card--form">
-            @csrf
+<div class=".container-fluid mx-auto">
+<h2>Generar Resumen por Periodos</h2>
+    <form action="{{url('/periodos/preview')}}" method="POST" class="card p-3">
+        @csrf
 
-            <div class="card--row row--centered evenly">
-                <div>
-                    <input type="radio" id="compras" name="operatoria" value="compras" checked>
-                    <label for="compras">Compras</label>
-                </div>
-                <div>
-                    <input type="radio" id="ventas" name="operatoria" value="ventas">
-                    <label for="ventas">Ventas</label>
-                </div>
+        <div class="row mb-3">
+            <div class="col mb-1">
+                <input type="radio" id="compras" name="operatoria" value="compras" checked>
+                <label for="compras">Compras</label>
             </div>
-
-            <div class="card--row">
-                
-                <label for="year" class="card--row--item card--label">Ingrese el Año:</label>
-                <div class="card--row--item card-input">
-                    <input id="year" type="number" name="year" value="{{now()->year}}" required autocomplete="year" oninvalid="this.setCustomValidity('Esta campo en requerido!')">
-                    @error('year')
-                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
-                    @enderror
-                </div>
+            <div class="col mb-1">
+                <input type="radio" id="ventas" name="operatoria" value="ventas">
+                <label for="ventas">Ventas</label>
             </div>
+        </div>
 
-            <div class="card--row">
-                <label for="mes" class="card--row--item card--label">Ingrese el Mes Inicial:</label>
+        <div class="row mb-3">
 
-                <div class="card--row--item card-input">
-                    <input id="mes" type="number" name="mes" value="{{ old('mes') }}" required autocomplete="mes" oninvalid="this.setCustomValidity('Esta campo en requerido!')">
-                    @error('mes')
-                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
-                    @enderror
-                </div>
+            <label for="year" class="col-form-label">Ingrese el Año:</label>
+            <div class="col">
+                <input class="form-control" id="year" type="number" name="year" value="{{now()->year}}" required autocomplete="year" oninvalid="this.setCustomValidity('Esta campo en requerido!')">
+                @error('year')
+                <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                @enderror
             </div>
+        </div>
 
-            <div class="card--row">
-                <label for="mes_final" class="card--row--item card--label">Ingrese el Mes Final:</label>
+        <div class="row mb-3">
+            <label for="mes" class="col-form-label">Ingrese el Mes Inicial:</label>
 
-                <div class="card--row--item card-input">
-                    <input id="mes_final" type="number" name="mes_final" value="{{ old('mes_final') }}" required autocomplete="mes_final" oninvalid="this.setCustomValidity('Esta campo en requerido!')">
-                    @error('mes_final')
-                    <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
-                    @enderror
-                </div>
+            <div class="col">
+                <input class="form-control" id="mes" type="number" name="mes" value="{{ old('mes') }}" required autocomplete="mes" oninvalid="this.setCustomValidity('Esta campo en requerido!')">
+                @error('mes')
+                <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                @enderror
             </div>
+        </div>
 
+        <div class="row mb-3">
+            <label for="mes_final" class="col-form-label">Ingrese el Mes Final:</label>
 
-            <div class="card--row">
-                <div class="row--centered">
-                    <button type="submit" class="btn btn--confirm"> Continuar </button>
-                </div>
+            <div class="col">
+                <input class="form-control" id="mes_final" type="number" name="mes_final" value="{{ old('mes_final') }}" required autocomplete="mes_final" oninvalid="this.setCustomValidity('Esta campo en requerido!')">
+                @error('mes_final')
+                <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span>
+                @enderror
             </div>
+        </div>
 
 
-        </form>
+        <div class="row text-center mt-3">
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                <button type="submit" class="btn btn-primary"> Continuar </button>
+            </div>
+        </div>
 
-    </div>
-</main>
+
+    </form>
+
+</div>
 
 
 @endsection
