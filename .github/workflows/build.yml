@@ -22,10 +22,10 @@ jobs:
       run: npm install
 
     - name: Run First Step
-      run: npm run first
+      run: docker pull hackash/electron-windows-build
 
     - name: Run Second Step
-      run: npm run second
+      run: docker run --rm -v ${PWD}:/project hackash/electron-windows-build
 
     - name: Run Third Step
       run: npm run third
