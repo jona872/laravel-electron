@@ -16,12 +16,10 @@
     "second": "sudo docker run -it --rm -v ${PWD}:/project hackash/electron-windows-build",
     "third": "npm run windows-from-docker",
     "sets": "sudo chmod -R 777 dist/",
-    "copy": "cp -R dist/ /media/sf_Facu2/ACA/",
     "move": "mv dist/ /media/sf_Facu2/ACA/",
-    
-    "compress": "cd /media/sf_Facu2/ACA/ && zip -r Facturas.zip dist",
     "fourth": "npm run sets && npm run move",
-
+    "compress": "cd /media/sf_Facu2/ACA/ && zip -r Facturas.zip dist",
+    
     "windows-from-docker32": "electron-packager . --overwrite --platform win32 --arch ia32 --out=dist",
     "third32": "npm run windows-from-docker32"
   },
