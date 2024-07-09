@@ -39,9 +39,6 @@ jobs:
     - name: Move files
       run: mv dist/ /media/sf_Facu2/ACA/
 
-    - name: Compress files
-      run: cd /media/sf_Facu2/ACA/ && zip -r Facturas.zip dist
-
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
