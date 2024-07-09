@@ -36,11 +36,14 @@ jobs:
     - name: Run Third Step (Electron packager)
       run: electron-packager . --overwrite --platform win32 --arch x64 --out=dist
 
+    - name: Zip artifact
+      run: zip -r Facturas.zip ./dist
+
     - name: Run Fourth Step (Upload Artifact)
       uses: actions/upload-artifact@v2
       with:
-        name: MyArtifact
-        path: ./dist
+        name: Facturas
+        path: ./Facturas.zip
 
     # - name: Download Artifact
     #   uses: actions/download-artifact@v2
