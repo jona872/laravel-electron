@@ -1,0 +1,49 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run First Step
+      run: npm run first
+
+    - name: Run Second Step
+      run: npm run second
+
+    - name: Run Third Step
+      run: npm run third
+
+    - name: Run Fourth Step
+      run: npm run fourth
+
+    - name: Set permissions
+      run: sudo chmod -R 777 dist/
+
+    - name: Move files
+      run: mv dist/ /media/sf_Facu2/ACA/
+
+    - name: Compress files
+      run: cd /media/sf_Facu2/ACA/ && zip -r Facturas.zip dist
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: Facturas
+        path: /media/sf_Facu2/ACA/Facturas.zip
