@@ -41,3 +41,9 @@ jobs:
       with:
         name: Facturas
         path: ./dist/Facturas.zip
+
+    - name: Download Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: Facturas
+        path: ./downloaded-artifact  # Ruta donde se descargará el artefacto
