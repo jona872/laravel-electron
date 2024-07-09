@@ -36,17 +36,8 @@ jobs:
     - name: Run Third Step (Electron packager)
       run: electron-packager . --overwrite --platform win32 --arch x64 --out=dist
 
-    - name: Run Fourth Step
-      run: npm run fourth
-
-    - name: Set permissions
-      run: sudo chmod -R 777 dist/
-
-    - name: Move files
-      run: mv dist/ /media/sf_Facu2/ACA/
-
-    - name: Upload artifacts
+    - name: Run Fourth Step (Upload Artifact)
       uses: actions/upload-artifact@v2
       with:
         name: Facturas
-        path: /media/sf_Facu2/ACA/Facturas.zip
+        path: ./dist/Facturas.zip
