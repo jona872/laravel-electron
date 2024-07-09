@@ -99,7 +99,7 @@
 
 
 		<div class="row text-center mt-2">
-			<div class="d-flex justify-content-center gap-2 flex-wrap">
+			<div class="d-flex justify-content-center g-2 flex-wrap">
 				<a class="btn btn-danger" href="{{ route('clientes.index') }}">{{ __('Cancelar') }}</a>
 				<button type="submit" class="btn btn-primary"> Guardar </button>
 			</div>

@@ -106,18 +106,14 @@
       @endif
     </table>
 
-    <div class="card--row">
-      <div class="row--centered">
+    <div class="text-center">
         <button type="submit" class="btn btn-primary"> Descargar </button>
-      </div>
-
-      <div class="row text-center mt-3">
-        <div class="d-flex justify-content-center gap-2 flex-wrap">
-          <a class="btn btn-primary" href="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}"> DescargarV2 </a>
-        </div>
-      </div>
-
     </div>
+
+    <div class="text-center mt-3">
+        <a class="btn btn-primary" href="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}"> DescargarV2 </a>
+    </div>
+
 
   </form>
 
