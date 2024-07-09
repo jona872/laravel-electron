@@ -20,9 +20,9 @@ jobs:
 
     - name: Install Wine (for Electron packager)
       run: sudo apt-get update && sudo apt-get install -y wine wine64
-           
-    - name: Install Wine Gecko (if needed)
-      run: wineboot --init
+
+    - name: Install electron-packager
+      run: npm install -g electron-packager
 
     - name: Install dependencies
       run: npm install
@@ -34,7 +34,7 @@ jobs:
       run: sudo docker run --rm -v ${PWD}:/project hackash/electron-windows-build
 
     - name: Run Third Step (Electron packager)
-      run: npm run windows-from-docker
+      run: electron-packager . --overwrite --platform win32 --arch x64 --out=dist
 
     - name: Run Fourth Step
       run: npm run fourth
