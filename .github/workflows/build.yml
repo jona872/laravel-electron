@@ -18,17 +18,20 @@ jobs:
       with:
         node-version: '14'
 
+    - name: Install Wine (for Electron packager)
+      run: sudo apt-get update && sudo apt-get install -y wine
+
     - name: Install dependencies
       run: npm install
 
     - name: Run First Step
-      run: docker pull hackash/electron-windows-build
+      run: sudo docker pull hackash/electron-windows-build
 
     - name: Run Second Step
-      run: docker run --rm -v ${PWD}:/project hackash/electron-windows-build
+      run: sudo docker run --rm -v ${PWD}:/project hackash/electron-windows-build
 
     - name: Run Third Step
-      run: npm run third
+      run: npm run windows-from-docker
 
     - name: Run Fourth Step
       run: npm run fourth
