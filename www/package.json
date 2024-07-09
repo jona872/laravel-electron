@@ -1,4 +1,8 @@
 {
+    "name": "nombre-de-tu-proyecto",
+    "version": "1.0.0",
+    "description": "Descripción de tu proyecto",
+    "author": "Autor del proyecto",
     "private": true,
     "scripts": {
         "dev": "npm run development",

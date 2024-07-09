@@ -11,16 +11,13 @@
     "build": "electron-packager . Facturas --out=dist",
     "build-linux": "electron-packager . Facturas --overwrite --platform=linux --arch=x64 --out=dist",
     "windows-from-ubuntu": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=x64 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Facturas'",
-    "windows-from-docker": "electron-packager . --overwrite --platform win32 --arch x64 --out=dist",
+    "windows-from-docker":   "electron-packager . --overwrite --platform win32 --arch x64 --out=dist",
     "first": "sudo docker pull hackash/electron-windows-build",
     "second": "sudo docker run -it --rm -v ${PWD}:/project hackash/electron-windows-build",
     "third": "npm run windows-from-docker",
+    "fourth": "npm run sets && npm run copy",
     "sets": "sudo chmod -R 777 dist/",
     "copy": "cp -R dist/ /media/sf_Facu2/ACA/",
-    "move": "mv dist/ /media/sf_Facu2/ACA/",
-    
-    "compress": "cd /media/sf_Facu2/ACA/ && zip -r Facturas.zip dist",
-    "fourth": "npm run sets && npm run move",
 
     "windows-from-docker32": "electron-packager . --overwrite --platform win32 --arch ia32 --out=dist",
     "third32": "npm run windows-from-docker32"
