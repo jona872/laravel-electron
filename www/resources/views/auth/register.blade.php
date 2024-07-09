@@ -15,7 +15,7 @@
 
 
 
-<div class=".container-fluid mx-auto">
+<div class="mx-auto">
   <h2>Registrar Nuevo Usuario</h2>
   <form method="POST" action="{{ route('register') }}" class="card p-3">
     @csrf
@@ -127,15 +127,8 @@
         <button type="submit" class="btn btn-primary"> Registrar </button>
     </div>
 
-  
-
-
-
-
   </form>
 
 </div>
-
-
 
 @endsection

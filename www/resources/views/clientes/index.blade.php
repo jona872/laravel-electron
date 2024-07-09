@@ -56,10 +56,10 @@
 
         </td>
 
-        <td> {{$c->name }} </td>
-        <td> {{$c->cuit }} </td>
-        <td> {{$c->condition }} </td>
-        <td> {{$c->direction }} </td>
+        <td class="vertical-middle"> {{$c->name }} </td>
+        <td class="vertical-middle"> {{$c->cuit }} </td>
+        <td class="vertical-middle"> {{$c->condition }} </td>
+        <td class="vertical-middle"> {{$c->direction }} </td>
       </tr>
       @endforeach
       @else

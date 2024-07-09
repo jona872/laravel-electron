@@ -24,7 +24,7 @@
 </div>
 @endif
 
-<div class=".container-fluid mx-auto">
+<div class="mx-auto">
     <form action="{{ route('clientes.update',$cliente->id) }}" method="POST" class="card p-3">
         @csrf
         @method('PUT')

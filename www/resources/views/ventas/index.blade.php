@@ -88,7 +88,7 @@
     @foreach ($ventas ?? '' as $c)
     <tr>
       <td class="vertical-middle">
-        <div class="d-flex flex-wrap gap-2">
+        <div class="d-flex flex-wrap gap-2 justify-content-center">
 
           <a href="ventas/{{$c->id}}/edit" title="Edit" class="btn btn-warning">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

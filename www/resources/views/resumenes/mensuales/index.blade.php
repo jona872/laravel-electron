@@ -3,8 +3,8 @@
 @section('content')
 
 
-<div class=".container-fluid mx-auto">
-<h2>Generar Resumen Mensual</h2>
+<div class="mx-auto">
+<h2 class="my-3">Generar Resumen Mensual</h2>
     <!-- <form action="{{ route('clientes.store') }}" method="POST" class="card--form"> -->
     <form action="{{url('/mensuales/preview')}}" method="POST" class="card p-3">
         @csrf
