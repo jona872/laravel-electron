@@ -1,6 +1,6 @@
 <!-- NAVBAR -->
 <nav class="navbar">
-@if (Auth::check())
+    @if (Auth::check())
     <div class="dropdown">
         <button class="nav--btn">Clientes</button>
         <div class="dropdown-content">
@@ -34,22 +34,14 @@
         </div>
     </div>
 
-    @auth
+    
     <div class="dropdown">
         <button class="nav--btn"> {{Auth::user()->name}} </button>
         <div class="dropdown-content">
             <a href="{{ route('logout') }}"> Salir </a>
         </div>
     </div>
-    @endauth
-@else
-<div class="dropdown">
-        <button class="nav--btn"></button>
-        <div class="dropdown-content">
-            <a href="/clientes/create">Agregar Cliente</a>
-            <a href="/clientes">Listado de Clientes</a>
-        </div>
-    </div>
-@endif
+    
+    @endif
 </nav>
 <!-- NAVBAR -->
