@@ -6,8 +6,8 @@
 @section('content')
 
 
-<div class=".container-fluid mx-auto">
-  <h2 class="">Ingresar al sistema</h2>
+<div class="mx-auto">
+  <h2 class="my-4">Ingresar al sistema</h2>
 
   <form method="POST" action="{{ route('login') }}" class="card p-3">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -45,13 +45,15 @@
     </div>
 
     <!-- Buttons -->
-    <div class="row text-center">
-      <div>
-        <button type="submit" class="btn btn-primary"> Entrar </button>
-        @if (Route::has('register'))
-        <a class="btn btn-danger" href="{{ route('register') }}">{{ __('Registrar') }}</a>
-        @endif
-      </div>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="me-2">
+          <button type="submit" class="btn btn-primary"> Entrar </button>
+        </div>
+        <div>
+          @if (Route::has('register'))
+          <a class="btn btn-danger" href="{{ route('register') }}">{{ __('Registrar') }}</a>
+          @endif
+        </div>
     </div>
 
 

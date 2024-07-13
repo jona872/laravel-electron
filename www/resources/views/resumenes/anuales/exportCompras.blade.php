@@ -1,7 +1,7 @@
 <?php
 header("Pragma: public");
 header("Expires: 0");
-$filename = "Resumen-Mensual-{$operatoria}-{$year}-{$mes}.xls";
+$filename = "Resumen-Anual-{$operatoria}-{$year}.xls";
 header("Content-type: application/vnd.ms-excel; charset=UTF-8");
 header("Content-Disposition: attachment; filename=$filename");
 header("Pragma: no-cache");
@@ -21,7 +21,7 @@ echo "\xEF\xBB\xBF";
    }
 </style>
 
-<h1>Libro de I.V.A. Compras de: {{$user->name}} - Período: {{$mes}}/{{$year}} - ()</h1>
+<h1>Libro de I.V.A. Compras de: {{$user->name}} - Período: {{$year}} </h1>
 <b>Domicilio: RUTA 18 - KM. 10</b>
 <br>
 <b>C.U.I.T.: {{$user->cuit}}</b>

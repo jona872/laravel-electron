@@ -5,10 +5,11 @@
 
 @section('content')
 
+
 <h1>Listado Mensual de {{ $operatoria }} {{ $year }}-{{ $mes }}</h1>
 
 <div class="container.fluid">
-  <form action="{{url('/mensuales/export')}}" method="POST">
+  <form action="{{ url('mensuales/export/'.$operatoria . '/'.$year. '/'.$mes) }}" method="GET">
     @csrf
     <input type="hidden" name="operatoria" value="{{ $operatoria }}">
     <input type="hidden" name="mes" value="{{ $mes }}">
@@ -103,10 +104,8 @@
       @endif
     </table>
 
-    <div class="row text-center mt-3">
-      <div class="d-flex justify-content-center gap-2 flex-wrap">
+    <div class="text-center mt-3">
         <button type="submit" class="btn btn-primary"> Descargar </button>
-      </div>
     </div>
 
   </form>

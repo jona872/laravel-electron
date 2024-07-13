@@ -2,8 +2,8 @@
 
 @section('content')
 
-<div class=".container-fluid mx-auto">
-<h2>Generar Resumen por Periodos</h2>
+<div class="mx-auto">
+<h2 class="my-3">Generar Resumen por Periodos</h2>
     <form action="{{url('/periodos/preview')}}" method="POST" class="card p-3">
         @csrf
 
@@ -52,10 +52,8 @@
         </div>
 
 
-        <div class="row text-center mt-3">
-            <div class="d-flex justify-content-center gap-2 flex-wrap">
-                <button type="submit" class="btn btn-primary"> Continuar </button>
-            </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary"> Continuar </button>
         </div>
 
 

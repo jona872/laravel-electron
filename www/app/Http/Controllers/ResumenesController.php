@@ -47,6 +47,7 @@ class ResumenesController extends Controller
 
         //Ventas no tiene el autocompletar aun,
         if ($operatoria == "compras") {
+            // dd(["COMPRAS"=>$request->all()]);
             $consulta = DB::table('libro_compras')
                 ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
                 ->whereYear('fecha', '=', $request->year)
@@ -55,6 +56,7 @@ class ResumenesController extends Controller
 
             return view('resumenes.mensuales.listadoCompras', compact('consulta', 'operatoria', 'year', 'mes'));
         } else {
+            // dd(["VENTAS"=>$request->all()]);
             $consulta = DB::table('libro_ventas')
                 ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
                 ->whereYear('fecha', '=', $request->year)
@@ -65,38 +67,38 @@ class ResumenesController extends Controller
         }
     }
 
-    public function mensualesExport(Request $request)
-    {
-        //operatoria, mes, year
-        if ($request->operatoria && $request->operatoria == "compras") {
-            $data = $this->getComprasData($request->year, $request->mes);
+    // public function mensualesExport(Request $request)
+    // {
+    //     //operatoria, mes, year
+    //     if ($request->operatoria && $request->operatoria == "compras") {
+    //         $data = $this->getComprasData($request->year, $request->mes);
 
-            $csv = Writer::createFromFileObject(new SplTempFileObject());
+    //         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne(self::$HEADER_COMPRAS);
+    //         $csv->insertOne(self::$HEADER_COMPRAS);
 
-            foreach ($data as $key => $array) {
-                $csv->insertOne(get_object_vars($array));
-            }
-            //descarga
-            $csv->output('ResumenMensualCompras' . $request->mes . '.csv');
-        } else {
-            $data = $this->getVentasData($request->year, $request->mes);
-            // dd($request->all(),$request->mes,$request->year);
-            // dd($data);
-            $csv = Writer::createFromFileObject(new SplTempFileObject());
+    //         foreach ($data as $key => $array) {
+    //             $csv->insertOne(get_object_vars($array));
+    //         }
+    //         //descarga
+    //         $csv->output('ResumenMensualCompras' . $request->mes . '.csv');
+    //     } else {
+    //         $data = $this->getVentasData($request->year, $request->mes);
+    //         // dd($request->all(),$request->mes,$request->year);
+    //         // dd($data);
+    //         $csv = Writer::createFromFileObject(new SplTempFileObject());
 
-            $csv->insertOne(self::$HEADER_VENTAS);
+    //         $csv->insertOne(self::$HEADER_VENTAS);
 
-            foreach ($data as $key => $array) {
-                $csv->insertOne(get_object_vars($array));
-            }
-            //descarga
-            $csv->output('ResumenMensualVentas' . $request->mes . '.csv');
-        }
-    }
+    //         foreach ($data as $key => $array) {
+    //             $csv->insertOne(get_object_vars($array));
+    //         }
+    //         //descarga
+    //         $csv->output('ResumenMensualVentas' . $request->mes . '.csv');
+    //     }
+    // }
 
-    public function mensualesExportV2($operatoria, $year, $mes)
+    public function mensualesExport($operatoria, $year, $mes)
     {
         if ($operatoria && $operatoria == "compras") {
 
@@ -105,10 +107,16 @@ class ResumenesController extends Controller
                 ->whereYear('fecha', '=', $year)
                 ->whereMonth('fecha', '=', $mes)
                 ->get();
-            $user = (object) Auth::user()->toArray();
+            $user = (object) Auth::user();
             return view('resumenes.mensuales.exportCompras', compact('consulta', 'operatoria', 'year', 'mes', 'user'));
         } else {
-            dd("Ventas");
+            $consulta = DB::table('libro_ventas')
+                ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
+                ->whereYear('fecha', '=', $year)
+                ->whereMonth('fecha', '=', $mes)
+                ->get();
+            $user = (object) Auth::user();
+            return view('resumenes.mensuales.exportVentas', compact('consulta', 'operatoria', 'year', 'mes', 'user'));
         }
     }
 
@@ -135,9 +143,6 @@ class ResumenesController extends Controller
                 ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
                 ->whereYear('libro_ventas.fecha', '=', $request->year)
                 ->get();
-            // dd($operatoria, $year);
-            // dd($consulta);
-
             return view('resumenes.anuales.listadoVentas', compact('consulta', 'operatoria', 'year'));
         }
     }
@@ -145,30 +150,25 @@ class ResumenesController extends Controller
     public function anualesExport(Request $request)
     {
         if ($request->operatoria && $request->operatoria == "compras") {
-
-            $data = $this->getComprasData($request->year);
-
-            $csv = Writer::createFromFileObject(new SplTempFileObject());
-
-            $csv->insertOne(self::$HEADER_COMPRAS);
-
-            foreach ($data as $key => $array) {
-                $csv->insertOne(get_object_vars($array));
-            }
-            //descarga
-            $csv->output('ResumenAnualCompras.csv');
+            $consulta = DB::table('libro_compras')
+                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+                ->whereYear('fecha', '=', $request->year)
+                ->get();
+            $operatoria = $request->operatoria;
+            $year = $request->year;
+            $user = (object) Auth::user();
+            return view('resumenes.anuales.exportCompras', compact('consulta', 'operatoria', 'year', 'user'));
         } else {
-            $data = $this->getVentasData($request->year, $request->mes);
-
-            $csv = Writer::createFromFileObject(new SplTempFileObject());
-
-            $csv->insertOne(self::$HEADER_VENTAS);
-            foreach ($data as $key => $array) {
-                $csv->insertOne(get_object_vars($array));
-            }
-            //descarga
-            $csv->output('ResumenAnualVentas.csv');
+            $consulta = DB::table('libro_ventas')
+                ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
+                ->whereYear('fecha', '=', $request->year)
+                ->get();
+            $operatoria = $request->operatoria;
+            $year = $request->year;
+            $user = (object) Auth::user();
+            return view('resumenes.anuales.exportVentas', compact('consulta', 'operatoria', 'year', 'user'));
         }
+        
     }
 
     public function indexPeriodo()
@@ -181,7 +181,6 @@ class ResumenesController extends Controller
         $mes = $request->mes;
         $mes_final = $request->mes_final;
         $year = $request->year;
-        //Ventas no tiene el autocompletar aun,
         if ($operatoria == "compras") {
             $consulta = DB::table('libro_compras')
                 ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
@@ -204,33 +203,59 @@ class ResumenesController extends Controller
     }
     public function periodosExport(Request $request)
     {
+        // dd($request->all());
         //operatoria, mes, year
+        // if ($request->operatoria && $request->operatoria == "compras") {
+
+        //     $data = $this->getComprasData($request->year, $request->mes, $request->mes_final);
+
+        //     $csv = Writer::createFromFileObject(new SplTempFileObject());
+
+        //     $csv->insertOne(self::$HEADER_COMPRAS);
+
+        //     foreach ($data as $key => $array) {
+        //         $csv->insertOne(get_object_vars($array));
+        //     }
+        //     //descarga
+        //     $csv->output('Resumen-Periodos-Compras-' . $request->mes . '-' . $request->mes_final . '.csv');
+        // } else {
+
+        //     $data = $this->getVentasData($request->year, $request->mes, $request->mes_final);
+
+        //     $csv = Writer::createFromFileObject(new SplTempFileObject());
+
+        //     $csv->insertOne(self::$HEADER_VENTAS);
+
+        //     foreach ($data as $key => $array) {
+        //         $csv->insertOne(get_object_vars($array));
+        //     }
+        //     //descarga
+        //     $csv->output('Resumen-Periodos-Ventas-' . $request->mes . '-' . $request->mes_final . '.csv');
+        // }
         if ($request->operatoria && $request->operatoria == "compras") {
-
-            $data = $this->getComprasData($request->year, $request->mes, $request->mes_final);
-
-            $csv = Writer::createFromFileObject(new SplTempFileObject());
-
-            $csv->insertOne(self::$HEADER_COMPRAS);
-
-            foreach ($data as $key => $array) {
-                $csv->insertOne(get_object_vars($array));
-            }
-            //descarga
-            $csv->output('Resumen-Periodos-Compras-' . $request->mes . '-' . $request->mes_final . '.csv');
+            $consulta = DB::table('libro_compras')
+                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+                ->whereYear('fecha', '=', $request->year)
+                ->whereBetween(DB::raw("strftime('%m', fecha)"), [$request->mes, $request->mes_final])
+                ->get();
+            $operatoria = $request->operatoria;
+            $year = $request->year;
+            $mes = $request->mes;
+            $mes_final = $request->mes_final;
+            $user = (object) Auth::user();
+            return view('resumenes.periodos.exportCompras', compact('consulta', 'operatoria', 'year', 'mes', 'mes_final', 'user'));
         } else {
-
-            $data = $this->getVentasData($request->year, $request->mes, $request->mes_final);
-
-            $csv = Writer::createFromFileObject(new SplTempFileObject());
-
-            $csv->insertOne(self::$HEADER_VENTAS);
-
-            foreach ($data as $key => $array) {
-                $csv->insertOne(get_object_vars($array));
-            }
-            //descarga
-            $csv->output('Resumen-Periodos-Ventas-' . $request->mes . '-' . $request->mes_final . '.csv');
+            $consulta = DB::table('libro_ventas')
+                ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
+                ->whereYear('fecha', '=', $request->year)
+                ->whereBetween(DB::raw("strftime('%m', fecha)"), [$request->mes, $request->mes_final])
+                ->get();
+            $operatoria = $request->operatoria;
+            $year = $request->year;
+            $mes = $request->mes;
+            $mes_final = $request->mes_final;
+            $user = (object) Auth::user();
+            return view('resumenes.periodos.exportVentas', compact('consulta', 'operatoria', 'year', 'mes', 'mes_final', 'user'));
         }
     }
 

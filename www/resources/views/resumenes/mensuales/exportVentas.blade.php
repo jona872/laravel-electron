@@ -21,7 +21,7 @@ echo "\xEF\xBB\xBF";
    }
 </style>
 
-<h1>Libro de I.V.A. Compras de: {{$user->name}} - Período: {{$mes}}/{{$year}} - ()</h1>
+<h1>Libro de I.V.A. {{$operatoria}} de: {{$user->name}} - Período: {{$mes}}/{{$year}} - ()</h1>
 <b>Domicilio: RUTA 18 - KM. 10</b>
 <br>
 <b>C.U.I.T.: {{$user->cuit}}</b>
@@ -29,62 +29,62 @@ echo "\xEF\xBB\xBF";
 <br>
 
 <table>
-   <tr>
-      <th>
-         Fecha
-      </th>
-      <th>
-         Pto de Venta
-      </th>
-      <th>
-         Nº de Compro
-      </th>
-      <th>
-         Tipo de Compro
-      </th>
-      <th>
-         Nombre
-      </th>
-      <th>
-         CUIT
-      </th>
-      <th>
-         Resp. IVA
-      </th>
-      <th>
-         Neto Gravado
-      </th>
-      <th>
-         Tasa de I.V.A
-      </th>
-      <th>
-         I.V.A. Liquiddo
-      </th>
-      <th>
-         Sobre I.V.A
-      </th>
-      <th>
-         Percep D.G.R
-      </th>
-      <th>
-         Reten. I.V.A
-      </th>
-      <th>
-         Concep No Gravados
-      </th>
-      <th>
-         Ingresos Externos
-      </th>
-      <th>
-         Reten Gcias
-      </th>
-      <th>
-         Total
-      </th>
-      <th>
-         Tipo Op
-      </th>
-   </tr>
+<tr>
+          <th>
+            <div>Fecha</div>
+          </th>
+          <th>
+            <div>Punto de Venta</div>
+          </th>
+          <th>
+            <div>Nrp de Compro</div>
+          </th>
+          <th>
+            <div>Tipo de Compro</div>
+          </th>
+          <th>
+            <div>Nombre</div>
+          </th>
+          <th>
+            <div>CUIT</div>
+          </th>
+          <th>
+            <div>Resp. IVA</div>
+          </th>
+          <th>
+            <div>Neto Gravado</div>
+          </th>
+          <th>
+            <div>Tasa de I.V.A.</div>
+          </th>
+          <th>
+            <div>I.V.A. Liquiddo</div>
+          </th>
+          <th>
+            <div>Sobre I.V.A.</div>
+          </th>
+          <th>
+            <div>Percep D.G.R.</div>
+          </th>
+          <th>
+            <div>Reten. I.V.A.</div>
+          </th>
+          <th>
+            <div>Concep No Gravados</div>
+          </th>
+          <th>
+            <div>Ingresos Externos</div>
+          </th>
+          <th>
+            <div>Reten Gcias</div>
+          </th>
+          <th>
+            <div>Total</div>
+          </th>
+          <th>
+            <div>Tipo Op</div>
+          </th>
+        </tr>
    @if (count($consulta ?? '') > 0)
    <input type="hidden" name="exportData" value="{{base64_encode(serialize($consulta))}}">
    @foreach ($consulta ?? '' as $c)
@@ -102,9 +102,9 @@ echo "\xEF\xBB\xBF";
       <td> {{$c->iva_sobretasa }} </td>
       <td> {{$c->percepcion }} </td>
       <td> {{$c->iva_retencion }} </td>
-      <td> {{$c->impuestos_internos }} </td>
       <td> {{$c->conceptos_no_gravados }} </td>
-      <td> {{$c->compras_no_inscriptas }} </td>
+      <td> {{$c->ingresos_exentos }} </td>
+      <td> {{$c->ganancias_retencion }} </td>
       <td> {{$c->total }} </td>
       <td> {{$c->tipo_op }} </td>
    </tr>

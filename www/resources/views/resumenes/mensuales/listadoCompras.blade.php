@@ -8,8 +8,8 @@
 
 <h1>Listado Mensual de {{ $operatoria }} {{ $year }}-{{ $mes }}</h1>
 
-<div class="container.fluid">
-  <form action="{{url('/mensuales/export')}}" method="POST">
+<div class="container-fluid">
+  <form action="{{ url('mensuales/export/'.$operatoria . '/'.$year. '/'.$mes) }}" method="GET">
     @csrf
     <input type="hidden" name="operatoria" value="{{ $operatoria }}">
     <input type="hidden" name="mes" value="{{ $mes }}">
@@ -106,17 +106,8 @@
       @endif
     </table>
 
-    <div class="card--row">
-      <div class="row--centered">
+    <div class="text-center">
         <button type="submit" class="btn btn-primary"> Descargar </button>
-      </div>
-
-      <div class="row text-center mt-3">
-        <div class="d-flex justify-content-center gap-2 flex-wrap">
-          <a class="btn btn-primary" href="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}"> DescargarV2 </a>
-        </div>
-      </div>
-
     </div>
 
   </form>

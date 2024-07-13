@@ -106,7 +106,7 @@
     </table>
 
     <div class="row text-center mt-3">
-      <div class="d-flex justify-content-center gap-2 flex-wrap">
+      <div class="d-flex justify-content-center g-2 flex-wrap">
         <button type="submit" class="btn btn-primary"> Continuar </button>
       </div>
     </div>
