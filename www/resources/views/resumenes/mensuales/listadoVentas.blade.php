@@ -5,10 +5,12 @@
 
 @section('content')
 
+
 <h1>Listado Mensual de {{ $operatoria }} {{ $year }}-{{ $mes }}</h1>
 
 <div class="container.fluid">
-  <form action="{{url('/mensuales/export')}}" method="POST">
+  <!-- <form action="{{url('/mensuales/export')}}" method="POST"> -->
+  <form action="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}" method="GET">
     @csrf
     <input type="hidden" name="operatoria" value="{{ $operatoria }}">
     <input type="hidden" name="mes" value="{{ $mes }}">

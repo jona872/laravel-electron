@@ -45,8 +45,8 @@
     </div>
 
     <!-- Buttons -->
-    <div class="d-flex justify-content-center align-items-center g-3">
-        <div>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="me-2">
           <button type="submit" class="btn btn-primary"> Entrar </button>
         </div>
         <div>

@@ -9,7 +9,8 @@
 <h1>Listado Mensual de {{ $operatoria }} {{ $year }}-{{ $mes }}</h1>
 
 <div class="container.fluid">
-  <form action="{{url('/mensuales/export')}}" method="POST">
+  <!-- <form action="{{url('/mensuales/export')}}" method="POST"> -->
+  <form action="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}" method="GET">
     @csrf
     <input type="hidden" name="operatoria" value="{{ $operatoria }}">
     <input type="hidden" name="mes" value="{{ $mes }}">
@@ -109,11 +110,6 @@
     <div class="text-center">
         <button type="submit" class="btn btn-primary"> Descargar </button>
     </div>
-
-    <div class="text-center mt-3">
-        <a class="btn btn-primary" href="{{ url('mensuales/exportv2/'.$operatoria . '/'.$year. '/'.$mes) }}"> DescargarV2 </a>
-    </div>
-
 
   </form>
 
