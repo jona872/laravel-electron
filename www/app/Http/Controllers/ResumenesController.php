@@ -119,28 +119,6 @@ class ResumenesController extends Controller
             return view('resumenes.mensuales.exportVentas', compact('consulta', 'operatoria', 'year', 'mes', 'user'));
         }
     }
-    public function mensualesExportV2($operatoria, $year, $mes)
-    {
-        // dd(["OPERATORIA DENTRO DFEL CONTROLLER: "=>$operatoria]);
-        if ($operatoria && $operatoria == "compras") {
-
-            $consulta = DB::table('libro_compras')
-                ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
-                ->whereYear('fecha', '=', $year)
-                ->whereMonth('fecha', '=', $mes)
-                ->get();
-            $user = (object) Auth::user();
-            return view('resumenes.mensuales.exportCompras', compact('consulta', 'operatoria', 'year', 'mes', 'user'));
-        } else {
-            $consulta = DB::table('libro_ventas')
-                ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
-                ->whereYear('fecha', '=', $year)
-                ->whereMonth('fecha', '=', $mes)
-                ->get();
-            $user = (object) Auth::user();
-            return view('resumenes.mensuales.exportVentas', compact('consulta', 'operatoria', 'year', 'mes', 'user'));
-        }
-    }
 
 
     public function indexAnual()

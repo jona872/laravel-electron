@@ -50,8 +50,8 @@ a:visited {
 }
 
 body {
-    height: 100vh;
-    width: 100vw;
+    height: 90vh;
+    width: 99vw;
     background-color: var(--bg);
 }
 
