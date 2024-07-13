@@ -1,7 +1,7 @@
 <?php
 header("Pragma: public");
 header("Expires: 0");
-$filename = "Mensual_{$operatoria}_{$year}_{$mes}.xls";
+$filename = "Resumen-Mensual-{$operatoria}-{$year}-{$mes}.xls";
 header("Content-type: application/vnd.ms-excel; charset=UTF-8");
 header("Content-Disposition: attachment; filename=$filename");
 header("Pragma: no-cache");
