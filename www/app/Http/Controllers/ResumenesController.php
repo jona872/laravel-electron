@@ -21,8 +21,7 @@ use SplFileObject;
 //     'Fecha', 'Punto de Venta', 'Nro. de Comprob.', 'Tipo de Comprob.', 'Nombre', 'C.U.I.T.', 'Responsable ante el I.V.A.', 'Neto Gravado', 'Tasa de I.V.A.', 'I.V.A. Liquidado', 'Sobretasa I.V.A.', 'Percep. D.G.R.', 'Retenc. I.V.A.', 'Concep. No Gravados', 'Ingresos Exentos', 'Retenc. Gcias.', 'Total', 'Tipo Op.'
 // ];
 
-class ResumenesController extends Controller
-{
+class ResumenesController extends Controller {
     public static $HEADER_COMPRAS = [
         'Fecha', 'Punto de Venta', 'Nro. de Comprob.', 'Tipo de Comprob.', 'Nombre', 'C.U.I.T.', 'Resp. I.V.A.', 'Neto Gravado', 'Tasa de I.V.A.', 'I.V.A. Liquidado', 'Sobretasa I.V.A.', 'Percep. D.G.R.', 'Retenc. I.V.A.', 'Imp. Internos', 'Concep. No Gravados', 'Compras No Insc.', 'Total', 'Tipo Op.'
     ];
@@ -30,17 +29,14 @@ class ResumenesController extends Controller
     public static $HEADER_VENTAS = [
         'Fecha', 'Punto de Venta', 'Nro. de Comprob.', 'Tipo de Comprob.', 'Nombre', 'C.U.I.T.', 'Responsable ante el I.V.A.', 'Neto Gravado', 'Tasa de I.V.A.', 'I.V.A. Liquidado', 'Sobretasa I.V.A.', 'Percep. D.G.R.', 'Retenc. I.V.A.', 'Concep. No Gravados', 'Ingresos Exentos', 'Retenc. Gcias.', 'Total', 'Tipo Op.'
     ];
-    public function index()
-    {
+    public function index() {
         return view('resumenes.index');
     }
 
-    public function indexMensual()
-    {
+    public function indexMensual() {
         return view('resumenes.mensuales.index');
     }
-    public function mensualesPreview(Request $request)
-    {
+    public function mensualesPreview(Request $request) {
         $operatoria = $request->operatoria;
         $mes = $request->mes;
         $year = $request->year;
@@ -98,8 +94,7 @@ class ResumenesController extends Controller
     //     }
     // }
 
-    public function mensualesExport($operatoria, $year, $mes)
-    {
+    public function mensualesExport($operatoria, $year, $mes) {
         if ($operatoria && $operatoria == "compras") {
 
             $consulta = DB::table('libro_compras')
@@ -121,62 +116,157 @@ class ResumenesController extends Controller
     }
 
 
-    public function indexAnual()
-    {
+    public function indexAnual() {
         return view('resumenes.anuales.index');
     }
 
-    public function anualesPreview(Request $request)
-    {
+    public function anualesPreview(Request $request) {
         $operatoria = $request->operatoria;
         $year = $request->year;
 
         if ($request->operatoria && $request->operatoria == "compras") {
+            // $consulta = DB::table('libro_compras')
+            //     ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+            //     ->whereYear('libro_compras.fecha', '=', $request->year)
+            //     ->get();
             $consulta = DB::table('libro_compras')
                 ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
                 ->whereYear('libro_compras.fecha', '=', $request->year)
+                ->select('*', DB::raw('neto + iva + iva_liquidado + iva_sobretasa + percepcion + iva_retencion + impuestos_internos + conceptos_no_gravados + compras_no_inscriptas + total as row_sum'))
                 ->get();
+            $columnSums = DB::table('libro_compras')
+                ->whereYear('fecha', '=', $request->year)
+                ->select(
+                    DB::raw('SUM(neto) as neto_sum'),
+                    DB::raw('SUM(iva) as iva_sum'),
+                    DB::raw('SUM(iva_liquidado) as iva_liquidado_sum'),
+                    DB::raw('SUM(iva_sobretasa) as iva_sobretasa_sum'),
+                    DB::raw('SUM(percepcion) as percepcion_sum'),
+                    DB::raw('SUM(iva_retencion) as iva_retencion_sum'),
+                    DB::raw('SUM(impuestos_internos) as impuestos_internos_sum'),
+                    DB::raw('SUM(conceptos_no_gravados) as conceptos_no_gravados_sum'),
+                    DB::raw('SUM(compras_no_inscriptas) as compras_no_inscriptas_sum'),
+                    DB::raw('SUM(total) as total_sum')
+                )
+                ->first();
 
-            return view('resumenes.anuales.listadoCompras', compact('consulta', 'operatoria', 'year'));
+            $totalRowSum = $consulta->sum('row_sum');
+            $totalColumnSum = array_sum((array) $columnSums);
+            $match = $totalRowSum == $totalColumnSum;
+            // dd(["CONSULTA" => $consulta, "columnSums" => $columnSums, "totalRowSum" => $totalRowSum, "totalColumnSum" => $totalColumnSum, "match" => $match]);
+            return view('resumenes.anuales.listadoCompras', compact('consulta', 'columnSums', 'match', 'operatoria', 'year'));
         } else {
+            // $consulta = DB::table('libro_ventas')
+            //     ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
+            //     ->whereYear('libro_ventas.fecha', '=', $request->year)
+            //     ->get();
             $consulta = DB::table('libro_ventas')
                 ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
                 ->whereYear('libro_ventas.fecha', '=', $request->year)
+                ->select('*', DB::raw('neto + iva + iva_liquidado + iva_sobretasa + percepcion + iva_retencion + 
+                conceptos_no_gravados + ingresos_exentos + ganancias_retencion + total as row_sum'))
                 ->get();
-            return view('resumenes.anuales.listadoVentas', compact('consulta', 'operatoria', 'year'));
+            $columnSums = DB::table('libro_ventas')
+                ->whereYear('fecha', '=', $request->year)
+                ->select(
+                    DB::raw('SUM(neto) as neto_sum'),
+                    DB::raw('SUM(iva) as iva_sum'),
+                    DB::raw('SUM(iva_liquidado) as iva_liquidado_sum'),
+                    DB::raw('SUM(iva_sobretasa) as iva_sobretasa_sum'),
+                    DB::raw('SUM(percepcion) as percepcion_sum'),
+                    DB::raw('SUM(iva_retencion) as iva_retencion_sum'),
+                    DB::raw('SUM(conceptos_no_gravados) as conceptos_no_gravados_sum'),
+                    DB::raw('SUM(ingresos_exentos) as ingresos_exentos_sum'),
+                    DB::raw('SUM(ganancias_retencion) as ganancias_retencion_sum'),
+                    DB::raw('SUM(total) as total_sum')
+                )
+                ->first();
+
+            $totalRowSum = $consulta->sum('row_sum');
+            $totalColumnSum = array_sum((array) $columnSums);
+            $match = $totalRowSum == $totalColumnSum;
+
+            return view('resumenes.anuales.listadoVentas', compact('consulta',  'columnSums', 'match', 'operatoria', 'year'));
         }
     }
 
-    public function anualesExport(Request $request)
-    {
+    public function anualesExport(Request $request) {
         if ($request->operatoria && $request->operatoria == "compras") {
+            // $consulta = DB::table('libro_compras')
+            //     ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
+            //     ->whereYear('fecha', '=', $request->year)
+            //     ->get();
             $consulta = DB::table('libro_compras')
                 ->join('clientes', 'libro_compras.sender_id', '=', 'clientes.id')
-                ->whereYear('fecha', '=', $request->year)
+                ->whereYear('libro_compras.fecha', '=', $request->year)
+                ->select('*', DB::raw('neto + iva + iva_liquidado + iva_sobretasa + percepcion + iva_retencion + impuestos_internos + conceptos_no_gravados + compras_no_inscriptas + total as row_sum'))
                 ->get();
+            $columnSums = DB::table('libro_compras')
+                ->whereYear('fecha', '=', $request->year)
+                ->select(
+                    DB::raw('SUM(neto) as neto_sum'),
+                    DB::raw('SUM(iva) as iva_sum'),
+                    DB::raw('SUM(iva_liquidado) as iva_liquidado_sum'),
+                    DB::raw('SUM(iva_sobretasa) as iva_sobretasa_sum'),
+                    DB::raw('SUM(percepcion) as percepcion_sum'),
+                    DB::raw('SUM(iva_retencion) as iva_retencion_sum'),
+                    DB::raw('SUM(impuestos_internos) as impuestos_internos_sum'),
+                    DB::raw('SUM(conceptos_no_gravados) as conceptos_no_gravados_sum'),
+                    DB::raw('SUM(compras_no_inscriptas) as compras_no_inscriptas_sum'),
+                    DB::raw('SUM(total) as total_sum')
+                )
+                ->first();
+
+            $totalRowSum = $consulta->sum('row_sum');
+            $totalColumnSum = array_sum((array) $columnSums);
+            $match = $totalRowSum == $totalColumnSum;
+
             $operatoria = $request->operatoria;
             $year = $request->year;
             $user = (object) Auth::user();
-            return view('resumenes.anuales.exportCompras', compact('consulta', 'operatoria', 'year', 'user'));
+            return view('resumenes.anuales.exportCompras', compact('consulta', 'columnSums', 'match', 'operatoria', 'year', 'user'));
         } else {
+            // $consulta = DB::table('libro_ventas')
+            //     ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
+            //     ->whereYear('fecha', '=', $request->year)
+            //     ->get();
             $consulta = DB::table('libro_ventas')
                 ->join('clientes', 'libro_ventas.receiver_id', '=', 'clientes.id')
-                ->whereYear('fecha', '=', $request->year)
+                ->whereYear('libro_ventas.fecha', '=', $request->year)
+                ->select('*', DB::raw('neto + iva + iva_liquidado + iva_sobretasa + percepcion + iva_retencion + 
+                conceptos_no_gravados + ingresos_exentos + ganancias_retencion + total as row_sum'))
                 ->get();
+            $columnSums = DB::table('libro_ventas')
+                ->whereYear('fecha', '=', $request->year)
+                ->select(
+                    DB::raw('SUM(neto) as neto_sum'),
+                    DB::raw('SUM(iva) as iva_sum'),
+                    DB::raw('SUM(iva_liquidado) as iva_liquidado_sum'),
+                    DB::raw('SUM(iva_sobretasa) as iva_sobretasa_sum'),
+                    DB::raw('SUM(percepcion) as percepcion_sum'),
+                    DB::raw('SUM(iva_retencion) as iva_retencion_sum'),
+                    DB::raw('SUM(conceptos_no_gravados) as conceptos_no_gravados_sum'),
+                    DB::raw('SUM(ingresos_exentos) as ingresos_exentos_sum'),
+                    DB::raw('SUM(ganancias_retencion) as ganancias_retencion_sum'),
+                    DB::raw('SUM(total) as total_sum')
+                )
+                ->first();
+
+            $totalRowSum = $consulta->sum('row_sum');
+            $totalColumnSum = array_sum((array) $columnSums);
+            $match = $totalRowSum == $totalColumnSum;
+
             $operatoria = $request->operatoria;
             $year = $request->year;
             $user = (object) Auth::user();
-            return view('resumenes.anuales.exportVentas', compact('consulta', 'operatoria', 'year', 'user'));
+            return view('resumenes.anuales.exportVentas', compact('consulta', 'columnSums', 'match', 'operatoria', 'year', 'user'));
         }
-        
     }
 
-    public function indexPeriodo()
-    {
+    public function indexPeriodo() {
         return view('resumenes.periodos.index');
     }
-    public function periodosPreview(Request $request)
-    {
+    public function periodosPreview(Request $request) {
         $operatoria = $request->operatoria;
         $mes = $request->mes;
         $mes_final = $request->mes_final;
@@ -201,8 +291,7 @@ class ResumenesController extends Controller
             return view('resumenes.periodos.listadoVentas', compact('consulta', 'operatoria', 'year', 'mes', 'mes_final'));
         }
     }
-    public function periodosExport(Request $request)
-    {
+    public function periodosExport(Request $request) {
         // dd($request->all());
         //operatoria, mes, year
         // if ($request->operatoria && $request->operatoria == "compras") {
@@ -259,8 +348,7 @@ class ResumenesController extends Controller
         }
     }
 
-    public function getComprasData($year, ?int $startMonth = null, ?int $endMonth = null)
-    {
+    public function getComprasData($year, ?int $startMonth = null, ?int $endMonth = null) {
         if ($startMonth == null or empty($startMonth)) {
             $startMonth = 1;
             $endMonth = 12;
@@ -296,8 +384,7 @@ class ResumenesController extends Controller
             ->get();
     }
 
-    public function getVentasData($year, ?int $startMonth = null, ?int $endMonth = null)
-    {
+    public function getVentasData($year, ?int $startMonth = null, ?int $endMonth = null) {
         if ($startMonth == null or empty($startMonth)) {
             $startMonth = 1;
             $endMonth = 12;
@@ -333,33 +420,27 @@ class ResumenesController extends Controller
             ->get();
     }
 
-    public function create()
-    {
+    public function create() {
         //
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
 }

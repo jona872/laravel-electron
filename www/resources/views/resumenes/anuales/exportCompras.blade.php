@@ -84,6 +84,9 @@ echo "\xEF\xBB\xBF";
       <th>
          Tipo Op
       </th>
+      <th>
+         Extra
+      </th>
    </tr>
    @if (count($consulta ?? '') > 0)
    <input type="hidden" name="exportData" value="{{base64_encode(serialize($consulta))}}">
@@ -107,8 +110,38 @@ echo "\xEF\xBB\xBF";
       <td> {{$c->compras_no_inscriptas }} </td>
       <td> {{$c->total }} </td>
       <td> {{$c->tipo_op }} </td>
+      <td> {{$c->row_sum }} </td>
    </tr>
    @endforeach
+   <tr>
+        <td> SUMATORIAS </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> {{$columnSums->neto_sum }} </td>
+        <td> {{$columnSums->iva_sum }} </td>
+        <td> {{$columnSums->iva_liquidado_sum }} </td>
+        <td> {{$columnSums->iva_sobretasa_sum }} </td>
+        <td> {{$columnSums->percepcion_sum }} </td>
+        <td> {{$columnSums->iva_retencion_sum }} </td>
+        <td> {{$columnSums->impuestos_internos_sum }} </td>
+        <td> {{$columnSums->conceptos_no_gravados_sum }} </td>
+        <td> {{$columnSums->compras_no_inscriptas_sum }} </td>
+        <td> {{$columnSums->total_sum }} </td>
+        <td> </td>
+        @if($match)
+        <td class="text-success">
+          <strong>SUMA CORRECTA</strong>
+        </td>
+        @else
+        <td class="text-danger">
+          <strong>SUMA INCORRECTA</strong>
+        </td>
+        @endif
+      </tr>
    @else
    <input type="hidden" name="exportData" value="">
    <tr>
