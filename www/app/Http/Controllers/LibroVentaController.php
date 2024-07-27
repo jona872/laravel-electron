@@ -31,6 +31,7 @@ class LibroVentaController extends Controller
             $ventas = DB::table('libro_ventas as lv')
             ->join('clientes as c', 'lv.receiver_id', '=', 'c.id')
             ->select('c.*', 'lv.*')
+            ->orderBy('lv.id', 'DESC')
             ->get();
             
             return view('ventas.index', compact('ventas'));

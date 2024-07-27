@@ -26,6 +26,7 @@ class LibroCompraController extends Controller
          $compras = DB::table('libro_compras as lc')
             ->join('clientes as c', 'lc.sender_id', '=', 'c.id')
             ->select('c.*', 'lc.*')
+            ->orderBy('lc.id', 'DESC')
             ->get();
 
          return view('compras.index', compact('compras'));
