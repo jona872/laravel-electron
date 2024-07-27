@@ -14,6 +14,7 @@ let a7_impuestos_internos = document.getElementById('impuestos_internos');
 let a8_conceptos_no_gravados = document.getElementById('conceptos_no_gravados');
 let a9_compras_no_inscriptas = document.getElementById('compras_no_inscriptas');
 let a11_total = document.getElementById('total');
+let btn_limpiar = document.getElementById('limpiar');
 // let editableButtons = [ a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a8_conceptos_no_gravados, a9_compras_no_inscriptas ];
 
 function clearFields(vButtons) {
@@ -21,13 +22,37 @@ function clearFields(vButtons) {
     btn.value = parseFloat('0').toFixed(2);
   });
 }
+function limpiarNumeros() {
+  clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a8_conceptos_no_gravados, a9_compras_no_inscriptas, a11_total]);
+}
+btn_limpiar.addEventListener('click', limpiarNumeros);
 
 function calcular() {
-  switch (document.getElementById("tipo_calculo").value) {
+  let tipoCalculo = document.getElementById("tipo_calculo").value;
+  let total = parseFloat(a11_total.value) || 0;
+  let iva = parseFloat(a2_iva.value) || 0;
+  let percepcion = parseFloat(a5_percepcion.value) || 0;
+  let ivaRetencion = parseFloat(a6_iva_retencion.value) || 0;
+  let impuestosInternos = parseFloat(a7_impuestos_internos.value) || 0;
+  let conceptosNoGravados = parseFloat(a8_conceptos_no_gravados.value) || 0;
+  let comprasNoInscriptas = parseFloat(a9_compras_no_inscriptas.value) || 0;
+
+  switch (tipoCalculo) {
     case '1':
-      clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a8_conceptos_no_gravados, a9_compras_no_inscriptas]);
-      a1_neto.value = parseFloat((a11_total.value - a9_compras_no_inscriptas.value - a8_conceptos_no_gravados.value - a7_impuestos_internos.value - a6_iva_retencion.value - a5_percepcion.value) / (1 + a2_iva.value) * 100).toFixed(2);
-      a3_iva_liquidado.value = parseFloat(a1_neto.value * (a2_iva.value / 100)).toFixed(2);
+      clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa]);
+
+      let netoAjustado = parseFloat(
+        (total - comprasNoInscriptas - conceptosNoGravados - impuestosInternos - ivaRetencion - percepcion)
+        /
+        (1 + (iva / 100))
+      ).toFixed(2);
+
+      let iva_liquidado = parseFloat(netoAjustado * (iva / 100)).toFixed(2);
+      a3_iva_liquidado.value = iva_liquidado;
+
+      let neto = parseFloat(netoAjustado + percepcion + impuestosInternos + conceptosNoGravados + comprasNoInscriptas).toFixed(2);
+      a1_neto.value = neto;
+
       break;
     case '4':
       clearFields([a1_neto, a3_iva_liquidado, a4_iva_sobretasa, a5_percepcion, a6_iva_retencion, a7_impuestos_internos, a9_compras_no_inscriptas]);
@@ -42,9 +67,11 @@ function calcular() {
   }
 }
 
-$("#tipo_calculo, #total").focusout(function () {
+//update and triger cals on exit of this fields
+$("#percepcion, #iva_retencion, #impuestos_internos, #conceptos_no_gravados, #compras_no_inscriptas, #tipo_calculo, #total").focusout(function () {
   calcular();
 });
+
 
 // fetch all data and filters
 const getData = async () => {

@@ -95,19 +95,19 @@
       </div>
       <div class="form--row">
         <label for="iva_retencion"> I.V.A. Retencion </label>
-        <input id="iva_retencion" type="number" name="iva_retencion" value="0.00" />
+        <input id="iva_retencion" type="number" name="iva_retencion" step="0.01" value="0.00" />
       </div>
       <div class="form--row">
         <label for="impuestos_internos"> Impuestos Internos </label>
-        <input id="impuestos_internos" type="number" name="impuestos_internos" value="0.00" />
+        <input id="impuestos_internos" type="number" name="impuestos_internos" step="0.01" value="0.00" />
       </div>
       <div class="form--row">
         <label for="conceptos_no_gravados"> Conceptos No Gravados </label>
-        <input id="conceptos_no_gravados" type="number" name="conceptos_no_gravados" value="0.00" />
+        <input id="conceptos_no_gravados" type="number" name="conceptos_no_gravados" step="0.01" value="0.00" />
       </div>
       <div class="form--row">
         <label for="compras_no_inscriptas"> Compras no Inscriptas </label>
-        <input id="compras_no_inscriptas" type="number" name="compras_no_inscriptas" value="0.00" />
+        <input id="compras_no_inscriptas" type="number" name="compras_no_inscriptas" step="0.01" value="0.00" />
       </div>
       <div class="form--row">
         <label for="total"> Total </label>
@@ -120,6 +120,17 @@
       <div class="form--row">
         <label for="tipo_calculo"> Tipo de Calculo </label>
         <input id="tipo_calculo" type="text" step="any" name="tipo_calculo" value="{{ old('tipo_calculo') }}" />
+      </div>
+
+      <div class="form--row mt-2">
+        <div class="invisible">.</div>
+        <button type="button" class="btn btn-outline-danger" id="limpiar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser" viewBox="0 0 16 16">
+            <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"></path>
+          </svg>
+          Limpiar Campos
+        </button>
+
       </div>
     </div>
   </div>
